@@ -172,6 +172,7 @@
   <ItemGroup>
     <ClInclude Include="camera.h" />
     <ClInclude Include="game.h" />
+    <ClInclude Include="game_object.h" />
     <ClInclude Include="renderer\buffer.h" />
     <ClInclude Include="renderer\mesh.h" />
     <ClInclude Include="renderer\model.h" />

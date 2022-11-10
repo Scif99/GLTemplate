@@ -90,11 +90,11 @@ int main(int argc, char* argv[])
 
         // update game state
         // -----------------
-      Breakout.Update(deltaTime);
+        Breakout.Update(deltaTime);
 
         // render
         // ------
-       Breakout.Render();
+        Breakout.Render();
 
         glfwSwapBuffers(window);
     }
@@ -115,9 +115,9 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
     if (key >= 0 && key < 1024)
     {
         if (action == GLFW_PRESS)
-        {}//Breakout.m_keys[key] = true;
+        Breakout.m_keys[key] = true;
         else if (action == GLFW_RELEASE) {}
-        {}  //Breakout.m_keys[key] = false;
+        Breakout.m_keys[key] = false;
     }
 }
 
