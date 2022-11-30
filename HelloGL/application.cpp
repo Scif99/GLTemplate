@@ -129,7 +129,15 @@ void Application::Render()
     m_shader->SetVec3("lightColor", light_color);
     m_shader->SetVec3("lightPos", light_pos);
     m_shader->SetVec3("viewPos", m_camera->Position());
-    m_shader->SetVec3("objectColor", glm::vec3(1.0f, 0.5f, 0.31f));
+
+    m_shader->SetVec3("material.ambient", glm::vec3(1.0f, 0.5f, 0.31f));
+    m_shader->SetVec3("material.diffuse", glm::vec3(1.0f, 0.5f, 0.31f));
+    m_shader->SetVec3("material.specular",glm::vec3( 0.5f, 0.5f, 0.5f));
+    m_shader->SetFloat("material.shininess", 32.0f);
+
+    m_shader->SetVec3("light.ambient", glm::vec3(0.2f, 0.2f, 0.2f));
+    m_shader->SetVec3("light.diffuse", glm::vec3(0.5f, 0.5f, 0.5f)); // darken diffuse light a bit
+    m_shader->SetVec3("light.specular", glm::vec3(1.0f, 1.0f, 1.0f));
 
     //Model
     glm::mat4 model = glm::mat4(1.f);
