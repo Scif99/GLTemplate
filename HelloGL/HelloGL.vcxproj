@@ -189,6 +189,8 @@
     <None Include="assets\models\backpack\backpack.mtl" />
     <None Include="shaders\2DSpriteShader.fs" />
     <None Include="shaders\2DSpriteShader.vs" />
+    <None Include="shaders\LightSourceShader.fs" />
+    <None Include="shaders\LightSourceShader.vs" />
     <None Include="shaders\3DShader.fs" />
     <None Include="shaders\3DShader.vs" />
   </ItemGroup>

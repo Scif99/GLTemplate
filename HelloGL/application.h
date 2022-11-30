@@ -22,12 +22,15 @@ public:
 	unsigned int m_width, m_height;
 
 	std::unique_ptr<GLShader> m_shader;
+	std::unique_ptr<GLShader> m_lightsourceshader;
+
 	std::unique_ptr<GLTexture> m_texture;
 	std::unique_ptr<Camera> m_camera;
 
 
 	//Camera m_camera;
 	std::unique_ptr<VertexArray> m_VAO;
+
 
 	Application(unsigned int width, unsigned int height);
 	~Application();

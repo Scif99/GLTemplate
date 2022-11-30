@@ -2,17 +2,20 @@
 
 #include <iostream>
 
+inline const unsigned int SCREEN_WIDTH = 800;
+inline const unsigned int SCREEN_HEIGHT = 600;
+
 //Note forward, up should be orthogonal
 Camera::Camera(glm::vec3 pos, glm::vec3 target, glm::vec3 up)
     : m_position{ pos }, m_forward{ glm::normalize(target - m_position) }, m_up{ glm::normalize(up) }, m_right{ glm::normalize(glm::cross(m_forward, m_up)) },
-     lastX{400}, lastY{300}, firstMouse{true}
+     lastX{SCREEN_WIDTH/2}, lastY{SCREEN_HEIGHT/2}, firstMouse{true}
 {
     WORLD_UP = m_up;
 }
 
 void Camera::ProcessKeyboardInput(GLFWwindow* window, float dt)
 {
-    const float speed{ 2.f * dt };
+    const float speed{ 2.5f * dt };
 
     if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
         m_position += speed * m_forward;

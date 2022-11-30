@@ -105,6 +105,8 @@
     <None Include="shaders\2DSpriteShader.fs" />
     <None Include="shaders\3DShader.vs" />
     <None Include="shaders\3DShader.fs" />
+    <None Include="shaders\LightSourceShader.vs" />
+    <None Include="shaders\LightSourceShader.fs" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="assets\textures\container.jpg">

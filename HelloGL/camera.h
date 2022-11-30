@@ -44,7 +44,7 @@ public:
 
 	void Update();
 
-	const glm::vec3& position() const { return m_position; }
+	const glm::vec3& Position() const { return m_position; }
 	void setPosition(glm::vec3 v) { m_position = v; }; //sets absolute position
 	void move(glm::vec3 v) { m_position += v; }; //moves relative to current pos
 
