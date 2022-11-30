@@ -59,7 +59,7 @@ struct BufferElement
 };
 
 /*
-* A BufferLayout is 
+* A BufferLayout is a container for BufferElements that stores information such as the stride and offset
 * We can't just use a vector of BufferElements because, in order to know the stride, and the offset of an attribute,
 * we need to know about other elements
 */

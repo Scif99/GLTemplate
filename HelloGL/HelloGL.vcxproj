@@ -156,39 +156,41 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="camera.cpp" />
-    <ClCompile Include="game.cpp" />
+    <ClCompile Include="application.cpp" />
     <ClCompile Include="glad.c" />
     <ClCompile Include="renderer\buffer.cpp" />
     <ClCompile Include="renderer\mesh.cpp" />
     <ClCompile Include="renderer\model.cpp" />
     <ClCompile Include="renderer\shader.cpp" />
     <ClCompile Include="resource_manager.cpp" />
-    <ClCompile Include="sprite_renderer.cpp" />
-    <ClCompile Include="Source.cpp" />
+    <ClCompile Include="2d_sprite_renderer.cpp" />
+    <ClCompile Include="entry_point.cpp" />
     <ClCompile Include="renderer\stb_image.cpp" />
     <ClCompile Include="renderer\texture.cpp" />
     <ClCompile Include="renderer\vertex_array.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="camera.h" />
-    <ClInclude Include="game.h" />
-    <ClInclude Include="game_object.h" />
+    <ClInclude Include="application.h" />
+    <ClInclude Include="3d_renderer.h" />
     <ClInclude Include="renderer\buffer.h" />
     <ClInclude Include="renderer\mesh.h" />
     <ClInclude Include="renderer\model.h" />
+    <ClInclude Include="renderer\renderer.h" />
     <ClInclude Include="renderer\shader.h" />
     <ClInclude Include="renderer\stb_image.h" />
     <ClInclude Include="renderer\texture.h" />
     <ClInclude Include="renderer\vertex.h" />
     <ClInclude Include="renderer\vertex_array.h" />
     <ClInclude Include="resource_manager.h" />
-    <ClInclude Include="sprite_renderer.h" />
-    <ClInclude Include="square.h" />
+    <ClInclude Include="2d_sprite_renderer.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="assets\models\backpack\backpack.mtl" />
     <None Include="shaders\2DSpriteShader.fs" />
     <None Include="shaders\2DSpriteShader.vs" />
+    <None Include="shaders\3DShader.fs" />
+    <None Include="shaders\3DShader.vs" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="assets\models\backpack\ao.jpg" />
@@ -197,8 +199,10 @@
     <Image Include="assets\models\backpack\roughness.jpg" />
     <Image Include="assets\models\backpack\specular.jpg" />
     <Image Include="assets\textures\awesomeface.png" />
+    <Image Include="assets\textures\background.jpg" />
     <Image Include="assets\textures\container.jpg" />
     <Image Include="assets\textures\container2.png" />
+    <Image Include="assets\textures\paddle.png" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="assets\models\backpack\source_attribution.txt" />

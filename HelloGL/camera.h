@@ -16,12 +16,18 @@ private:
 	glm::mat4 m_view{ glm::mat4(1.0f) }; //stores the view matrix
 	glm::vec3 WORLD_UP; //We use this vector along with m_forward to construct an orthonormal basis
 
+
+
 	//euler angles
 	float pitch{ 0.f };
 	float yaw{ -90.f };
 
 	const float sensitivity{ 0.1f };
 
+public:
+	float lastX;
+	float lastY;
+	bool firstMouse;
 
 public:
 	~Camera() = default;
@@ -33,10 +39,10 @@ public:
 
 	Camera(glm::vec3 pos, glm::vec3 look, glm::vec3 up);
 
-	void processKeyboardInput(GLFWwindow* window);
-	void processMouseInput(GLFWwindow* window, float dx, float dy);
+	void ProcessKeyboardInput(GLFWwindow* window, float dt);
+	void ProcessMouseInput(GLFWwindow* window, float dx, float dy);
 
-	void update();
+	void Update();
 
 	const glm::vec3& position() const { return m_position; }
 	void setPosition(glm::vec3 v) { m_position = v; }; //sets absolute position

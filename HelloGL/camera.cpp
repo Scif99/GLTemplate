@@ -4,14 +4,15 @@
 
 //Note forward, up should be orthogonal
 Camera::Camera(glm::vec3 pos, glm::vec3 target, glm::vec3 up)
-    : m_position{ pos }, m_forward{ glm::normalize(target - m_position) }, m_up{ glm::normalize(up) }, m_right{ glm::normalize(glm::cross(m_forward, m_up)) }
+    : m_position{ pos }, m_forward{ glm::normalize(target - m_position) }, m_up{ glm::normalize(up) }, m_right{ glm::normalize(glm::cross(m_forward, m_up)) },
+     lastX{400}, lastY{300}, firstMouse{true}
 {
     WORLD_UP = m_up;
 }
 
-void Camera::processKeyboardInput(GLFWwindow* window)
+void Camera::ProcessKeyboardInput(GLFWwindow* window, float dt)
 {
-    constexpr float speed{ 0.1f };
+    const float speed{ 2.f * dt };
 
     if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
         m_position += speed * m_forward;
@@ -27,7 +28,7 @@ void Camera::processKeyboardInput(GLFWwindow* window)
 }
 
 
-void Camera::processMouseInput(GLFWwindow* window, float dx, float dy)
+void Camera::ProcessMouseInput(GLFWwindow* window, float dx, float dy)
 {
 
     dx *= sensitivity;
@@ -42,7 +43,7 @@ void Camera::processMouseInput(GLFWwindow* window, float dx, float dy)
         pitch = -89.0f;
 }
 
-void Camera::update()
+void Camera::Update()
 {
     glm::vec3 direction;
     direction.x = cos(glm::radians(yaw)) * cos(glm::radians(pitch));

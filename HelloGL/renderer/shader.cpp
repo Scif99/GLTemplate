@@ -5,7 +5,7 @@
 
 void GLShader::Compile(const char* vShaderCode, const char* fShaderCode)
 {
-    // 2. compile shaders
+    // create shader objects
     unsigned int vertex, fragment;
 
     // vertex shader
@@ -20,7 +20,7 @@ void GLShader::Compile(const char* vShaderCode, const char* fShaderCode)
     glCompileShader(fragment);
     CheckCompileErrors(fragment, "FRAGMENT");
 
-    // shader Program
+    // Link Shaders
     m_renderer_ID = glCreateProgram();
     glAttachShader(m_renderer_ID, vertex);
     glAttachShader(m_renderer_ID, fragment);

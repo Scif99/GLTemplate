@@ -10,7 +10,7 @@
 #include <filesystem>
 
 #include "camera.h"
-#include "game.h"
+#include "application.h"
 
 #include "renderer/model.h"
 #include "renderer/shader.h"
@@ -23,14 +23,14 @@
 // GLFW function declarations
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void key_callback(GLFWwindow* window, int key, int scancode, int action, int mode);
+void mouse_callback(GLFWwindow* window, double xpos, double ypos);
 
 
 const unsigned int SCREEN_WIDTH = 800;
 const unsigned int SCREEN_HEIGHT = 600;
 
+Application App(SCREEN_WIDTH, SCREEN_HEIGHT);
 
-
-Game Breakout(SCREEN_WIDTH, SCREEN_HEIGHT);
 
 int main(int argc, char* argv[])
 {
@@ -39,7 +39,7 @@ int main(int argc, char* argv[])
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3); //enforce minimum version of 3.3
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
-    GLFWwindow* window = glfwCreateWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "Breakout", nullptr, nullptr);
+    GLFWwindow* window = glfwCreateWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "App", nullptr, nullptr);
     if (window == NULL)
     {
         std::cout << "Failed to create GLFW window" << std::endl;
@@ -49,6 +49,9 @@ int main(int argc, char* argv[])
     glfwMakeContextCurrent(window);
     glfwSetKeyCallback(window, key_callback);
     glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
+    glfwSetCursorPosCallback(window, mouse_callback);
+
+    glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED); //hide cursor, capture
 
     // glad: load all OpenGL function pointers
     // ---------------------------------------
@@ -64,10 +67,13 @@ int main(int argc, char* argv[])
     glViewport(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    glEnable(GL_DEPTH_TEST); //enable depth testing
 
-    // initialize game
+
+    // initialize application
     // ---------------
-    Breakout.init();
+    App.init();
+
 
     // deltaTime variables
     // -------------------
@@ -77,6 +83,7 @@ int main(int argc, char* argv[])
 
     while (!glfwWindowShouldClose(window))
     {
+
         // calculate delta time
         // --------------------
         float currentFrame = glfwGetTime();
@@ -86,15 +93,16 @@ int main(int argc, char* argv[])
 
         // manage user input
         // -----------------
-        Breakout.ProcessInput(deltaTime);
+        App.ProcessInput(window, deltaTime, 0, 0);
+
 
         // update game state
         // -----------------
-        Breakout.Update(deltaTime);
+        App.Update(deltaTime);
 
         // render
-        // ------
-        Breakout.Render();
+        // 
+        App.Render();
 
         glfwSwapBuffers(window);
     }
@@ -115,10 +123,31 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
     if (key >= 0 && key < 1024)
     {
         if (action == GLFW_PRESS)
-        Breakout.m_keys[key] = true;
-        else if (action == GLFW_RELEASE) {}
-        Breakout.m_keys[key] = false;
+        App.m_keys[key] = true;
+        else if (action == GLFW_RELEASE) 
+        App.m_keys[key] = false;
     }
+}
+
+void mouse_callback(GLFWwindow* window, double xposIn, double yposIn)
+{
+    float xpos = static_cast<float>(xposIn);
+    float ypos = static_cast<float>(yposIn);
+
+    if (App.m_camera->firstMouse)
+    {
+        App.m_camera->lastX = xpos;
+        App.m_camera->lastY = ypos;
+        App.m_camera->firstMouse = false;
+    }
+
+    float xoffset = xpos - App.m_camera->lastX;
+    float yoffset = App.m_camera->lastY - ypos; // reversed since y-coordinates go from bottom to top
+
+    App.m_camera->lastX = xpos;
+    App.m_camera->lastY= ypos;
+
+    App.m_camera->ProcessMouseInput(window, xoffset, yoffset);
 }
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height)

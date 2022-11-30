@@ -13,42 +13,8 @@
 /*
 - Note that our shader class is an OpenGL wrapper.
 - Therefore we should ensure the class is non-copyable
-- Following the single Responsibility Property, we create a base class that handles ownership
 */
 
-//class GLShaderID
-//{
-//private:
-//    unsigned int m_ID;
-//public:
-//    GLShaderID() = default;
-//    ~GLShaderID() {glDeleteProgram(m_ID);}
-//    //copy operations
-//    GLShaderID(const GLShaderID& other) = delete;
-//    const GLShaderID& operator=(const GLShaderID& other) = delete;
-//
-//    //move constructor
-//    GLShaderID(GLShaderID&& other) noexcept
-//        :m_ID{std::move(other.m_ID)}
-//    {
-//        other.m_ID = 0;
-//    }
-//    //move assignment
-//    GLShaderID& operator=(GLShaderID&& other) noexcept
-//    {
-//        if (this != &other)
-//        {
-//            //free resources
-//            glDeleteProgram(m_ID);
-//            //transfer
-//            m_ID = std::move(other.m_ID);
-//            //leave other in valid state
-//            other.m_ID = 0;
-//        }
-//        return *this;
-//    }
-//    unsigned int Get() const noexcept { return m_ID; }
-//};
 
 //--------------------
 //SHADER

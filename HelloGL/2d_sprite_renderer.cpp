@@ -1,5 +1,5 @@
 
-#include "sprite_renderer.h"
+#include "2d_sprite_renderer.h"
 
 SpriteRenderer::SpriteRenderer(std::shared_ptr<GLShader> shader)
     : m_shader{ shader }
@@ -57,7 +57,7 @@ void SpriteRenderer::DrawSprite(const std::shared_ptr<GLTexture>& texture, const
     model = glm::rotate(model, glm::radians(rotate), glm::vec3(0.0f, 0.0f, 1.0f));
     model = glm::translate(model, glm::vec3(-0.5f * size.x, -0.5f * size.y, 0.0f));
 
-    model = glm::scale(model, glm::vec3(80.f, 60.f, 1.0f));
+    model = glm::scale(model, glm::vec3(size,1.f));
 
     m_shader->SetMat4("model", model);
 
