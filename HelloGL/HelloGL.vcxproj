@@ -124,7 +124,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)dependencies/glfw/include;$(SolutionDir)dependencies/GLAD/include;$(SolutionDir)dependencies/glm;$(SolutionDir)dependencies/assimp/include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)dependencies/glfw/include;$(SolutionDir)dependencies/GLAD/include;$(SolutionDir)dependencies/glm;$(SolutionDir)dependencies/assimp/include;$(ProjectDir)imgui</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
@@ -143,7 +143,7 @@
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>$(SolutionDir)dependencies/glfw/include;$(SolutionDir)dependencies/GLAD/include;$(SolutionDir)dependencies/glm;$(SolutionDir)dependencies/assimp/include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)dependencies/glfw/include;$(SolutionDir)dependencies/GLAD/include;$(SolutionDir)dependencies/glm;$(SolutionDir)dependencies/assimp/include;$(ProjectDir)imgui</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -158,6 +158,13 @@
     <ClCompile Include="camera.cpp" />
     <ClCompile Include="application.cpp" />
     <ClCompile Include="glad.c" />
+    <ClCompile Include="imgui\imgui.cpp" />
+    <ClCompile Include="imgui\imgui_demo.cpp" />
+    <ClCompile Include="imgui\imgui_draw.cpp" />
+    <ClCompile Include="imgui\imgui_impl_glfw.cpp" />
+    <ClCompile Include="imgui\imgui_impl_opengl3.cpp" />
+    <ClCompile Include="imgui\imgui_tables.cpp" />
+    <ClCompile Include="imgui\imgui_widgets.cpp" />
     <ClCompile Include="renderer\buffer.cpp" />
     <ClCompile Include="renderer\mesh.cpp" />
     <ClCompile Include="renderer\model.cpp" />
@@ -173,6 +180,14 @@
     <ClInclude Include="camera.h" />
     <ClInclude Include="application.h" />
     <ClInclude Include="3d_renderer.h" />
+    <ClInclude Include="imgui\imconfig.h" />
+    <ClInclude Include="imgui\imgui.h" />
+    <ClInclude Include="imgui\imgui_impl_glfw.h" />
+    <ClInclude Include="imgui\imgui_impl_opengl3.h" />
+    <ClInclude Include="imgui\imgui_internal.h" />
+    <ClInclude Include="imgui\imstb_rectpack.h" />
+    <ClInclude Include="imgui\imstb_textedit.h" />
+    <ClInclude Include="imgui\imstb_truetype.h" />
     <ClInclude Include="renderer\buffer.h" />
     <ClInclude Include="renderer\mesh.h" />
     <ClInclude Include="renderer\model.h" />
@@ -204,6 +219,7 @@
     <Image Include="assets\textures\background.jpg" />
     <Image Include="assets\textures\container.jpg" />
     <Image Include="assets\textures\container2.png" />
+    <Image Include="assets\textures\container2_specular.png" />
     <Image Include="assets\textures\paddle.png" />
   </ItemGroup>
   <ItemGroup>
