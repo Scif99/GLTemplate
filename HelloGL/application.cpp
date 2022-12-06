@@ -144,6 +144,7 @@ void Application::Render()
 
     //Model
     glm::mat4 model = glm::mat4(1.f);
+    model = glm::scale(model, glm::vec3(3.f));
     m_container_shader->SetMat4("model", model);
 
     //draw

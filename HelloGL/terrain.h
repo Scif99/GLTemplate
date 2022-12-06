@@ -27,20 +27,20 @@ public:
     {
         
         float vertices[] = {
-            //pos                   //tex   //normal
-            -0.5f, 0.f, -0.5f,   0.f,0.f,    0.f,1.f,0.f,
-            0.5f, 0.f, -0.5f,    1.f,0.f,    0.f,1.f,0.f,
-            0.5f, 0.f, 0.5f,      1.f,1.f,    0.f,1.f,0.f,
-            -0.5f,0.f,0.5f,     0.f,1.f,     0.f,1.f,0.f
+            //pos                //normal       //tex
+           -0.5f, 0.f,-0.5f,    0.f,1.f,0.f,  0.f,0.f,
+            0.5f, 0.f,-0.5f,    0.f,1.f,0.f,  1.f,0.f,
+            0.5f, 0.f, 0.5f,    0.f,1.f,0.f,  1.f,1.f,
+           -0.5f, 0.f, 0.5f,    0.f,1.f,0.f,  0.f,1.f
         };
 
         unsigned int indices[] = {
-            0,1,2,
-            0,2,3
+            0,2,1,
+            0,3,2
         };
 
         //specify the layout of the data
-        BufferLayout layout({ ShaderDataType::Float3, ShaderDataType::Float2, ShaderDataType::Float3 });
+        BufferLayout layout({ ShaderDataType::Float3, ShaderDataType::Float3, ShaderDataType::Float2 });
 
         //Generate VBO, attach layout
         m_VBO = std::make_shared<VertexBuffer>(vertices, sizeof(vertices));
