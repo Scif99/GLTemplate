@@ -24,9 +24,13 @@ void Application::init(GLFWwindow* window)
 
     //Load Shaders
     m_container_shader = std::make_unique<GLShader>("shaders/3dMaterialShader.vs", "shaders/3dMaterialShader.fs");
+    m_lightsourceshader = std::make_unique<GLShader>("shaders/LightSourceShader.vs", "shaders/LightSourceShader.fs");
+
+    //Load Textures
     m_diffuse_map = std::make_unique<GLTexture>("assets/textures/container2.png", false, "diffuse");
     m_specular_map = std::make_unique<GLTexture>("assets/textures/container2_specular.png", false, "specular");
-    m_lightsourceshader = std::make_unique<GLShader>("shaders/LightSourceShader.vs", "shaders/LightSourceShader.fs");
+    m_tiles = std::make_unique<GLTexture>("assets/textures/tiles.jpg", false, "floor");
+
 
     //configure camera
     glm::vec3 cameraPos = glm::vec3(0.0f, 0.0f, 3.0f);
@@ -44,7 +48,8 @@ void Application::init(GLFWwindow* window)
     m_light = std::make_unique<LightCube>(light_pos, light_ambient, light_diffuse, light_specular);
 
     //Wooden Container
-    m_container = std::make_shared<Container>();
+    m_container = std::make_unique<Container>();
+    m_terrain = std::make_unique<Terrain>();
 
 
 }
@@ -147,6 +152,25 @@ void Application::Render()
 
     m_container->m_mesh->Draw();
 
+
+    //------------------------
+    //TERRAIN
+    //-----------------
+    //using same shader as container... so all uniforms are set already.... just need to compute model
+    
+    //Model
+    glm::mat4 floor_model = glm::mat4(1.f);
+    floor_model = glm::translate(floor_model, glm::vec3(0.f, 0.5f, 0.f));
+    floor_model = glm::scale(floor_model, glm::vec3(5.f));
+    m_container_shader->SetMat4("model", floor_model);
+
+    //draw
+    m_tiles->Bind(0);
+    m_tiles->Bind(1);
+
+    m_terrain->m_mesh->Draw();
+
+
     //-----------
     //LIGHT SOURCE
     //-------------
@@ -164,6 +188,9 @@ void Application::Render()
 
     //Draw
     m_container->m_mesh->Draw();
+
+
+
 
 }
 

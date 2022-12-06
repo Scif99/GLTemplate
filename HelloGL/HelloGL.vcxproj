@@ -201,6 +201,7 @@
     <ClInclude Include="renderer\vertex_array.h" />
     <ClInclude Include="resource_manager.h" />
     <ClInclude Include="2d_sprite_renderer.h" />
+    <ClInclude Include="terrain.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="assets\models\backpack\backpack.mtl" />

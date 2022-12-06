@@ -149,6 +149,9 @@
     <ClInclude Include="cube.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="terrain.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="assets\models\backpack\backpack.mtl" />

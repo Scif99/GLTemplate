@@ -14,6 +14,7 @@
 
 #include "cube.h"
 #include "gui.h"
+#include "terrain.h"
 
 
 
@@ -35,11 +36,14 @@ public:
 
 	std::unique_ptr<GLTexture> m_diffuse_map;
 	std::unique_ptr<GLTexture> m_specular_map;
+	std::unique_ptr<GLTexture> m_tiles;
+
 
 	std::unique_ptr<Camera> m_camera;
 
-	std::shared_ptr<Container> m_container;
+	std::unique_ptr<Container> m_container;
 	std::unique_ptr<LightCube> m_light;
+	std::unique_ptr<Terrain>	 m_terrain;
 
 	//Window/gui stuff
 	GLFWwindow* m_window; //TODO figure out how to use smart pointers...
