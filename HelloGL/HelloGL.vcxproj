@@ -180,6 +180,8 @@
     <ClInclude Include="camera.h" />
     <ClInclude Include="application.h" />
     <ClInclude Include="3d_renderer.h" />
+    <ClInclude Include="cube.h" />
+    <ClInclude Include="gui.h" />
     <ClInclude Include="imgui\imconfig.h" />
     <ClInclude Include="imgui\imgui.h" />
     <ClInclude Include="imgui\imgui_impl_glfw.h" />
@@ -206,8 +208,8 @@
     <None Include="shaders\2DSpriteShader.vs" />
     <None Include="shaders\LightSourceShader.fs" />
     <None Include="shaders\LightSourceShader.vs" />
-    <None Include="shaders\3DShader.fs" />
-    <None Include="shaders\3DShader.vs" />
+    <None Include="shaders\3DMaterialShader.fs" />
+    <None Include="shaders\3DMaterialShader.vs" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="assets\models\backpack\ao.jpg" />

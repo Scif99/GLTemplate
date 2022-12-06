@@ -1,28 +1,32 @@
 #include "application.h"
 
 
-
 Application::Application(unsigned int width, unsigned int height)
 	:m_keys(), m_width{ width }, m_height{ height }
 {
 
 }
 
-void Application::init()
+void Application::init(GLFWwindow* window)
 {
-    m_container_shader = std::make_unique<GLShader>("shaders/3DShader.vs", "shaders/3DShader.fs");
+    //Window/GUI stuff
+    m_window = window;
+    //m_gui = std::make_unique<GUI>(m_window.get());
+
+    // Initialize ImGUI
+    IMGUI_CHECKVERSION();
+    ImGui::CreateContext();
+    ImGuiIO& io = ImGui::GetIO(); (void)io;
+    ImGui::StyleColorsDark();
+    ImGui_ImplGlfw_InitForOpenGL(window, true);
+    //ImGui::GetIO().ConfigFlags |= ImguiConfigFlafe_//ImGuiConfigFlags_ViewportsEnable; //enabkeviewports
+    ImGui_ImplOpenGL3_Init("#version 400 core");
+
+    //Load Shaders
+    m_container_shader = std::make_unique<GLShader>("shaders/3dMaterialShader.vs", "shaders/3dMaterialShader.fs");
     m_diffuse_map = std::make_unique<GLTexture>("assets/textures/container2.png", false, "diffuse");
     m_specular_map = std::make_unique<GLTexture>("assets/textures/container2_specular.png", false, "specular");
-
-
     m_lightsourceshader = std::make_unique<GLShader>("shaders/LightSourceShader.vs", "shaders/LightSourceShader.fs");
-
-    //set properties of light (doesn't change per frame for now...)
-    glm::vec3 light_pos = glm::vec3(1.2f, 1.0f, 2.0f);
-    glm::vec3 light_ambient = glm::vec3(0.2f, 0.2f, 0.2f);
-    glm::vec3 light_diffuse = glm::vec3(0.5f, 0.5f, 0.5f);
-    glm::vec3 light_specular = glm::vec3(1.0f, 1.0f, 1.0f);
-    m_light = std::make_unique<LightSource>(light_pos, light_ambient, light_diffuse, light_specular);
 
     //configure camera
     glm::vec3 cameraPos = glm::vec3(0.0f, 0.0f, 3.0f);
@@ -30,92 +34,26 @@ void Application::init()
     glm::vec3 cameraUp = glm::vec3(0.0f, 1.0f, 0.0f);
     m_camera = std::make_unique<Camera>(cameraPos, cameraFront, cameraUp);
 
+    //Create Game objects
+    
+    //set properties of light (doesn't change per frame for now...)
+    glm::vec3 light_pos = glm::vec3(1.2f, 1.0f, 2.0f);
+    glm::vec3 light_ambient = glm::vec3(1.f, 0.2f, 0.2f);
+    glm::vec3 light_diffuse = glm::vec3(0.5f, 0.5f, 0.5f);
+    glm::vec3 light_specular = glm::vec3(1.0f, 1.0f, 1.0f);
+    m_light = std::make_unique<LightCube>(light_pos, light_ambient, light_diffuse, light_specular);
 
-    float vertices[] = {
-        //pos                   //tex      //normal
-        -0.5f, -0.5f, -0.5f,  0.0f, 0.0f, 0.0f,  0.0f, -1.0f,
-         0.5f, -0.5f, -0.5f,  1.0f, 0.0f, 0.0f,  0.0f, -1.0f,
-         0.5f,  0.5f, -0.5f,  1.0f, 1.0f, 0.0f,  0.0f, -1.0f,
-         0.5f,  0.5f, -0.5f,  1.0f, 1.0f, 0.0f,  0.0f, -1.0f,
-        -0.5f,  0.5f, -0.5f,  0.0f, 1.0f, 0.0f,  0.0f, -1.0f,
-        -0.5f, -0.5f, -0.5f,  0.0f, 0.0f, 0.0f,  0.0f, -1.0f,
-
-        -0.5f, -0.5f,  0.5f,  0.0f, 0.0f, 0.0f,  0.0f, 1.0f,
-         0.5f, -0.5f,  0.5f,  1.0f, 0.0f, 0.0f,  0.0f, 1.0f,
-         0.5f,  0.5f,  0.5f,  1.0f, 1.0f, 0.0f,  0.0f, 1.0f,
-         0.5f,  0.5f,  0.5f,  1.0f, 1.0f, 0.0f,  0.0f, 1.0f,
-        -0.5f,  0.5f,  0.5f,  0.0f, 1.0f, 0.0f,  0.0f, 1.0f,
-        -0.5f, -0.5f,  0.5f,  0.0f, 0.0f, 0.0f,  0.0f, 1.0f,
-
-        -0.5f,  0.5f,  0.5f,  1.0f, 0.0f, -1.0f,  0.0f,  0.0f,
-        -0.5f,  0.5f, -0.5f,  1.0f, 1.0f, -1.0f,  0.0f,  0.0f,
-        -0.5f, -0.5f, -0.5f,  0.0f, 1.0f, -1.0f,  0.0f,  0.0f,
-        -0.5f, -0.5f, -0.5f,  0.0f, 1.0f, -1.0f,  0.0f,  0.0f,
-        -0.5f, -0.5f,  0.5f,  0.0f, 0.0f, -1.0f,  0.0f,  0.0f,
-        -0.5f,  0.5f,  0.5f,  1.0f, 0.0f, -1.0f,  0.0f,  0.0f,
-
-         0.5f,  0.5f,  0.5f,  1.0f, 0.0f,  1.0f,  0.0f,  0.0f,
-         0.5f,  0.5f, -0.5f,  1.0f, 1.0f,  1.0f,  0.0f,  0.0f,
-         0.5f, -0.5f, -0.5f,  0.0f, 1.0f,  1.0f,  0.0f,  0.0f,
-         0.5f, -0.5f, -0.5f,  0.0f, 1.0f,  1.0f,  0.0f,  0.0f,
-         0.5f, -0.5f,  0.5f,  0.0f, 0.0f,  1.0f,  0.0f,  0.0f,
-         0.5f,  0.5f,  0.5f,  1.0f, 0.0f,  1.0f,  0.0f,  0.0f,
-
-        -0.5f, -0.5f, -0.5f,  0.0f, 1.0f,  0.0f, -1.0f,  0.0f,
-         0.5f, -0.5f, -0.5f,  1.0f, 1.0f,  0.0f, -1.0f,  0.0f,
-         0.5f, -0.5f,  0.5f,  1.0f, 0.0f,  0.0f, -1.0f,  0.0f,
-         0.5f, -0.5f,  0.5f,  1.0f, 0.0f,  0.0f, -1.0f,  0.0f,
-        -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,  0.0f, -1.0f,  0.0f,
-        -0.5f, -0.5f, -0.5f,  0.0f, 1.0f,  0.0f, -1.0f,  0.0f,
-
-        -0.5f,  0.5f, -0.5f,  0.0f, 1.0f, 0.0f,  1.0f,  0.0f,
-         0.5f,  0.5f, -0.5f,  1.0f, 1.0f, 0.0f,  1.0f,  0.0f,
-         0.5f,  0.5f,  0.5f,  1.0f, 0.0f, 0.0f,  1.0f,  0.0f,
-         0.5f,  0.5f,  0.5f,  1.0f, 0.0f, 0.0f,  1.0f,  0.0f,
-        -0.5f,  0.5f,  0.5f,  0.0f, 0.0f, 0.0f,  1.0f,  0.0f,
-        -0.5f,  0.5f, -0.5f,  0.0f, 1.0f,  0.0f,  1.0f,  0.0f
-    };
-
-    unsigned int indices[] = {
-        0,1,2, 3,4,5,
-        6,7,8, 9,10,11,
-        12,13,14, 15,16,17,
-        18,19,20, 21,22,23,
-        24,25,26, 27,28,29,
-        30,31,32, 33,34,35
-    };
-
-    //specify the layout of the data
-    BufferLayout layout({ ShaderDataType::Float3, ShaderDataType::Float2, ShaderDataType::Float3 });
-
-    //Generate VBO, attach layout
-    auto VBO = std::make_shared<VertexBuffer>(vertices, sizeof(vertices));
-    VBO->SetLayout(layout);
-
-    auto IBO = std::make_shared<IndexBuffer>(indices, sizeof(indices));
-
-    m_VAO = std::make_unique<VertexArray>();
-
-    //Configure VAO
-    m_VAO->Bind();
-    m_VAO->AddVertexBuffer(VBO);
-    m_VAO->SetIndexBuffer(IBO);
-    m_VAO->Unbind();
-    VBO->Unbind();
+    //Wooden Container
+    m_container = std::make_shared<Container>();
 
 
 }
 
-Application::~Application()
+
+void Application::ProcessInput(float dt, float dx, float dy)
 {
-
-
-}
-
-void Application::ProcessInput(GLFWwindow* window, float dt, float dx, float dy)
-{
-    m_camera->ProcessKeyboardInput(window, dt);
-    m_camera->ProcessMouseInput(window, dx, dy);
+    m_camera->ProcessKeyboardInput(m_window, dt);
+    m_camera->ProcessMouseInput(m_window, dx, dy);
 
 }
 
@@ -123,12 +61,54 @@ void Application::Update(float dt)
 {
     m_camera->Update();
 
+    //m_gui->CreateFrame();
+
+
 }
 
 
 
 void Application::Render()
 {
+    //GUI
+    // //-------------------------------
+        // Our state
+    bool show_demo_window = true;
+    static ImVec4 Light_Specular = ImVec4(1.f, 0.2f, 0.2f,1.f);
+    static ImVec4 Light_Diffuse = ImVec4(0.5f, 0.5f, 0.5f, 1.f);
+    static ImVec4 Light_Ambient = ImVec4(0.2f, 0.2f, 0.2f, 1.f);
+
+    //// 2. Show a simple window that we create ourselves. We use a Begin/End pair to created a named window.
+    //{
+    //    static float f = 0.0f;
+    //    static int counter = 0;
+
+    //    ImGui::Begin("Hello, world!");                          // Create a window called "Hello, world!" and append into it.
+
+    //    ImGui::Text("This is some useful text.");               // Display some text (you can use a format strings too)
+    //    ImGui::Checkbox("Demo Window", &show_demo_window);      // Edit bools storing our window open/close state
+
+    //    ImGui::SliderFloat("float", &f, 0.0f, 1.0f);            // Edit 1 float using a slider from 0.0f to 1.0f
+    //    ImGui::ColorEdit3("Ambient", (float*)&Light_Ambient); // Edit 3 floats representing a color
+    //    ImGui::ColorEdit3("Diffuse", (float*)&Light_Diffuse); // Edit 3 floats representing a color
+    //    ImGui::ColorEdit3("Specular", (float*)&Light_Specular); // Edit 3 floats representing a color
+
+
+
+    //    if (ImGui::Button("Button"))                            // Buttons return true when clicked (most widgets return true when edited/activated)
+    //        counter++;
+    //    ImGui::SameLine();
+    //    ImGui::Text("counter = %d", counter);
+
+    //    ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
+    //    ImGui::End();
+    //}
+    //m_gui->Render();
+
+
+    //------------------------------------------
+
+
     glClearColor(0.f, 0.f, 0.f, 0.f); //state-setting
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); //state-using
 
@@ -149,9 +129,13 @@ void Application::Render()
 
     //**TODO add a SetMaterial(amb, diff, spec) function?**
     m_container_shader->SetVec3("light.position", m_light->m_position);
-    m_container_shader->SetVec3("light.ambient", m_light->m_ambient);
-    m_container_shader->SetVec3("light.diffuse", m_light->m_diffuse); // darken diffuse light a bit
-    m_container_shader->SetVec3("light.specular", m_light->m_specular);
+    //m_container_shader->SetVec3("light.ambient", m_light->m_ambient);
+    //m_container_shader->SetVec3("light.diffuse", m_light->m_diffuse); // darken diffuse light a bit
+    //m_container_shader->SetVec3("light.specular", m_light->m_specular);
+
+    m_container_shader->SetVec3("light.ambient", glm::vec3(Light_Ambient.x,Light_Ambient.y,Light_Ambient.z));
+    m_container_shader->SetVec3("light.diffuse", glm::vec3(Light_Diffuse.x, Light_Diffuse.y, Light_Diffuse.z)); // darken diffuse light a bit
+    m_container_shader->SetVec3("light.specular", glm::vec3(Light_Specular.x, Light_Specular.y, Light_Specular.z));
 
     //Model
     glm::mat4 model = glm::mat4(1.f);
@@ -160,9 +144,8 @@ void Application::Render()
     //draw
     m_diffuse_map->Bind(0);
     m_specular_map->Bind(1);
-    m_VAO->Bind();
-    glDrawElements(GL_TRIANGLES, m_VAO->GetIndexBuffer()->Count(), GL_UNSIGNED_INT, 0);
-    m_VAO->Unbind();
+
+    m_container->m_mesh->Draw();
 
     //-----------
     //LIGHT SOURCE
@@ -180,8 +163,11 @@ void Application::Render()
     m_lightsourceshader->SetMat4("model", Lightmodel);
 
     //Draw
-    m_VAO->Bind();
-    glDrawElements(GL_TRIANGLES, m_VAO->GetIndexBuffer()->Count(), GL_UNSIGNED_INT, 0);
-    m_VAO->Unbind();
+    m_container->m_mesh->Draw();
 
+}
+
+void Application::Cleanup()
+{
+    m_gui->Cleanup();
 }
