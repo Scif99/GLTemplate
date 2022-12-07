@@ -33,7 +33,7 @@ void Application::init(GLFWwindow* window)
 
 
     //configure camera
-    glm::vec3 cameraPos = glm::vec3(0.0f, 0.0f, 3.0f);
+    glm::vec3 cameraPos = glm::vec3(0.0f, 1.0f, 3.0f);
     glm::vec3 cameraFront = glm::vec3(0.0f, 0.0f, -1.0f);
     glm::vec3 cameraUp = glm::vec3(0.0f, 1.0f, 0.0f);
     m_camera = std::make_unique<Camera>(cameraPos, cameraFront, cameraUp);
@@ -42,7 +42,7 @@ void Application::init(GLFWwindow* window)
     
     //set properties of light (doesn't change per frame for now...)
     glm::vec3 light_pos = glm::vec3(1.2f, 1.0f, 2.0f);
-    glm::vec3 light_ambient = glm::vec3(1.f, 0.2f, 0.2f);
+    glm::vec3 light_ambient = glm::vec3(0.2f, 0.2f, 0.2f);
     glm::vec3 light_diffuse = glm::vec3(0.5f, 0.5f, 0.5f);
     glm::vec3 light_specular = glm::vec3(1.0f, 1.0f, 1.0f);
     m_light = std::make_unique<LightCube>(light_pos, light_ambient, light_diffuse, light_specular);
@@ -68,7 +68,6 @@ void Application::Update(float dt)
 
     //m_gui->CreateFrame();
 
-
 }
 
 
@@ -79,40 +78,42 @@ void Application::Render()
     // //-------------------------------
         // Our state
     bool show_demo_window = true;
-    static ImVec4 Light_Specular = ImVec4(1.f, 0.2f, 0.2f,1.f);
+    static ImVec4 Light_Specular = ImVec4(0.2f, 0.2f, 0.2f, 1.f);
     static ImVec4 Light_Diffuse = ImVec4(0.5f, 0.5f, 0.5f, 1.f);
     static ImVec4 Light_Ambient = ImVec4(0.2f, 0.2f, 0.2f, 1.f);
 
-    //// 2. Show a simple window that we create ourselves. We use a Begin/End pair to created a named window.
-    //{
-    //    static float f = 0.0f;
-    //    static int counter = 0;
+    bool show_gui{ false };
+    if(show_gui)
+    {
+        // 2. Show a simple window that we create ourselves. We use a Begin/End pair to created a named window.
+        {
+            static float f = 0.0f;
+            static int counter = 0;
 
-    //    ImGui::Begin("Hello, world!");                          // Create a window called "Hello, world!" and append into it.
+            ImGui::Begin("Hello, world!");                          // Create a window called "Hello, world!" and append into it.
 
-    //    ImGui::Text("This is some useful text.");               // Display some text (you can use a format strings too)
-    //    ImGui::Checkbox("Demo Window", &show_demo_window);      // Edit bools storing our window open/close state
+            ImGui::Text("This is some useful text.");               // Display some text (you can use a format strings too)
+            ImGui::Checkbox("Demo Window", &show_demo_window);      // Edit bools storing our window open/close state
 
-    //    ImGui::SliderFloat("float", &f, 0.0f, 1.0f);            // Edit 1 float using a slider from 0.0f to 1.0f
-    //    ImGui::ColorEdit3("Ambient", (float*)&Light_Ambient); // Edit 3 floats representing a color
-    //    ImGui::ColorEdit3("Diffuse", (float*)&Light_Diffuse); // Edit 3 floats representing a color
-    //    ImGui::ColorEdit3("Specular", (float*)&Light_Specular); // Edit 3 floats representing a color
+            ImGui::SliderFloat("float", &f, 0.0f, 1.0f);            // Edit 1 float using a slider from 0.0f to 1.0f
+            ImGui::ColorEdit3("Ambient", (float*)&Light_Ambient); // Edit 3 floats representing a color
+            ImGui::ColorEdit3("Diffuse", (float*)&Light_Diffuse); // Edit 3 floats representing a color
+            ImGui::ColorEdit3("Specular", (float*)&Light_Specular); // Edit 3 floats representing a color
 
 
 
-    //    if (ImGui::Button("Button"))                            // Buttons return true when clicked (most widgets return true when edited/activated)
-    //        counter++;
-    //    ImGui::SameLine();
-    //    ImGui::Text("counter = %d", counter);
+            if (ImGui::Button("Button"))                            // Buttons return true when clicked (most widgets return true when edited/activated)
+                counter++;
+            ImGui::SameLine();
+            ImGui::Text("counter = %d", counter);
 
-    //    ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
-    //    ImGui::End();
-    //}
-    //m_gui->Render();
-
+            ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
+            ImGui::End();
+        }
+    m_gui->Render();
+    }
 
     //------------------------------------------
-
 
     glClearColor(0.f, 0.f, 0.f, 0.f); //state-setting
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); //state-using
@@ -143,9 +144,9 @@ void Application::Render()
     m_container_shader->SetVec3("light.specular", glm::vec3(Light_Specular.x, Light_Specular.y, Light_Specular.z));
 
     //Model
-    glm::mat4 model = glm::mat4(1.f);
-    model = glm::scale(model, glm::vec3(3.f));
-    m_container_shader->SetMat4("model", model);
+    glm::mat4 container_model = glm::mat4(1.f);
+    container_model = glm::translate(container_model, glm::vec3(0.f, 0.52f, 0.f));
+    m_container_shader->SetMat4("model", container_model);
 
     //draw
     m_diffuse_map->Bind(0);
@@ -161,7 +162,6 @@ void Application::Render()
     
     //Model
     glm::mat4 floor_model = glm::mat4(1.f);
-    floor_model = glm::translate(floor_model, glm::vec3(0.f, 0.5f, 0.f));
     floor_model = glm::scale(floor_model, glm::vec3(5.f));
     m_container_shader->SetMat4("model", floor_model);
 

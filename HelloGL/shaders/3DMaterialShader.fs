@@ -34,7 +34,7 @@ void main()
 
 vec3 CalculateLighting(Light light, vec3 normal, vec3 fragPos, vec3 viewPos)
 {
-        // ambient
+    // ambient
     vec3 ambient = light.ambient * texture(material.diffuse, TexCoords).rgb;
   	
     // diffuse 

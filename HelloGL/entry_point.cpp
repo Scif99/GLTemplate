@@ -65,7 +65,6 @@ int main(int argc, char* argv[])
         return -1;
     }
 
-
     // OpenGL configuration
     // --------------------
     glViewport(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
@@ -73,20 +72,17 @@ int main(int argc, char* argv[])
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     glEnable(GL_DEPTH_TEST); //enable depth testing
     //glEnable(GL_CULL_FACE); //face-culling
-    glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+    glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED); //hide & capture mouse
 
 
     // initialize application
     // ---------------
     App.init(window);
 
-
     // deltaTime variables
     // -------------------
     float deltaTime = 0.0f;
     float lastFrame = 0.0f;
-
-
 
     while (!glfwWindowShouldClose(window))
     {
@@ -98,21 +94,17 @@ int main(int argc, char* argv[])
         lastFrame = currentFrame;
         glfwPollEvents();
 
-
         // manage user input
         // -----------------
         App.ProcessInput(deltaTime, 0, 0);
-
 
         // update game state
         // -----------------
         App.Update(deltaTime);
 
-
         // render
         App.Render();
         
-
         glfwSwapBuffers(window);
     }
 
