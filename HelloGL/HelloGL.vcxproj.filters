@@ -75,6 +75,9 @@
     <ClCompile Include="imgui\imgui_widgets.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="renderer\framebuffer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="renderer\shader.h">
@@ -152,6 +155,12 @@
     <ClInclude Include="terrain.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="quad.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="renderer\framebuffer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="assets\models\backpack\backpack.mtl" />
@@ -161,6 +170,8 @@
     <None Include="shaders\3DMaterialShader.fs" />
     <None Include="shaders\LightSourceShader.vs" />
     <None Include="shaders\LightSourceShader.fs" />
+    <None Include="shaders\FrameBufferShader.vs" />
+    <None Include="shaders\FrameBufferShader.fs" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="assets\textures\container.jpg">

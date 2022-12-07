@@ -25,6 +25,7 @@ void Application::init(GLFWwindow* window)
     //Load Shaders
     m_container_shader = std::make_unique<GLShader>("shaders/3dMaterialShader.vs", "shaders/3dMaterialShader.fs");
     m_lightsourceshader = std::make_unique<GLShader>("shaders/LightSourceShader.vs", "shaders/LightSourceShader.fs");
+    m_frame_buffer_shader = std::make_unique<GLShader>("shaders/FrameBufferShader.vs", "shaders/FrameBufferShader.fs");
 
     //Load Textures
     m_diffuse_map = std::make_unique<GLTexture>("assets/textures/container2.png", false, "diffuse");
@@ -50,6 +51,9 @@ void Application::init(GLFWwindow* window)
     //Wooden Container
     m_container = std::make_unique<Container>();
     m_terrain = std::make_unique<Terrain>();
+
+    m_frame_quad = std::make_unique<Quad>();
+    m_framebuffer = std::make_unique<Framebuffer>(m_width, m_height);
 
 
 }
@@ -115,8 +119,11 @@ void Application::Render()
 
     //------------------------------------------
 
-    glClearColor(0.f, 0.f, 0.f, 0.f); //state-setting
+
+    m_framebuffer->Bind();
+    glClearColor(0.1f, 0.1f, 0.1f, 1.f); //state-setting
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); //state-using
+    glEnable(GL_DEPTH_TEST);
 
     //Projection & view don't change per object
     glm::mat4 projection =  glm::perspective(glm::radians(45.0f), 800.0f / 600.0f, 0.1f, 100.0f);
@@ -168,7 +175,6 @@ void Application::Render()
     //draw
     m_tiles->Bind(0);
     m_tiles->Bind(1);
-
     m_terrain->m_mesh->Draw();
 
 
@@ -190,8 +196,17 @@ void Application::Render()
     //Draw
     m_container->m_mesh->Draw();
 
+    // SECONDPASS
+    m_framebuffer->Unbind();
+    glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
+    glClear(GL_COLOR_BUFFER_BIT);
+    glDisable(GL_DEPTH_TEST);
 
-
+    m_frame_buffer_shader->Use();
+    m_frame_quad->m_VAO->Bind();
+    glActiveTexture(GL_TEXTURE0);
+    glBindTexture(GL_TEXTURE_2D, m_framebuffer->m_texturebuffer_ID);
+    glDrawElements(GL_TRIANGLES, m_frame_quad->m_VAO->GetIndexBuffer()->Count(), GL_UNSIGNED_INT, 0);
 
 }
 
