@@ -34,14 +34,11 @@ inline const unsigned int SCREEN_HEIGHT = 600;
 
 Application App(SCREEN_WIDTH, SCREEN_HEIGHT);
 
-
-
-
 int main(int argc, char* argv[])
 {
     glfwInit();
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 0); //enforce minimum version of 3.3
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 0); //enforce minimum version of 4.0
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
     GLFWwindow* window = glfwCreateWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "App", nullptr, nullptr);
@@ -134,24 +131,23 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
 
 void mouse_callback(GLFWwindow* window, double xposIn, double yposIn)
 {
-
+    Camera& cam = App.m_scene->m_camera;
     float xpos = static_cast<float>(xposIn);
     float ypos = static_cast<float>(yposIn);
-
-    if (App.m_camera->firstMouse)
+    if (cam.firstMouse)
     {
-        App.m_camera->lastX = xpos;
-        App.m_camera->lastY = ypos;
-        App.m_camera->firstMouse = false;
+        cam.lastX = xpos;
+        cam.lastY = ypos;
+        cam.firstMouse = false;
     }
 
-    float xoffset = xpos - App.m_camera->lastX;
-    float yoffset = App.m_camera->lastY - ypos; // reversed since y-coordinates go from bottom to top
+    float xoffset = xpos - cam.lastX;
+    float yoffset = cam.lastY - ypos; // reversed since y-coordinates go from bottom to top
 
-    App.m_camera->lastX = xpos;
-    App.m_camera->lastY= ypos;
+    cam.lastX = xpos;
+    cam.lastY= ypos;
 
-    App.m_camera->ProcessMouseInput(window, xoffset, yoffset);
+    cam.ProcessMouseInput(window, xoffset, yoffset);
 }
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height)

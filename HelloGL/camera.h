@@ -16,7 +16,9 @@ private:
 	glm::mat4 m_view{ glm::mat4(1.0f) }; //stores the view matrix
 	glm::vec3 WORLD_UP; //We use this vector along with m_forward to construct an orthonormal basis
 
-
+	inline static glm::vec3 s_default_pos = glm::vec3( 0.0f, 1.0f, 3.0f );
+	inline static glm::vec3 s_default_front = glm::vec3(0.0f, 0.0f, -1.0f);
+	inline static glm::vec3 s_default_up = glm::vec3(0.0f, 1.0f, 0.0f);
 
 	//euler angles
 	float pitch{ 0.f };
@@ -31,13 +33,13 @@ public:
 
 public:
 	~Camera() = default;
-	Camera() = delete;
-	Camera(const Camera& other) = delete;
-	Camera& operator=(const Camera& other) = delete;
-	Camera(Camera&& other) = delete;
-	Camera& operator=(Camera&& other) = delete;
-
 	Camera(glm::vec3 pos, glm::vec3 look, glm::vec3 up);
+	Camera()
+		:Camera(Camera::s_default_pos, Camera::s_default_front, Camera::s_default_up) {}
+	Camera(const Camera& other) = default;
+	//Camera& operator=(const Camera& other) = default;
+	//Camera(Camera&& other) = default;
+	//Camera& operator=(Camera&& other) = default;
 
 	void ProcessKeyboardInput(GLFWwindow* window, float dt);
 	void ProcessMouseInput(GLFWwindow* window, float dx, float dy);

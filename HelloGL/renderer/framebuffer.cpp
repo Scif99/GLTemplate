@@ -1,13 +1,5 @@
 #include "framebuffer.h"
 
-
-/**
-TO-DO
-- read/write framebufffers
-- 
-
-*/
-
 Framebuffer::Framebuffer(unsigned int width, unsigned int height)
 {
 	glGenFramebuffers(1, &m_frame_buffer_ID);

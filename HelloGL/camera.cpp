@@ -13,6 +13,7 @@ Camera::Camera(glm::vec3 pos, glm::vec3 target, glm::vec3 up)
     WORLD_UP = m_up;
 }
 
+
 void Camera::ProcessKeyboardInput(GLFWwindow* window, float dt)
 {
     const float speed{ 2.5f * dt };
