@@ -15,22 +15,12 @@ PostProcessingScene::PostProcessingScene(GLFWwindow* window)
     m_container_specular{"assets/textures/container2_specular.png", false, "specular"},
     m_tiles{"assets/textures/tiles.jpg", false, "floor"},
     //Framebuffer
-    m_framebuffer{ SCREEN_WIDTH, SCREEN_HEIGHT }
+    m_framebuffer{ SCREEN_WIDTH, SCREEN_HEIGHT },
+    //Entities
+    m_light{ LightCube::s_default_pos, LightCube::s_default_ambient, LightCube::s_default_diffuse, LightCube::s_default_specular}
+    //All other entities are constructed using default
 {
 
-//Create Game objects
-//set properties of light (doesn't change per frame for now...)
-glm::vec3 light_pos = glm::vec3(1.2f, 1.0f, 2.0f);
-glm::vec3 light_ambient = glm::vec3(0.2f, 0.2f, 0.2f);
-glm::vec3 light_diffuse = glm::vec3(0.5f, 0.5f, 0.5f);
-glm::vec3 light_specular = glm::vec3(1.0f, 1.0f, 1.0f);
-m_light = std::make_unique<LightCube>(light_pos, light_ambient, light_diffuse, light_specular);
-
-//Wooden Container
-m_container = std::make_unique<Container>();
-m_terrain = std::make_unique<Terrain>();
-
-m_frame_quad = std::make_unique<Quad>();
 }
 
 void PostProcessingScene::ProcessInput(float dt, float dx, float dy)
@@ -69,10 +59,10 @@ void PostProcessingScene::Render()
     m_container_shader.SetFloat("material.shininess", 64.f);
 
     //**TODO add a SetMaterial(amb, diff, spec) function?**
-    m_container_shader.SetVec3("light.position", m_light->m_position);
-    m_container_shader.SetVec3("light.ambient", m_light->m_ambient);
-    m_container_shader.SetVec3("light.diffuse", m_light->m_diffuse); // darken diffuse light a bit
-    m_container_shader.SetVec3("light.specular", m_light->m_specular);
+    m_container_shader.SetVec3("light.position", m_light.m_position);
+    m_container_shader.SetVec3("light.ambient", m_light.m_ambient);
+    m_container_shader.SetVec3("light.diffuse", m_light.m_diffuse); // darken diffuse light a bit
+    m_container_shader.SetVec3("light.specular", m_light.m_specular);
 
 
     //Model
@@ -83,7 +73,7 @@ void PostProcessingScene::Render()
     //draw
     m_container_diffuse.Bind(0);
     m_container_specular.Bind(1);
-    m_container->m_mesh->Draw();
+    m_container.m_mesh->Draw();
 
 
     //------------------------
@@ -99,7 +89,7 @@ void PostProcessingScene::Render()
     //draw
     m_tiles.Bind(0);
     m_tiles.Bind(1);
-    m_terrain->m_mesh->Draw();
+    m_terrain.m_mesh->Draw();
 
 
     //-----------
@@ -113,23 +103,23 @@ void PostProcessingScene::Render()
 
     //Model
     glm::mat4 Lightmodel = glm::mat4(1.f);
-    Lightmodel = glm::translate(Lightmodel, m_light->m_position);
+    Lightmodel = glm::translate(Lightmodel, m_light.m_position);
     Lightmodel = glm::scale(Lightmodel, glm::vec3(0.2f));
     m_light_source_shader.SetMat4("model", Lightmodel);
 
     //Draw
-    m_container->m_mesh->Draw();
+    m_container.m_mesh->Draw();
 
-    // SECONDPASS
+    // SECOND PASS
     m_framebuffer.Unbind();
     glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT);
     glDisable(GL_DEPTH_TEST);
 
     m_frame_buffer_shader.Use();
-    m_frame_quad->m_VAO->Bind();
+    m_frame_quad.m_VAO->Bind();
     m_framebuffer.m_texture_object.Bind();
-    glDrawElements(GL_TRIANGLES, m_frame_quad->m_VAO->GetIndexBuffer()->Count(), GL_UNSIGNED_INT, 0);
+    glDrawElements(GL_TRIANGLES, m_frame_quad.m_VAO->GetIndexBuffer()->Count(), GL_UNSIGNED_INT, 0);
 
 
 }

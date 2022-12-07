@@ -23,12 +23,12 @@ public:
 
 	Camera m_camera;
 
-	std::unique_ptr<Container> m_container;
-	std::unique_ptr<LightCube> m_light;
-	std::unique_ptr<Terrain>	m_terrain;
+	Container m_container;
+	LightCube m_light;
+	Terrain	m_terrain;
 
 	//Framebuffer stuff
-	std::unique_ptr<Quad> m_frame_quad;
+	Quad m_frame_quad;
 	Framebuffer m_framebuffer;
 
 public:
