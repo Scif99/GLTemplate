@@ -34,27 +34,6 @@ public:
 
 	std::unique_ptr<PostProcessingScene> m_scene;
 
-	//std::unique_ptr<GLShader> m_container_shader;
-	//std::unique_ptr<GLShader> m_lightsourceshader;
-	//std::unique_ptr<GLShader> m_frame_buffer_shader;
-
-
-	//std::unique_ptr<GLTexture> m_diffuse_map;
-	//std::unique_ptr<GLTexture> m_specular_map;
-	//std::unique_ptr<GLTexture> m_tiles;
-
-
-	//std::unique_ptr<Camera> m_camera;
-
-	//std::unique_ptr<Container> m_container;
-	//std::unique_ptr<LightCube> m_light;
-	//std::unique_ptr<Terrain>	m_terrain;
-
-	////Framebuffer stuff
-	//std::unique_ptr<Quad> m_frame_quad;
-	//std::unique_ptr<Framebuffer> m_framebuffer;
-
-
 	////Window/gui stuff
 	//GLFWwindow* m_window; //TODO figure out how to use smart pointers...
 	//std::unique_ptr<GUI> m_gui;

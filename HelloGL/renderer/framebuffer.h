@@ -9,22 +9,38 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
+#include "texture.h"
+
 
 /**
 TO-DO
-- create classes for texture/renderbuffer?
 - add options for read/write framebufffers
 -
 
 */
+
+class RenderbufferObject
+{
+public:
+	unsigned int m_renderer_ID;
+	RenderbufferObject(unsigned int width, unsigned int height)
+	{
+		glGenRenderbuffers(1, &m_renderer_ID);
+		glBindRenderbuffer(GL_RENDERBUFFER, m_renderer_ID);
+		glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, width, height);
+		glBindRenderbuffer(GL_RENDERBUFFER, 0); //unbind after allocating memory
+	}
+
+	~RenderbufferObject() { glDeleteRenderbuffers(1, &m_renderer_ID); }
+};
 
 
 class Framebuffer
 {
 public:
 	unsigned int m_frame_buffer_ID;
-	unsigned int m_texturebuffer_ID;
-	unsigned int m_renderbuffer_ID;
+	GLTexture m_texture_object;
+	RenderbufferObject m_renderbuffer;
 
 	Framebuffer(unsigned int width, unsigned int height);
 

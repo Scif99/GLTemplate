@@ -45,6 +45,24 @@ GLTexture::GLTexture(const std::string& filePath, bool alpha, bool flip /*= true
 	glBindTexture(GL_TEXTURE_2D, 0);
 }
 
+GLTexture::GLTexture(int width, int height)
+	:m_width{width}, m_height{height}
+{
+
+	// generate texture
+	glGenTextures(1, &m_renderer_ID);
+	glBindTexture(GL_TEXTURE_2D, m_renderer_ID);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, NULL); //note the texture has no data (it is added when we render to framebuffer!)
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	//Clamp so we dont get any weird wrapping
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+
+	glBindTexture(GL_TEXTURE_2D, 0); //unbind texture after allocating memory
+
+}
+
 
 //------------
 //Alternative constructor for solid textures

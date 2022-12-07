@@ -128,8 +128,7 @@ void PostProcessingScene::Render()
 
     m_frame_buffer_shader.Use();
     m_frame_quad->m_VAO->Bind();
-    glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_2D, m_framebuffer.m_texturebuffer_ID);
+    m_framebuffer.m_texture_object.Bind();
     glDrawElements(GL_TRIANGLES, m_frame_quad->m_VAO->GetIndexBuffer()->Count(), GL_UNSIGNED_INT, 0);
 
 

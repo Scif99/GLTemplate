@@ -49,6 +49,7 @@ public:
 
 	GLTexture(const std::string& filePath, bool alpha, bool flip = true); //constructor for texture 
 	GLTexture(unsigned char r, unsigned char g, unsigned char b); //overload for solid color textures
+	GLTexture(int width, int height); //overload for framebuffers
 
 	//Bind to a specified texture unit
 	void Bind(unsigned int slot = 0) const;
