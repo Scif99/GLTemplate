@@ -1,4 +1,4 @@
-#pragma once
+ #pragma once
 
 #include <memory>
 #include "../renderer/renderer.h"
@@ -11,12 +11,12 @@
 class Scene
 {
 public:
-	Scene() {};
-
+	Camera m_camera;
+public:
 	virtual void ProcessInput(float dt, float dx, float dy) =0;
 	virtual void Update(float dx) =0;
 	virtual void Render() =0;
 
-	virtual ~Scene() = 0;
+	virtual ~Scene() {};
 
 };

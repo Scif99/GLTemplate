@@ -1,4 +1,4 @@
-#include "post_processing.h"
+#include "post_processing_scene.h"
 
 inline const unsigned int SCREEN_WIDTH = 800;
 inline const unsigned int SCREEN_HEIGHT = 600;
@@ -78,7 +78,7 @@ void PostProcessingScene::Render()
 
     //------------------------
     //TERRAIN
-    //-----------------
+    //-----------------------
     //using same shader as container... so all uniforms are set already.... just need to compute model
 
     //Model
@@ -89,7 +89,7 @@ void PostProcessingScene::Render()
     //draw
     m_tiles.Bind(0);
     m_tiles.Bind(1);
-    m_terrain.m_mesh->Draw();
+    m_terrain.Draw();
 
 
     //-----------

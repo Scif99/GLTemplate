@@ -19,28 +19,35 @@
 
 
 #include "examples/scene.h"
-#include "examples/postProcessing/post_processing.h"
-
+#include "examples/postProcessing/post_processing_scene.h"
+#include "examples/PerlinNoise/perlin_noise.h"
 
 
 class Application
 {
 public:
+	enum class State
+	{
+		MENU,
+		SCENE
+	};
 
 
 public:
 	bool m_keys[1024];
 	unsigned int m_width, m_height;
+	State m_state;
+	bool drag{ false };
 
-	std::unique_ptr<PostProcessingScene> m_scene;
+	std::unique_ptr<Scene> m_scene;
 
 	////Window/gui stuff
-	//GLFWwindow* m_window; //TODO figure out how to use smart pointers...
-	//std::unique_ptr<GUI> m_gui;
+	GLFWwindow* m_window; //TODO figure out how to use smart pointers...
+	std::unique_ptr<GUI> m_gui;
 
 
 	Application(unsigned int width, unsigned int height);
-	~Application() {};
+	~Application() { glfwDestroyWindow(m_window); };
 
 	void init(GLFWwindow* window);
 	void ProcessInput(float dt, float dx, float dy);

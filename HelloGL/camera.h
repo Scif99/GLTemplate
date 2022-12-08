@@ -17,7 +17,7 @@ private:
 	glm::vec3 WORLD_UP; //We use this vector along with m_forward to construct an orthonormal basis
 
 	inline static glm::vec3 s_default_pos = glm::vec3( 0.0f, 1.0f, 3.0f );
-	inline static glm::vec3 s_default_front = glm::vec3(0.0f, 0.0f, -1.0f);
+	inline static glm::vec3 s_default_front = glm::vec3(0.0f, -0.7f, -1.0f);
 	inline static glm::vec3 s_default_up = glm::vec3(0.0f, 1.0f, 0.0f);
 
 	//euler angles

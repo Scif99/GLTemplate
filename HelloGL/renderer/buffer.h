@@ -130,7 +130,7 @@ public:
 	}
 
 	VertexBuffer(const float vertices[], unsigned int size);
-	VertexBuffer(const std::vector<Vertex>& vertices); //overload for meshes
+	VertexBuffer(const std::vector<float>& vertices); //overload for meshes
 
 	void Bind() const;
 	void Unbind() const;

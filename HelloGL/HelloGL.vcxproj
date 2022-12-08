@@ -157,7 +157,8 @@
   <ItemGroup>
     <ClCompile Include="camera.cpp" />
     <ClCompile Include="application.cpp" />
-    <ClCompile Include="examples\postProcessing\post_processing.cpp" />
+    <ClCompile Include="examples\PerlinNoise\perlin_noise.cpp" />
+    <ClCompile Include="examples\postProcessing\post_processing_scene.cpp" />
     <ClCompile Include="glad.c" />
     <ClCompile Include="imgui\imgui.cpp" />
     <ClCompile Include="imgui\imgui_demo.cpp" />
@@ -183,7 +184,10 @@
     <ClInclude Include="application.h" />
     <ClInclude Include="3d_renderer.h" />
     <ClInclude Include="cube.h" />
-    <ClInclude Include="examples\postProcessing\post_processing.h" />
+    <ClInclude Include="examples\PerlinNoise\perlin_noise_gui.h" />
+    <ClInclude Include="light.h" />
+    <ClInclude Include="examples\PerlinNoise\perlin_noise.h" />
+    <ClInclude Include="examples\postProcessing\post_processing_scene.h" />
     <ClInclude Include="examples\scene.h" />
     <ClInclude Include="gui.h" />
     <ClInclude Include="imgui\imconfig.h" />
@@ -207,6 +211,7 @@
     <ClInclude Include="resource_manager.h" />
     <ClInclude Include="2d_sprite_renderer.h" />
     <ClInclude Include="quad.h" />
+    <ClInclude Include="perlin.hpp" />
     <ClInclude Include="terrain.h" />
   </ItemGroup>
   <ItemGroup>
@@ -219,6 +224,8 @@
     <None Include="shaders\LightSourceShader.vs" />
     <None Include="shaders\3DMaterialShader.fs" />
     <None Include="shaders\3DMaterialShader.vs" />
+    <None Include="shaders\StripeShader.fs" />
+    <None Include="shaders\StripeShader.vs" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="assets\models\backpack\ao.jpg" />

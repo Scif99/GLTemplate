@@ -11,11 +11,11 @@ VertexBuffer::VertexBuffer(const float vertices[], unsigned int size)
 }
 
 //overload for meshes
-VertexBuffer::VertexBuffer(const std::vector<Vertex>& vertices)
+VertexBuffer::VertexBuffer(const std::vector<float>& vertices)
 {
 	glGenBuffers(1, &m_renderer_ID);
 	glBindBuffer(GL_ARRAY_BUFFER, m_renderer_ID); //'How do we want to use this memory?'
-	glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(Vertex), &vertices[0], GL_STATIC_DRAW); //copy data into our buffer
+	glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(float), &vertices[0], GL_STATIC_DRAW); //copy data into our buffer
 }
 
 void VertexBuffer::Bind() const

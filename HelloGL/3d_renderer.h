@@ -8,7 +8,8 @@
 #include "renderer/texture.h"
 #include "renderer/buffer.h"
 #include "renderer/vertex_array.h"
-
+#include "camera.h"
+#include "light.h"
 
 class Renderer
 {
@@ -20,6 +21,11 @@ class Renderer
 	{
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); //state-using
 	}
+
+	void BeginScene(Camera& camera, std::vector<LightCube> lights);
+
+	void Submit(const VertexArray& vao);
+	void EndScene();
 
 	void Draw(GLShader& shader, GLTexture& texture, const glm::mat4& model, const glm::mat4& view, const glm::mat4& projection,  const VertexArray& vao)
 	{

@@ -78,7 +78,10 @@
     <ClCompile Include="renderer\framebuffer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="examples\postProcessing\post_processing.cpp">
+    <ClCompile Include="examples\postProcessing\post_processing_scene.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="examples\PerlinNoise\perlin_noise.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -167,7 +170,19 @@
     <ClInclude Include="examples\scene.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="examples\postProcessing\post_processing.h">
+    <ClInclude Include="examples\postProcessing\post_processing_scene.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="examples\PerlinNoise\perlin_noise.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="light.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="perlin.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="examples\PerlinNoise\perlin_noise_gui.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -181,6 +196,8 @@
     <None Include="shaders\LightSourceShader.fs" />
     <None Include="shaders\FrameBufferShader.vs" />
     <None Include="shaders\FrameBufferShader.fs" />
+    <None Include="shaders\StripeShader.vs" />
+    <None Include="shaders\StripeShader.fs" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="assets\textures\container.jpg">

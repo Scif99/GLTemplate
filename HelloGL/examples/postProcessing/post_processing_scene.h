@@ -7,8 +7,9 @@
 #include "../terrain.h"
 #include "../quad.h"
 #include "../scene.h"
+#include "../light.h"
 
-class PostProcessingScene
+class PostProcessingScene : public Scene
 {
 public:
 	GLFWwindow& m_window;
@@ -20,12 +21,11 @@ public:
 	GLTexture m_container_diffuse;
 	GLTexture m_container_specular;
 	GLTexture m_tiles;
-
-	Camera m_camera;
+	//Camera m_camera;
 
 	Container m_container;
 	LightCube m_light;
-	Terrain	m_terrain;
+	TerrainQuad	m_terrain;
 
 	//Framebuffer stuff
 	Quad m_frame_quad;
@@ -33,8 +33,8 @@ public:
 
 public:
 	PostProcessingScene(GLFWwindow* window);
-	void ProcessInput(float dt, float dx, float dy);
-	void Update(float dt);
-	void Render();
+	void ProcessInput(float dt, float dx, float dy) override;
+	void Update(float dt) override;
+	void Render() override;
 
 };

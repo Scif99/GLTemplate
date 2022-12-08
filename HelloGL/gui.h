@@ -20,39 +20,12 @@ public:
 
 };
 
-//What if slider is over ints?
-//What if i want a slider of morre than 1D? (e.g. a slider for 3d coordinates)
-
-class Slider : Widget
-{
-	inline static float f{ 0.f };
-
-	float m_min;
-	float m_max;
-
-public:
-
-	Slider(float min, float max)
-		:m_min{ min }, m_max{ max }
-	{
-		ImGui::SliderFloat("float", &f, m_min, m_max);
-	}
-
-	float& GetValue() const
-	{
-		return f;
-	}
-
-};
-
-
 
 //A class for a ImGui slider
 class GUI
 {
 
 public:
-	std::vector<Widget> m_widgets;
 
 public:
 	GUI(GLFWwindow* window)
@@ -67,12 +40,6 @@ public:
 	}
 	~GUI() {};
 
-	void Cleanup()
-	{
-		ImGui_ImplOpenGL3_Shutdown();
-		ImGui_ImplGlfw_Shutdown();
-		ImGui::DestroyContext();
-	}
 
 	void CreateFrame()
 	{
@@ -87,14 +54,10 @@ public:
 	void CreateWindow()
 	{
 
-		ImGui::Begin("Hello, world!");
-
-		//Draw widgets
+		ImGui::Begin("Scene Menu");
 
 		ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
 		ImGui::End();
-
-
 	}
 
 	void Render()
@@ -103,6 +66,12 @@ public:
 		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 	}
 
+	void Cleanup()
+	{
+		ImGui_ImplOpenGL3_Shutdown();
+		ImGui_ImplGlfw_Shutdown();
+		ImGui::DestroyContext();
+	}
 };
 
 

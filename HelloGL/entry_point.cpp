@@ -24,10 +24,11 @@
 #include "resource_manager.h"
 
 // GLFW function declarations
+//Callbacks are functions that are called when a certain condition is met (e.g. mouse movement, keyboard input)
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void key_callback(GLFWwindow* window, int key, int scancode, int action, int mode);
 void mouse_callback(GLFWwindow* window, double xpos, double ypos);
-
+void mouse_button_callback(GLFWwindow* window, int button, int action, int mods);
 
 inline const unsigned int SCREEN_WIDTH = 800;
 inline const unsigned int SCREEN_HEIGHT = 600;
@@ -52,7 +53,7 @@ int main(int argc, char* argv[])
     glfwSetKeyCallback(window, key_callback);
     glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
     glfwSetCursorPosCallback(window, mouse_callback);
-
+    glfwSetMouseButtonCallback(window, mouse_button_callback);
 
     // glad: load all OpenGL function pointers
     // ---------------------------------------
@@ -69,8 +70,9 @@ int main(int argc, char* argv[])
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     //glEnable(GL_DEPTH_TEST); //enable depth testing
     //glEnable(GL_CULL_FACE); //face-culling
-    glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED); //hide & capture mouse
+    //glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED); //hide & capture mouse
 
+    glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
     // initialize application
     // ---------------
@@ -129,8 +131,15 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
     }
 }
 
+void mouse_button_callback(GLFWwindow* window, int button, int action, int mods)
+{
+    if (button == GLFW_MOUSE_BUTTON_LEFT)
+        App.drag = (action == GLFW_PRESS);
+}
 void mouse_callback(GLFWwindow* window, double xposIn, double yposIn)
 {
+    if (!App.drag) return;
+
     Camera& cam = App.m_scene->m_camera;
     float xpos = static_cast<float>(xposIn);
     float ypos = static_cast<float>(yposIn);
