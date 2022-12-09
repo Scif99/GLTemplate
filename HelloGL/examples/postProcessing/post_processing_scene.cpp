@@ -37,7 +37,7 @@ void PostProcessingScene::Update(float dt)
 
 void PostProcessingScene::Render()
 {
-    //first pass using our custom framebuffer
+    ////first pass using our custom framebuffer
     m_framebuffer.Bind();
     glClearColor(0.1f, 0.1f, 0.1f, 1.f); //state-setting
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); //state-using

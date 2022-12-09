@@ -15,7 +15,7 @@ void Application::init(GLFWwindow* window)
     //Load scene
     //(scene can have stack-allocated members rather than pointers everywhere)
     m_window = window;
-
+    //m_scene = std::make_unique<PostProcessingScene>(window);
     m_scene = std::make_unique<PerlinNoiseScene>(window);
 }
 

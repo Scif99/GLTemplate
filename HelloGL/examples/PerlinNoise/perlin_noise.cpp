@@ -35,6 +35,7 @@ void PerlinNoiseScene::Render()
 {
     //**WHAT IF WE WANT MULTIPLE IMGUI WINDOWS?**
 
+    static int t{ 128 };
     static float k{ 5.f };
     static float v{ 1.f };
     static float a{ 1.f };
@@ -43,6 +44,7 @@ void PerlinNoiseScene::Render()
     ImGui::SliderFloat("K", &k, 1.f, 10.f);            // Edit 1 float using a slider from 0.0f to 1.0f
     ImGui::SliderFloat("Velocity", &v, 0.0f, 5.0f);            // Edit 1 float using a slider from 0.0f to 1.0f
     ImGui::SliderFloat("Amp", &a, 0.0f, 5.0f);            // Edit 1 float using a slider from 0.0f to 1.0f
+    ImGui::SliderInt("Tesselation", &t, 2, 128);            // Edit 1 float using a slider from 0.0f to 1.0f
 
     
     ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
@@ -72,7 +74,9 @@ void PerlinNoiseScene::Render()
     m_shader.SetFloat("Amp", a);
 
     //Model
+    m_perlin_mesh = TerrainMesh(t, t);
     glm::mat4 model = glm::mat4(1.f);
+    model = glm::scale(model, glm::vec3(1.f, 1.f, 3.f));
     m_shader.SetMat4("model", model);
     m_perlin_mesh.Draw();
 

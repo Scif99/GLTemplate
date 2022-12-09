@@ -42,7 +42,7 @@ int main(int argc, char* argv[])
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 0); //enforce minimum version of 4.0
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
-    GLFWwindow* window = glfwCreateWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "App", nullptr, nullptr);
+    GLFWwindow* window = glfwCreateWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "OpenGL Playground", nullptr, nullptr);
     if (window == NULL)
     {
         std::cout << "Failed to create GLFW window" << std::endl;
@@ -68,10 +68,9 @@ int main(int argc, char* argv[])
     glViewport(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-    //glEnable(GL_DEPTH_TEST); //enable depth testing
+    glEnable(GL_DEPTH_TEST); //enable depth testing
     //glEnable(GL_CULL_FACE); //face-culling
     //glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED); //hide & capture mouse
-
     glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
     // initialize application
@@ -131,11 +130,33 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
     }
 }
 
+/*
+* - Tha app uses a drag system to rotate camera
+* - i.e. user holds click then moves mouse to rotate camera
+
+- Whenever user left clicks, it sets a flag 
+- It also resets the last x, y positions of the mouse, to prevent jmups
+- Any mouse movement that occurs whilst left cli
+*/
+
 void mouse_button_callback(GLFWwindow* window, int button, int action, int mods)
 {
-    if (button == GLFW_MOUSE_BUTTON_LEFT)
-        App.drag = (action == GLFW_PRESS);
+    if (button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_PRESS)
+    {
+        App.drag = true;
+        double xpos;
+        double ypos;
+        glfwGetCursorPos(window, &xpos, &ypos);
+
+        App.m_scene->m_camera.lastX = xpos;
+        App.m_scene->m_camera.lastY = ypos;
+
+    }
+    else if (button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_RELEASE)
+        App.drag = false;
+
 }
+
 void mouse_callback(GLFWwindow* window, double xposIn, double yposIn)
 {
     if (!App.drag) return;
