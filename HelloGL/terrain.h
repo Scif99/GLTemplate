@@ -13,6 +13,7 @@ All instances share a VBO, IBO
     - Thus
 */
 
+
 class TerrainMesh
 {
 public:

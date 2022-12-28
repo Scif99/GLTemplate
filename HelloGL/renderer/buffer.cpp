@@ -10,6 +10,13 @@ VertexBuffer::VertexBuffer(const float vertices[], unsigned int size)
 	glBufferData(GL_ARRAY_BUFFER, size, vertices, GL_STATIC_DRAW); //copy data into our buffer
 }
 
+VertexBuffer::VertexBuffer(const glm::vec2 vertices[], unsigned int size)
+{
+	glGenBuffers(1, &m_renderer_ID);
+	glBindBuffer(GL_ARRAY_BUFFER, m_renderer_ID); //'How do we want to use this memory?'
+	glBufferData(GL_ARRAY_BUFFER, size, vertices, GL_STATIC_DRAW); //copy data into our buffer
+}
+
 //overload for meshes
 VertexBuffer::VertexBuffer(const std::vector<float>& vertices)
 {

@@ -10,11 +10,12 @@ PerlinNoiseScene::PerlinNoiseScene(GLFWwindow* window)
     :
     m_window{ *window },
     //Shaders
-    //m_shader{ GLShader("shaders/LightSourceShader.vs", "shaders/LightSourceShader.fs") }
-    m_shader{ GLShader("shaders/StripeShader.vs", "shaders/StripeShader.fs") },
+    m_shader{ GLShader("examples/PerlinNoise/WaveShader.vs", "examples/PerlinNoise/WaveShader.fs") },
     m_gui{window},
+
     //Entities
     m_perlin_mesh{ MESH_VERTICES_X, MESH_VERTICES_Z}
+
     //All other entities are constructed using default
 {}
 
@@ -35,7 +36,7 @@ void PerlinNoiseScene::Render()
 {
     //**WHAT IF WE WANT MULTIPLE IMGUI WINDOWS?**
 
-    static int t{ 128 };
+    static int t{ 32 };
     static float k{ 5.f };
     static float v{ 1.f };
     static float a{ 1.f };
@@ -59,9 +60,7 @@ void PerlinNoiseScene::Render()
     glm::mat4 projection = glm::perspective(glm::radians(45.0f), 800.0f / 600.0f, 0.1f, 100.0f);
     glm::mat4 view = m_camera.getView();
 
-    //-------------------
-    // WOODEN CONTAINER
-    //---------------
+
     //Bind shader, pass uniforms
     m_shader.Use();
     m_shader.SetMat4("projection", projection);
@@ -73,7 +72,7 @@ void PerlinNoiseScene::Render()
     m_shader.SetFloat("Velocity", v);
     m_shader.SetFloat("Amp", a);
 
-    //Model
+
     m_perlin_mesh = TerrainMesh(t, t);
     glm::mat4 model = glm::mat4(1.f);
     model = glm::scale(model, glm::vec3(1.f, 1.f, 3.f));

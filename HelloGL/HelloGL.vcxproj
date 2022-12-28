@@ -157,6 +157,7 @@
   <ItemGroup>
     <ClCompile Include="camera.cpp" />
     <ClCompile Include="application.cpp" />
+    <ClCompile Include="examples\Instancing\instancing.cpp" />
     <ClCompile Include="examples\PerlinNoise\perlin_noise.cpp" />
     <ClCompile Include="examples\postProcessing\post_processing_scene.cpp" />
     <ClCompile Include="glad.c" />
@@ -173,7 +174,6 @@
     <ClCompile Include="renderer\model.cpp" />
     <ClCompile Include="renderer\shader.cpp" />
     <ClCompile Include="resource_manager.cpp" />
-    <ClCompile Include="2d_sprite_renderer.cpp" />
     <ClCompile Include="entry_point.cpp" />
     <ClCompile Include="renderer\stb_image.cpp" />
     <ClCompile Include="renderer\texture.cpp" />
@@ -184,6 +184,7 @@
     <ClInclude Include="application.h" />
     <ClInclude Include="3d_renderer.h" />
     <ClInclude Include="cube.h" />
+    <ClInclude Include="examples\Instancing\instancing.h" />
     <ClInclude Include="examples\PerlinNoise\perlin_noise_gui.h" />
     <ClInclude Include="light.h" />
     <ClInclude Include="examples\PerlinNoise\perlin_noise.h" />
@@ -209,13 +210,14 @@
     <ClInclude Include="renderer\vertex.h" />
     <ClInclude Include="renderer\vertex_array.h" />
     <ClInclude Include="resource_manager.h" />
-    <ClInclude Include="2d_sprite_renderer.h" />
     <ClInclude Include="quad.h" />
     <ClInclude Include="perlin.hpp" />
     <ClInclude Include="terrain.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="assets\models\backpack\backpack.mtl" />
+    <None Include="examples\Instancing\2DQuadShader.fs" />
+    <None Include="examples\Instancing\2dQuadShader.vs" />
     <None Include="shaders\2DSpriteShader.fs" />
     <None Include="shaders\2DSpriteShader.vs" />
     <None Include="shaders\FrameBufferShader.fs" />
@@ -224,8 +226,8 @@
     <None Include="shaders\LightSourceShader.vs" />
     <None Include="shaders\3DMaterialShader.fs" />
     <None Include="shaders\3DMaterialShader.vs" />
-    <None Include="shaders\StripeShader.fs" />
-    <None Include="shaders\StripeShader.vs" />
+    <None Include="examples\PerlinNoise\WaveShader.fs" />
+    <None Include="examples\PerlinNoise\WaveShader.vs" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="assets\models\backpack\ao.jpg" />

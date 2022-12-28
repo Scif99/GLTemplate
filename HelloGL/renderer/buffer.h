@@ -30,8 +30,10 @@ static unsigned int ShaderDataTypeSize(ShaderDataType type)
 
 
 /*
-A BufferElement is essentially a vertex attribute
+- A BufferElement is essentially a vertex attribute
 - For example, position, texture coordinates etc...
+- It also stores the size (in bytes) of the attribute 
+- 
 */
 struct BufferElement
 {
@@ -39,8 +41,6 @@ struct BufferElement
 	ShaderDataType m_type{ShaderDataType::None};
 	unsigned int m_size;
 	unsigned int m_offset;
-
-	BufferElement() = default;
 
 	BufferElement(ShaderDataType type)//, const std::string& name)
 		: /*m_name{name},*/ m_type{type}, m_size{ShaderDataTypeSize(type)}, m_offset{0}
@@ -129,6 +129,8 @@ public:
 		return *this;
 	}
 
+	VertexBuffer(const glm::vec2 vertices[], unsigned int size);
+
 	VertexBuffer(const float vertices[], unsigned int size);
 	VertexBuffer(const std::vector<float>& vertices); //overload for meshes
 
@@ -138,7 +140,6 @@ public:
 	const BufferLayout& GetLayout() const { return m_layout; }
 	void SetLayout(const BufferLayout& layout) { m_layout = layout; }
 };
-
 
 
 //----------------

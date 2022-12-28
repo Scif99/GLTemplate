@@ -12,14 +12,6 @@
 #include <string>
 #include <vector>
 
-class Widget
-{
-public:
-	std::string m_name; //A name for the widget
-
-
-};
-
 
 //A class for a ImGui slider
 class GUI

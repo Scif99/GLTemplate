@@ -13,6 +13,8 @@ private:
 	std::vector<std::shared_ptr<VertexBuffer>> m_vertex_buffers;
 	std::shared_ptr<IndexBuffer> m_index_buffer;
 
+	int num_attributes{ 0 }; //The total number of vertex attributes over all the associated VBOs
+
 public:
 	VertexArray();
 	~VertexArray(){ glDeleteVertexArrays(1, &m_renderer_ID); }
@@ -21,7 +23,8 @@ public:
 	VertexArray& operator=(const VertexArray& other) = delete;
 
 	VertexArray(VertexArray&& other) noexcept
-		:m_renderer_ID{ std::move(other.m_renderer_ID) }, m_vertex_buffers{std::move(other.m_vertex_buffers)}, m_index_buffer{std::move(other.m_index_buffer)}
+		:m_renderer_ID{ std::move(other.m_renderer_ID) }, m_vertex_buffers{std::move(other.m_vertex_buffers)}, m_index_buffer{std::move(other.m_index_buffer)},
+		num_attributes{std::move(other.num_attributes)}
 	{
 		other.m_renderer_ID = 0;
 	}
@@ -36,6 +39,7 @@ public:
 			m_renderer_ID = std::move(other.m_renderer_ID);
 			m_vertex_buffers = std::move(other.m_vertex_buffers);
 			m_index_buffer = std::move(other.m_index_buffer);
+			num_attributes = std::move(other.num_attributes);
 
 			//leave in valid state
 			other.m_renderer_ID = 0;
@@ -43,7 +47,8 @@ public:
 		return *this;
 	}
 
-	void AddVertexBuffer(const std::shared_ptr<VertexBuffer>& vbo);
+	void AddVertexBuffer(const std::shared_ptr<VertexBuffer>& vbo, int divisor = 0);
+
 	void SetIndexBuffer(const std::shared_ptr<IndexBuffer>& ibo);
 
 	const std::vector<std::shared_ptr<VertexBuffer>>& GetVertexBuffers() const{ return m_vertex_buffers; }

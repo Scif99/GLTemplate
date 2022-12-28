@@ -71,7 +71,7 @@ int main(int argc, char* argv[])
     glEnable(GL_DEPTH_TEST); //enable depth testing
     //glEnable(GL_CULL_FACE); //face-culling
     //glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED); //hide & capture mouse
-    glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+    //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE); //Wireframe mode
 
     // initialize application
     // ---------------

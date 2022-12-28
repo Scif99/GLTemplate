@@ -2,7 +2,6 @@
 
 #include "camera.h"
 #include "resource_manager.h"
-#include "2d_sprite_renderer.h"
 #include "renderer/renderer.h"
 
 #include <glad/glad.h>
@@ -21,6 +20,8 @@
 #include "examples/scene.h"
 #include "examples/postProcessing/post_processing_scene.h"
 #include "examples/PerlinNoise/perlin_noise.h"
+#include "examples/Instancing/instancing.h"
+
 
 
 class Application
@@ -37,7 +38,7 @@ public:
 	bool m_keys[1024];
 	unsigned int m_width, m_height;
 	State m_state;
-	bool drag{ false };
+	bool drag{ false }; //Used for mouse dragging...
 
 	std::unique_ptr<Scene> m_scene;
 

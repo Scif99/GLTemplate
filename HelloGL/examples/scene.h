@@ -13,10 +13,15 @@ class Scene
 public:
 	Camera m_camera;
 public:
-	virtual void ProcessInput(float dt, float dx, float dy) =0;
-	virtual void Update(float dx) =0;
-	virtual void Render() =0;
+	virtual ~Scene() = default;
+	Scene() = default;
+	Scene(const Scene&) = delete;
+	Scene& operator=(const Scene&) = delete;
+	Scene(Scene&&) = delete;
+	Scene& operator=(Scene&&) = delete;
 
-	virtual ~Scene() {};
+	virtual void ProcessInput(float dt, float dx, float dy) =0;
+	virtual void Update(float dt) =0;
+	virtual void Render() =0;
 
 };
