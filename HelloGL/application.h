@@ -10,11 +10,11 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
-#include "cube.h"
 #include "gui.h"
-#include "terrain.h"
-#include "quad.h"
 
+#include "../Shapes/cube.h"
+#include "../Shapes/terrain.h"
+#include "../Shapes/2Dquad.h"
 
 #include "examples/scene.h"
 #include "examples/postProcessing/post_processing_scene.h"
@@ -25,7 +25,7 @@
 class GLWindow
 {
 public:
-	GLFWwindow* m_window;
+	GLFWwindow* m_window{ nullptr};
 
 public:
 	~GLWindow() { glfwDestroyWindow(m_window); }
@@ -51,7 +51,7 @@ public:
 	std::unique_ptr<Scene> m_scene;
 
 	////Window/gui stuff
-	GLFWwindow* m_window; //TODO figure out how to use smart pointers...
+	GLFWwindow* m_window{nullptr}; //TODO figure out how to use smart pointers...
 	std::unique_ptr<GUI> m_gui;
 
 

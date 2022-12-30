@@ -3,10 +3,6 @@
 #include <memory>
 #include "../renderer/renderer.h"
 #include "../camera.h"
-#include "../cube.h"
-#include "../terrain.h"
-#include "../quad.h"
-
 
 class Scene
 {

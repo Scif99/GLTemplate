@@ -146,13 +146,13 @@
     <ClInclude Include="gui.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="cube.h">
+    <ClInclude Include="Shapes\cube.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="terrain.h">
+    <ClInclude Include="Shapes\terrain.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="quad.h">
+    <ClInclude Include="Shapes\2Dquad.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="renderer\framebuffer.h">
@@ -168,9 +168,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="light.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="perlin.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="examples\PerlinNoise\perlin_noise_gui.h">
@@ -195,7 +192,7 @@
     <None Include="shaders\FrameBufferShader.fs" />
     <None Include="examples\PerlinNoise\WaveShader.vs" />
     <None Include="examples\PerlinNoise\WaveShader.fs" />
-    <None Include="examples\Instancing\2dQuadShader.vs" />
+    <None Include="examples\Instancing\2DQuadShader.vs" />
     <None Include="examples\Instancing\2DQuadShader.fs" />
   </ItemGroup>
   <ItemGroup>
@@ -230,6 +227,9 @@
       <Filter>Resource Files</Filter>
     </Image>
     <Image Include="assets\textures\container2_specular.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="assets\textures\Water.jpg">
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>

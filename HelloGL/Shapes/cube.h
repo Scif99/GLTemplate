@@ -3,8 +3,8 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
-#include "renderer/renderer.h"
 
+#include "../renderer/renderer.h"
 
 /*
 All instances share a VBO, IBO
@@ -86,20 +86,7 @@ public:
     void Draw()
     {
         m_VAO->Bind();
-        glDrawElements(GL_TRIANGLES, m_VAO->GetIndexBuffer()->Count(), GL_UNSIGNED_INT, 0);
+        glDrawElements(GL_TRIANGLES, m_IBO->Count(), GL_UNSIGNED_INT, 0);
         m_VAO->Unbind();
     }
 };
-
-class Container
-{
-public:
-    std::shared_ptr<CubeMesh> m_mesh;
-
-    Container()
-    {
-        m_mesh = std::make_shared<CubeMesh>();
-    }
-};
-
-

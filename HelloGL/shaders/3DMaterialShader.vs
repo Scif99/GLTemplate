@@ -14,7 +14,7 @@ uniform mat4 projection;
 
 void main()
 {
-    Normal = mat3(transpose(inverse(model))) * aNormal;  ;
+    Normal = mat3(transpose(inverse(model))) * aNormal;  //Note the normals do not transform in the same way as vertex positions!
     TexCoords = aTexCoord;
     FragPos = vec3(model * vec4(aPos, 1.0));
 

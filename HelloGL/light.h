@@ -6,7 +6,7 @@
 #include "renderer/renderer.h"
 
 //FIX
-#include "cube.h"
+#include "../Shapes/cube.h"
 
 class LightCube
 {

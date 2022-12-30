@@ -3,8 +3,8 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
-#include "renderer/renderer.h"
 
+#include "../renderer/renderer.h"
 
 /*
 A 2D Quad
@@ -50,6 +50,13 @@ public:
         m_VAO->Unbind();
         m_VBO->Unbind();
 
+    }
+
+    void Draw()
+    {
+        m_VAO->Bind();
+        glDrawElements(GL_TRIANGLES, m_IBO->Count(), GL_UNSIGNED_INT, 0);
+        m_VAO->Unbind();
     }
 
 };

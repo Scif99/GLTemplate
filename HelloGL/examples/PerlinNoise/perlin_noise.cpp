@@ -11,10 +11,11 @@ PerlinNoiseScene::PerlinNoiseScene(GLFWwindow* window)
     m_window{ *window },
     //Shaders
     m_shader{ GLShader("examples/PerlinNoise/WaveShader.vs", "examples/PerlinNoise/WaveShader.fs") },
+    m_water_texture{ "assets/textures/water.jpg", false, "water" },
     m_gui{window},
 
     //Entities
-    m_perlin_mesh{ MESH_VERTICES_X, MESH_VERTICES_Z}
+    m_terrain{ MESH_VERTICES_X, MESH_VERTICES_Z}
 
     //All other entities are constructed using default
 {}
@@ -42,10 +43,10 @@ void PerlinNoiseScene::Render()
     static float a{ 1.f };
 
     ImGui::Begin("Scene Menu");
-    ImGui::SliderFloat("K", &k, 1.f, 10.f);            // Edit 1 float using a slider from 0.0f to 1.0f
-    ImGui::SliderFloat("Velocity", &v, 0.0f, 5.0f);            // Edit 1 float using a slider from 0.0f to 1.0f
-    ImGui::SliderFloat("Amp", &a, 0.0f, 5.0f);            // Edit 1 float using a slider from 0.0f to 1.0f
-    ImGui::SliderInt("Tesselation", &t, 2, 128);            // Edit 1 float using a slider from 0.0f to 1.0f
+    ImGui::SliderFloat("K", &k, 1.f, 10.f);           
+    ImGui::SliderFloat("Velocity", &v, 0.0f, 5.0f);      
+    ImGui::SliderFloat("Amp", &a, 0.0f, 5.0f);           
+    ImGui::SliderInt("Tesselation", &t, 2, 128);           
 
     
     ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
@@ -73,11 +74,13 @@ void PerlinNoiseScene::Render()
     m_shader.SetFloat("Amp", a);
 
 
-    m_perlin_mesh = TerrainMesh(t, t);
+    m_terrain = TerrainMesh(t, t);
     glm::mat4 model = glm::mat4(1.f);
     model = glm::scale(model, glm::vec3(1.f, 1.f, 3.f));
     m_shader.SetMat4("model", model);
-    m_perlin_mesh.Draw();
+
+    m_water_texture.Bind(0);
+    m_terrain.Draw();
 
     m_gui.Render();
 }

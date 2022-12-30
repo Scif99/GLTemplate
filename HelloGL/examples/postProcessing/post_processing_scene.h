@@ -3,29 +3,30 @@
 #include <memory>
 #include "../renderer/renderer.h"
 #include "../camera.h"
-#include "../cube.h"
-#include "../terrain.h"
-#include "../quad.h"
 #include "../scene.h"
 #include "../light.h"
+
+#include "../Shapes/cube.h"
+#include "../Shapes/terrain.h"
+#include "../Shapes/2Dquad.h"
 
 class PostProcessingScene : public Scene
 {
 public:
 	GLFWwindow& m_window;
 
-	GLShader m_container_shader;
+	GLShader m_material_shader;
 	GLShader m_light_source_shader;
 	GLShader m_frame_buffer_shader;
 
-	GLTexture m_container_diffuse;
-	GLTexture m_container_specular;
-	GLTexture m_tiles;
+	GLTexture m_container_diffuse_map;
+	GLTexture m_container_specular_map;
+	GLTexture m_tiles_texture;
 	//Camera m_camera;
 
-	Container m_container;
+	CubeMesh m_container;
 	LightCube m_light;
-	TerrainQuad	m_terrain;
+	TerrainMesh m_terrain;
 
 	//Framebuffer stuff
 	Quad m_frame_quad;

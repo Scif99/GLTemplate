@@ -30,15 +30,15 @@ class Renderer
 	void Draw(GLShader& shader, GLTexture& texture, const glm::mat4& model, const glm::mat4& view, const glm::mat4& projection,  const VertexArray& vao)
 	{
 		//Bind shader
-		shader.Use();
+		//shader.Use();
 
-		//pass MVP to Shader
-		shader.SetMat4("model", model);
-		shader.SetMat4("view", view);
-		shader.SetMat4("projection", projection);
+		////pass MVP to Shader
+		//shader.SetMat4("model", model);
+		//shader.SetMat4("view", view);
+		//shader.SetMat4("projection", projection);
 
 		//Texture
-		texture.Bind(); //What if there is more than one texture?
+		//texture.Bind(); //What if there is more than one texture?
 
 		//Draw
 		//if (vao.GetIndexBuffer())
