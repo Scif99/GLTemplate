@@ -1,7 +1,6 @@
 #pragma once
 
 #include "camera.h"
-#include "resource_manager.h"
 #include "renderer/renderer.h"
 
 #include <glad/glad.h>
@@ -22,6 +21,15 @@
 #include "examples/PerlinNoise/perlin_noise.h"
 #include "examples/Instancing/instancing.h"
 
+
+class GLWindow
+{
+public:
+	GLFWwindow* m_window;
+
+public:
+	~GLWindow() { glfwDestroyWindow(m_window); }
+};
 
 
 class Application

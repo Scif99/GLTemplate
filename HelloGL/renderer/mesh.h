@@ -3,14 +3,14 @@
 
 #include <glm/glm.hpp>
 
+#include <vector>
+
 #include "buffer.h"
+#include "gl_wrappers.h"
 #include "shader.h"
 #include "vertex.h"
 #include "vertex_array.h"
 
-
-
-#include <vector>
 
 struct ModelTexture
 {

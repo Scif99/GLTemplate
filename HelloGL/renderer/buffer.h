@@ -1,12 +1,12 @@
 #ifndef BUFFER_H
 #define BUFFER_H
 
-
 #include <glad/glad.h>
-#include <vector>
 
 #include <string>
+#include <vector>
 
+#include "gl_wrappers.h"
 #include "vertex.h"
 
 /*An API-agnostic data type for buffer elements*/
@@ -100,37 +100,18 @@ private:
 class VertexBuffer
 {
 private:
-	unsigned int m_renderer_ID;
+	GLID m_renderer_ID;
 	BufferLayout m_layout;
 public:
-	~VertexBuffer() { glDeleteBuffers(1, &m_renderer_ID);}
-	//non-copyable
-	VertexBuffer(const VertexBuffer& other) = delete;
-	VertexBuffer& operator=(const VertexBuffer& other) = delete;
-
-	//move constructor
-	VertexBuffer(VertexBuffer&& other) noexcept
-		:m_renderer_ID{ std::move(other.m_renderer_ID) }
-	{
-		other.m_renderer_ID = 0;
-	}
-	//move assignment
-	VertexBuffer& operator=(VertexBuffer&& other) noexcept
-	{
-		if (this != &other)
-		{
-			//free resources
-			glDeleteBuffers(1, &m_renderer_ID);
-			//transfer
-			m_renderer_ID = std::move(other.m_renderer_ID);
-			//leave other in valid state
-			other.m_renderer_ID = 0;
-		}
-		return *this;
-	}
+	//default constructor for dynamic?
+	~VertexBuffer() { glDeleteBuffers(1, &m_renderer_ID); };
+	VertexBuffer() = default;
+	VertexBuffer(const VertexBuffer& other) = default;
+	VertexBuffer& operator=(const VertexBuffer& other) = default;
+	VertexBuffer(VertexBuffer&& other) = default;
+	VertexBuffer& operator=(VertexBuffer&& other) = default;
 
 	VertexBuffer(const glm::vec2 vertices[], unsigned int size);
-
 	VertexBuffer(const float vertices[], unsigned int size);
 	VertexBuffer(const std::vector<float>& vertices); //overload for meshes
 
@@ -149,36 +130,15 @@ public:
 class IndexBuffer
 {
 private:
-	unsigned int m_renderer_ID;
+	GLID m_renderer_ID;
 	unsigned int m_count;
 public:
-
 	~IndexBuffer() { glDeleteBuffers(1, &m_renderer_ID); };
-	//noon-copyable
-	IndexBuffer(const IndexBuffer& other) = delete;
-	IndexBuffer& operator=(const IndexBuffer& other) = delete;
-
-	//move constructor
-	IndexBuffer(IndexBuffer&& other) noexcept
-		:m_renderer_ID{ std::move(other.m_renderer_ID) }, m_count{std::move(other.m_count)}
-	{
-		other.m_renderer_ID = 0;
-	}
-	//move assignment
-	IndexBuffer& operator=(IndexBuffer&& other) noexcept
-	{
-		if (this != &other)
-		{
-			//free resources
-			glDeleteBuffers(1, &m_renderer_ID);
-			//transfer
-			m_renderer_ID = std::move(other.m_renderer_ID);
-			//leave other in valid state
-			other.m_renderer_ID = 0;
-			other.m_count = 0;
-		}
-		return *this;
-	}
+	IndexBuffer() = default;
+	IndexBuffer(const IndexBuffer& other) = default;
+	IndexBuffer& operator=(const IndexBuffer& other) = default;
+	IndexBuffer(IndexBuffer&& other) = default;
+	IndexBuffer& operator=(IndexBuffer&& other) = default;
 
 	IndexBuffer(const unsigned int indices[], unsigned int size); //size vs count...
 	IndexBuffer(const std::vector<unsigned int>& indices); //size vs count...

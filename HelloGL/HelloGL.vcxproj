@@ -173,7 +173,6 @@
     <ClCompile Include="renderer\mesh.cpp" />
     <ClCompile Include="renderer\model.cpp" />
     <ClCompile Include="renderer\shader.cpp" />
-    <ClCompile Include="resource_manager.cpp" />
     <ClCompile Include="entry_point.cpp" />
     <ClCompile Include="renderer\stb_image.cpp" />
     <ClCompile Include="renderer\texture.cpp" />
@@ -201,6 +200,7 @@
     <ClInclude Include="imgui\imstb_truetype.h" />
     <ClInclude Include="renderer\buffer.h" />
     <ClInclude Include="renderer\framebuffer.h" />
+    <ClInclude Include="renderer\gl_wrappers.h" />
     <ClInclude Include="renderer\mesh.h" />
     <ClInclude Include="renderer\model.h" />
     <ClInclude Include="renderer\renderer.h" />
@@ -209,7 +209,6 @@
     <ClInclude Include="renderer\texture.h" />
     <ClInclude Include="renderer\vertex.h" />
     <ClInclude Include="renderer\vertex_array.h" />
-    <ClInclude Include="resource_manager.h" />
     <ClInclude Include="quad.h" />
     <ClInclude Include="perlin.hpp" />
     <ClInclude Include="terrain.h" />

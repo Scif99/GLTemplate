@@ -1,7 +1,5 @@
 #include "mesh.h"
 
-#include <stdexcept>
-
 Mesh::Mesh(const std::vector<Vertex>& vertices, const std::vector<unsigned int>& indices, const std::vector<ModelTexture>& textures)
 	: m_vertices{ vertices }, m_indices{ indices }, m_textures{ textures }
 {

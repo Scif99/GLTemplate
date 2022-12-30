@@ -88,7 +88,6 @@ void InstancingScene::Render()
     m_shader.SetFloat("t", t);
 
     m_shader.Use();
-
     m_VAO->Bind();
     glDrawElementsInstanced(GL_TRIANGLES, m_IBO->Count(), GL_UNSIGNED_INT, 0, 100);
     m_VAO->Unbind();

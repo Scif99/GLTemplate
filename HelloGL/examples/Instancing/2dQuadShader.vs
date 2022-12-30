@@ -9,8 +9,6 @@ uniform float t;
 
 void main()
 {
-    //gl_Position = vec4(aPos, 0.0, 1.0);
-
     gl_Position = vec4(aPos.x + aOffset.x + sin(t), aPos.y + aOffset.y, 0.0, 1.0);
     fColor = aColor;
 }  

@@ -21,7 +21,6 @@
 #include "renderer/texture.h"
 #include "renderer/stb_image.h"
 #include "renderer/buffer.h"
-#include "resource_manager.h"
 
 // GLFW function declarations
 //Callbacks are functions that are called when a certain condition is met (e.g. mouse movement, keyboard input)
@@ -108,7 +107,6 @@ int main(int argc, char* argv[])
 
     // delete all resources as loaded using the resource manager
     // ---------------------------------------------------------
-    ResourceManager::clear();
 
     App.Cleanup();
 

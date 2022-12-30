@@ -1,15 +1,10 @@
 #include "vertex_array.h"
 
 #include <iostream>
-VertexArray::VertexArray()
-    : num_attributes{ 0 }
-{
-	glGenVertexArrays(1, &m_renderer_ID);
-}
 
 void VertexArray::Bind() const
 {
-	glBindVertexArray(m_renderer_ID);
+	glBindVertexArray(m_renderer_ID.Value());
 }
 
 void VertexArray::Unbind() const
@@ -21,7 +16,7 @@ void VertexArray::AddVertexBuffer(const std::shared_ptr<VertexBuffer>& vbo, int 
 {
     assert(vbo->GetLayout().m_elements.size() && "No Layout Has Been Set!");
 
-    glBindVertexArray(m_renderer_ID);
+    glBindVertexArray(m_renderer_ID.Value());
     vbo->Bind();
 
     //Get 
@@ -47,7 +42,7 @@ void VertexArray::AddVertexBuffer(const std::shared_ptr<VertexBuffer>& vbo, int 
 
 void VertexArray::SetIndexBuffer(const std::shared_ptr<IndexBuffer>& ibo)
 {
-    glBindVertexArray(m_renderer_ID);
+    glBindVertexArray(m_renderer_ID.Value());
     ibo->Bind();
     m_index_buffer = ibo;
 }

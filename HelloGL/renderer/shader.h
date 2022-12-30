@@ -3,12 +3,13 @@
 #include <glad/glad.h>
 #include <glm/glm.hpp>
 
-#include <string>
 #include <fstream>
-#include <sstream>
 #include <iostream>
-
 #include <memory>
+#include <sstream>
+#include <string>
+
+#include "gl_wrappers.h"
 
 /*
 - Note that our shader class is an OpenGL wrapper.
@@ -24,38 +25,16 @@ class GLShader
 {
 private:
     void CheckCompileErrors(unsigned int shader, std::string type);
-
+   
 public:
-    //OpenGL ID
-    unsigned int m_renderer_ID;
-
-    //special functions
+    GLID m_renderer_ID;
+public:
     GLShader() = default;
-    ~GLShader() { glDeleteProgram(m_renderer_ID); }
-    //copy operations
-    GLShader(const GLShader& other) = delete;
-    const GLShader& operator=(const GLShader& other) = delete;
-
-    //move constructor
-    GLShader(GLShader&& other) noexcept
-        :m_renderer_ID{ std::move(other.m_renderer_ID) }
-    {
-        other.m_renderer_ID = 0;
-    }
-    //move assignment
-    GLShader& operator=(GLShader&& other) noexcept
-    {
-        if (this != &other)
-        {
-            //free resources
-            glDeleteProgram(m_renderer_ID);
-            //transfer
-            m_renderer_ID = std::move(other.m_renderer_ID);
-            //leave other in valid state
-            other.m_renderer_ID = 0;
-        }
-        return *this;
-    }
+    ~GLShader() { glDeleteProgram(m_renderer_ID.Value()); }
+    GLShader(const GLShader& other) = default;
+    GLShader& operator=(const GLShader& other) = default;
+    GLShader(GLShader&& other) = default;
+    GLShader& operator=(GLShader&& other) = default;
 
     GLShader(const char* vertexPath, const char* fragmentPath);
 

@@ -41,10 +41,10 @@ class Renderer
 		texture.Bind(); //What if there is more than one texture?
 
 		//Draw
-		if (vao.GetIndexBuffer())
-		{
-			glDrawElements(GL_TRIANGLES, vao.GetIndexBuffer()->Count(), GL_UNSIGNED_INT, 0);
-		}
+		//if (vao.GetIndexBuffer())
+		//{
+		//	glDrawElements(GL_TRIANGLES, vao.GetIndexBuffer()->Count(), GL_UNSIGNED_INT, 0);
+		//}
 			//What to do if we never used an index buffer?
 	}
 

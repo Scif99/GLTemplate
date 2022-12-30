@@ -7,45 +7,25 @@
 #include <iostream>
 #include <string>
 
+#include "gl_wrappers.h"
 #include "stb_image.h"
 
 class GLTexture
 {
 public:
 	std::string m_path;
-	unsigned int m_renderer_ID;
+	GLID m_renderer_ID;
 	int m_width{ 0 };
 	int m_height{ 0 };
 
 public:
 	~GLTexture() { glDeleteTextures(1, &m_renderer_ID); }
 	GLTexture() = default;
-	GLTexture(const GLTexture& other) = delete;
-	GLTexture& operator=(const GLTexture& other) = delete;
-	
-	GLTexture(GLTexture&& other) noexcept
-		: m_path{ std::move(other.m_path) }, m_renderer_ID{ std::move(other.m_renderer_ID) }, m_width{ other.m_width }, m_height{ other.m_height }
-	{}
-	GLTexture& operator=(GLTexture&& other) noexcept
-	{
-		if (this != &other)
-		{
-			glDeleteProgram(m_renderer_ID);
+	GLTexture(const GLTexture& other) = default;
+	GLTexture& operator=(const GLTexture& other) = default;
+	GLTexture(GLTexture&& other) = default;
+	GLTexture& operator=(GLTexture&& other) = default;
 
-			//transfer
-			m_renderer_ID = std::move(other.m_renderer_ID);
-			m_width =  std::move(other.m_width) ;
-			m_height = std::move(other.m_height) ;
-			m_path = std::move(other.m_path);
-
-			//reset other
-			other.m_renderer_ID = 0;
-			other.m_width = 0;
-			other.m_height = 0;
-		}
-		return *this;
-
-	}
 
 	GLTexture(const std::string& filePath, bool alpha, bool flip = true); //constructor for texture 
 	GLTexture(unsigned char r, unsigned char g, unsigned char b); //overload for solid color textures
