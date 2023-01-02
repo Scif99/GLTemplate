@@ -31,6 +31,13 @@ void Camera::ProcessKeyboardInput(GLFWwindow* window, float dt)
 
 }
 
+void Camera::Reset(glm::vec3 pos, glm::vec3 target, glm::vec3 up)
+{
+    m_position =  pos ;
+    m_forward =  glm::normalize(target - m_position);
+    m_up = glm::normalize(up);
+    m_right = glm::normalize(glm::cross(m_forward, m_up));
+}
 
 void Camera::ProcessMouseInput(GLFWwindow* window, float dx, float dy)
 {

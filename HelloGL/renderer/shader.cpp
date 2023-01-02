@@ -24,13 +24,61 @@ void GLShader::Compile(const char* vShaderCode, const char* fShaderCode)
     m_renderer_ID.Set(glCreateProgram());
     glAttachShader(m_renderer_ID.Value(), vertex);
     glAttachShader(m_renderer_ID.Value(), fragment);
+
     glLinkProgram(m_renderer_ID.Value());
     CheckCompileErrors(m_renderer_ID.Value(), "PROGRAM");
 
     // delete the shaders as they're linked into our program now and no longer necessary
     glDeleteShader(vertex);
     glDeleteShader(fragment);
+}
 
+void GLShader::Compile(const char* vShaderCode, const char* fShaderCode, const char* tcsShaderCode , const char* tesShaderCode)
+{
+    // create shader objects
+    unsigned int vertex, fragment;
+
+    // vertex shader
+    vertex = glCreateShader(GL_VERTEX_SHADER);
+    glShaderSource(vertex, 1, &vShaderCode, NULL);
+    glCompileShader(vertex);
+    CheckCompileErrors(vertex, "VERTEX");
+
+    // fragment Shader
+    fragment = glCreateShader(GL_FRAGMENT_SHADER);
+    glShaderSource(fragment, 1, &fShaderCode, NULL);
+    glCompileShader(fragment);
+    CheckCompileErrors(fragment, "FRAGMENT");
+
+
+    unsigned int  tcs;
+    tcs = glCreateShader(GL_TESS_CONTROL_SHADER);
+    glShaderSource(tcs, 1, &tcsShaderCode, NULL);
+    glCompileShader(tcs);
+    CheckCompileErrors(tcs, "TESS_CONTROL");
+
+    unsigned int tes;
+    tes = glCreateShader(GL_TESS_EVALUATION_SHADER);
+    glShaderSource(tes, 1, &tesShaderCode, NULL);
+    glCompileShader(tes);
+    CheckCompileErrors(tes, "TESS_EVAL");
+
+
+    // Link Shaders
+    m_renderer_ID.Set(glCreateProgram());
+    glAttachShader(m_renderer_ID.Value(), vertex);
+    glAttachShader(m_renderer_ID.Value(), fragment);
+    glAttachShader(m_renderer_ID.Value(), tcs);
+    glAttachShader(m_renderer_ID.Value(), tes);
+
+    glLinkProgram(m_renderer_ID.Value());
+    CheckCompileErrors(m_renderer_ID.Value(), "PROGRAM");
+
+    // delete the shaders as they're linked into our program now and no longer necessary
+    glDeleteShader(vertex);
+    glDeleteShader(fragment);
+    glDeleteShader(tcs);
+    glDeleteShader(tes);
 }
 
 GLShader::GLShader(const char* vertexPath, const char* fragmentPath)
@@ -38,7 +86,7 @@ GLShader::GLShader(const char* vertexPath, const char* fragmentPath)
     // 1. retrieve the vertex/fragment source code from filePath
     std::string vertexCode;
     std::string fragmentCode;
-    
+
     try
     {
         std::ifstream vShaderFile(vertexPath);
@@ -63,6 +111,54 @@ GLShader::GLShader(const char* vertexPath, const char* fragmentPath)
     const char* fShaderCode = fragmentCode.c_str();
 
     Compile(vShaderCode, fShaderCode);
+}
+
+GLShader::GLShader(const char* vertexPath, const char* fragmentPath, const char* tcsPath, const char* tesPath)
+{
+    // 1. retrieve the vertex/fragment source code from filePath
+    std::string vertexCode;
+    std::string fragmentCode;
+    std::string tcsCode;
+    std::string tesCode;
+
+
+    try
+    {
+        std::ifstream vShaderFile(vertexPath);
+        std::ifstream fShaderFile(fragmentPath);
+        std::ifstream tcsShaderFile(tcsPath);
+        std::ifstream tesShaderFile(tesPath);
+
+        std::stringstream vShaderStream, fShaderStream, tcsShaderStream, tesShaderStream;
+        // read file's buffer contents into streams
+        vShaderStream << vShaderFile.rdbuf();
+        fShaderStream << fShaderFile.rdbuf();
+        tcsShaderStream << tcsShaderFile.rdbuf();
+        tesShaderStream << tesShaderFile.rdbuf();
+
+        // close file handlers
+        vShaderFile.close();
+        fShaderFile.close();
+        tcsShaderFile.close();
+        tesShaderFile.close();
+
+        // convert stream into string
+        vertexCode = vShaderStream.str();
+        fragmentCode = fShaderStream.str();
+        tcsCode = tcsShaderStream.str();
+        tesCode = tesShaderStream.str();
+
+    }
+    catch (std::ifstream::failure& e)
+    {
+        std::cout << "ERROR::SHADER::FILE_NOT_SUCCESFULLY_READ: " << e.what() << std::endl;
+    }
+    const char* vShaderCode = vertexCode.c_str();
+    const char* fShaderCode = fragmentCode.c_str();
+    const char* tcsShaderCode = tcsCode.c_str();
+    const char* tesShaderCode = tesCode.c_str();
+
+    Compile(vShaderCode, fShaderCode, tcsShaderCode, tesShaderCode);
 }
 
 void GLShader::Use()

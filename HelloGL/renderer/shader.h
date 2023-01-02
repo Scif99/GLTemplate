@@ -37,10 +37,12 @@ public:
     GLShader& operator=(GLShader&& other) = default;
 
     GLShader(const char* vertexPath, const char* fragmentPath);
+    GLShader(const char* vertexPath, const char* fragmentPath, const char* tcsPath, const char* tesPath); 
 
-    //compile shader 
     void Compile(const char* vShaderCode, const char* fShaderCode);
-    // use/activate the shader
+    void Compile(const char* vShaderCode, const char* fShaderCode, const char* tcsShaderCode, const char* tesShaderCode);
+
+    // Bind the shader
     void Use();
     // utility functions that set values of uniforms
     void SetBool(const std::string& name, bool value) const;

@@ -20,6 +20,8 @@
 #include "examples/postProcessing/post_processing_scene.h"
 #include "examples/PerlinNoise/perlin_noise.h"
 #include "examples/Instancing/instancing.h"
+#include "examples/Tessellation/tessellation.h"
+
 
 
 class GLWindow

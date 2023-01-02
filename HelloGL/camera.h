@@ -40,6 +40,7 @@ public:
 	//Camera& operator=(const Camera& other) = default;
 	//Camera(Camera&& other) = default;
 	//Camera& operator=(Camera&& other) = default;
+	void Reset(glm::vec3 pos, glm::vec3 target, glm::vec3 up);
 
 	void ProcessKeyboardInput(GLFWwindow* window, float dt);
 	void ProcessMouseInput(GLFWwindow* window, float dx, float dy);

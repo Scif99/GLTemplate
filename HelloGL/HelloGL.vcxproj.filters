@@ -81,6 +81,9 @@
     <ClCompile Include="examples\Instancing\instancing.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="examples\Tessellation\tessellation.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="renderer\shader.h">
@@ -179,6 +182,9 @@
     <ClInclude Include="renderer\gl_wrappers.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="examples\Tessellation\tessellation.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="assets\models\backpack\backpack.mtl" />
@@ -194,6 +200,14 @@
     <None Include="examples\PerlinNoise\WaveShader.fs" />
     <None Include="examples\Instancing\2DQuadShader.vs" />
     <None Include="examples\Instancing\2DQuadShader.fs" />
+    <None Include="examples\PerlinNoise\HeightmapShader.vs" />
+    <None Include="examples\PerlinNoise\HeightmapShader.fs" />
+    <None Include="examples\Tessellation\shader.vert" />
+    <None Include="examples\Tessellation\shader.frag" />
+    <None Include="examples\Tessellation\shader.tesc" />
+    <None Include="examples\Tessellation\shader.tese" />
+    <None Include="examples\Tessellation\cubeShader.vert" />
+    <None Include="examples\Tessellation\cubeShader.frag" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="assets\textures\container.jpg">

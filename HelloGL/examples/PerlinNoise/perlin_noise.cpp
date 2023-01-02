@@ -7,18 +7,22 @@ constexpr int MESH_VERTICES_X{ 64 };
 constexpr int MESH_VERTICES_Z{ 64 };
 
 PerlinNoiseScene::PerlinNoiseScene(GLFWwindow* window)
-    :
+    : 
     m_window{ *window },
     //Shaders
-    m_shader{ GLShader("examples/PerlinNoise/WaveShader.vs", "examples/PerlinNoise/WaveShader.fs") },
-    m_water_texture{ "assets/textures/water.jpg", false, "water" },
+    //m_shader{ GLShader("examples/PerlinNoise/WaveShader.vs", "examples/PerlinNoise/WaveShader.fs") },
+    m_shader{ GLShader("examples/PerlinNoise/HeightmapShader.vs", "examples/PerlinNoise/HeightmapShader.fs") },
+    //m_water_texture{ "assets/textures/water.jpg", false, "water" },
     m_gui{window},
 
     //Entities
-    m_terrain{ MESH_VERTICES_X, MESH_VERTICES_Z}
-
-    //All other entities are constructed using default
-{}
+    m_terrain{ "examples/PerlinNoise/HeightMaps/iceland_heightmap.png"} 
+{
+    //Move camera to a slightly better position
+    m_camera.Reset(glm::vec3(67.0f, 27.5f, 169.9f),
+        glm::vec3(0.0f, 1.0f, 0.0f),
+        glm::vec3(0.0f, 1.0f, 0.0f));
+}
 
 void PerlinNoiseScene::ProcessInput(float dt, float dx, float dy)
 {
@@ -30,6 +34,7 @@ void PerlinNoiseScene::Update(float dt)
 {
     m_gui.CreateFrame();
     m_camera.Update();
+    //std::cout << m_camera.Position().x << ',' << m_camera.Position().y << ',' << m_camera.Position().z << '\n';
 }
 
 
@@ -58,7 +63,7 @@ void PerlinNoiseScene::Render()
     glEnable(GL_DEPTH_TEST);
 
     //Projection & view don't change per object
-    glm::mat4 projection = glm::perspective(glm::radians(45.0f), 800.0f / 600.0f, 0.1f, 100.0f);
+    glm::mat4 projection = glm::perspective(glm::radians(45.0f), 800.0f / 600.0f, 0.1f, 100000.0f);
     glm::mat4 view = m_camera.getView();
 
 
@@ -68,18 +73,16 @@ void PerlinNoiseScene::Render()
     m_shader.SetMat4("view", view);
 
 
-    m_shader.SetFloat("Time", (float)glfwGetTime());
-    m_shader.SetFloat("K", k);
-    m_shader.SetFloat("Velocity", v);
-    m_shader.SetFloat("Amp", a);
-
-
-    m_terrain = TerrainMesh(t, t);
+    //m_shader.SetFloat("Time", (float)glfwGetTime());
+    //m_shader.SetFloat("K", k);
+    //m_shader.SetFloat("Velocity", v);
+    //m_shader.SetFloat("Amp", a);
+    //m_terrain = TerrainMesh(t, t);
     glm::mat4 model = glm::mat4(1.f);
-    model = glm::scale(model, glm::vec3(1.f, 1.f, 3.f));
+    //model = glm::scale(model, glm::vec3(2624.f / 2.f, 1.f, 1756.f / 2.f)); //Scale based on the resolution of the heightmap
     m_shader.SetMat4("model", model);
 
-    m_water_texture.Bind(0);
+    //m_water_texture.Bind(0);
     m_terrain.Draw();
 
     m_gui.Render();

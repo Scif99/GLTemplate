@@ -10,10 +10,10 @@
 class GLID
 {
 private:
-	std::unique_ptr<unsigned int> ptr_ID{ std::make_unique<unsigned int>(0) };
+	std::unique_ptr<unsigned int> ptr_ID;
 
 public:
-	GLID() = default;
+	GLID() : ptr_ID{ std::make_unique<unsigned int>(0) } {}
 	GLID(const GLID& other) = default;
 	GLID& operator=(const GLID& other) = default;
 	GLID(GLID&& other) = default;
