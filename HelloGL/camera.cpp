@@ -16,7 +16,7 @@ Camera::Camera(glm::vec3 pos, glm::vec3 target, glm::vec3 up)
 
 void Camera::ProcessKeyboardInput(GLFWwindow* window, float dt)
 {
-    const float speed{ 2.5f * dt };
+    const float speed{ 25.f * dt };
 
     if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
         m_position += speed * m_forward;

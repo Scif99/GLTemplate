@@ -81,7 +81,10 @@
     <ClCompile Include="examples\Instancing\instancing.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="examples\Tessellation\tessellation.cpp">
+    <ClCompile Include="examples\Tessellation\Curve\curve_tessellation.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="examples\Tessellation\Quad\quad_tessellation.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -182,7 +185,10 @@
     <ClInclude Include="renderer\gl_wrappers.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="examples\Tessellation\tessellation.h">
+    <ClInclude Include="examples\Tessellation\Curve\curve_tessellation.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="examples\Tessellation\Quad\quad_tessellation.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -202,12 +208,16 @@
     <None Include="examples\Instancing\2DQuadShader.fs" />
     <None Include="examples\PerlinNoise\HeightmapShader.vs" />
     <None Include="examples\PerlinNoise\HeightmapShader.fs" />
-    <None Include="examples\Tessellation\shader.vert" />
-    <None Include="examples\Tessellation\shader.frag" />
-    <None Include="examples\Tessellation\shader.tesc" />
-    <None Include="examples\Tessellation\shader.tese" />
+    <None Include="examples\Tessellation\Curve\CurveShader.vert" />
+    <None Include="examples\Tessellation\Curve\CurveShader.frag" />
+    <None Include="examples\Tessellation\Curve\CurveShader.tesc" />
+    <None Include="examples\Tessellation\Curve\CurveShader.tese" />
     <None Include="examples\Tessellation\cubeShader.vert" />
     <None Include="examples\Tessellation\cubeShader.frag" />
+    <None Include="examples\Tessellation\Quad\QuadShader.vert" />
+    <None Include="examples\Tessellation\Quad\QuadShader.frag" />
+    <None Include="examples\Tessellation\Quad\QuadShader.tesc" />
+    <None Include="examples\Tessellation\Quad\QuadShader.tese" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="assets\textures\container.jpg">

@@ -1,4 +1,4 @@
-#include "tessellation.h"
+#include "curve_tessellation.h"
 
 
 /*
@@ -6,10 +6,10 @@ TODO: Refactor buffer classes to add support for dynamic buffers
 
 */
 
-TessellationScene::TessellationScene(GLFWwindow* window)
+CurveTessellationScene::CurveTessellationScene(GLFWwindow* window)
 	:   m_window{ *window }, 
-		m_shader{ "examples/Tessellation/shader.vert", "examples/Tessellation/shader.frag",
-				 "examples/Tessellation/shader.tesc","examples/Tessellation/shader.tese" },
+		m_shader{ "examples/Tessellation/Curve/CurveShader.vert", "examples/Tessellation/Curve/CurveShader.frag",
+				 "examples/Tessellation/Curve/CurveShader.tesc","examples/Tessellation/Curve/CurveShader.tese" },
 		m_cube_shader{"examples/Tessellation/cubeshader.vert", "examples/Tessellation/cubeShader.frag" },
 		m_gui{window}
 
@@ -29,19 +29,19 @@ TessellationScene::TessellationScene(GLFWwindow* window)
 }
 
 
-void TessellationScene::ProcessInput(float dt, float dx, float dy)
+void CurveTessellationScene::ProcessInput(float dt, float dx, float dy)
 {
 	m_camera.ProcessKeyboardInput(&m_window, dt);
 	m_camera.ProcessMouseInput(&m_window, dx,dy);
 }
-void TessellationScene::Update(float dt)
+void CurveTessellationScene::Update(float dt)
 {
 	m_gui.CreateFrame();
 	m_camera.Update();
 }
 
 
-void TessellationScene::Render()
+void CurveTessellationScene::Render()
 {
 	glClearColor(0.1f, 0.1f, 0.1f, 1.f); 
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); 
@@ -86,7 +86,7 @@ void TessellationScene::Render()
 	m_shader.SetMat4("projection", projection);
 	
 	m_shader.SetInt("NumSegments", segments);
-	m_shader.SetInt("NumStrips", 1);
+	m_shader.SetInt("NumStrips", 1); //This specifies the number of line strips to be generated
 
 
 	//Bind shader, pass uniforms

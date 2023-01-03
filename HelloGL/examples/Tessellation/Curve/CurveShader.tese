@@ -8,7 +8,9 @@ uniform mat4 projection;
 
 void main()
 { 
-	float u = gl_TessCoord.x; //tessellation u coordinate
+	float u = gl_TessCoord.x; //tessellation u coordinate (distance along curve)
+	float v = gl_TessCoord.y; //specify the line
+
 
 	 // The patch vertices (control points)
 	 vec3 p0 = gl_in[0].gl_Position.xyz;
@@ -28,7 +30,7 @@ void main()
 	 // Cubic Bezier interpolation
 	vec3 p = p0 * b0 + p1 * b1 + p2 * b2 + p3 * b3;
 
-	gl_Position = projection* view* model* vec4(p, 1.f);
+	gl_Position = projection* view* model* vec4(p.x, p.y + 1.f*v, p.z, 1.f);
 
 
 }

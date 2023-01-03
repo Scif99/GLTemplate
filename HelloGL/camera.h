@@ -20,11 +20,14 @@ private:
 	inline static glm::vec3 s_default_front = glm::vec3(0.0f, -0.7f, -1.0f);
 	inline static glm::vec3 s_default_up = glm::vec3(0.0f, 1.0f, 0.0f);
 
+	inline static float s_default_speed{ 2.5f };
+
 	//euler angles
 	float pitch{ 0.f };
 	float yaw{ -90.f };
 
 	const float sensitivity{ 0.1f };
+	//const float m_speed;
 
 public:
 	float lastX;

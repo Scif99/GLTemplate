@@ -1,6 +1,6 @@
 #version 410 core
 
-layout(vertices = 4) out;
+layout(vertices = 4) out; //number of vertices in output patch
 
 uniform int NumSegments;
 uniform int NumStrips;

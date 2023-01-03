@@ -20,7 +20,10 @@
 #include "examples/postProcessing/post_processing_scene.h"
 #include "examples/PerlinNoise/perlin_noise.h"
 #include "examples/Instancing/instancing.h"
-#include "examples/Tessellation/tessellation.h"
+
+#include "examples/Tessellation/Curve/curve_tessellation.h"
+#include "examples/Tessellation/Quad/quad_tessellation.h"
+
 
 
 
