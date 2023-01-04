@@ -3,11 +3,15 @@
 
 #include <glad/glad.h>
 
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
+
 #include <string>
 #include <vector>
+#include <cassert>
 
 #include "gl_wrappers.h"
-#include "vertex.h"
 
 /*An API-agnostic data type for buffer elements*/
 static enum class ShaderDataType

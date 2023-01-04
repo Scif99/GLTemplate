@@ -9,7 +9,6 @@
 #include "gl_wrappers.h"
 #include "shader.h"
 #include "texture.h"
-#include "vertex.h"
 #include "vertex_array.h"
 
 

@@ -18,6 +18,7 @@ TerrainGenerationScene::TerrainGenerationScene(GLFWwindow* window)
     //Entities
     m_terrain{ "examples/TerrainGeneration/HeightMaps/iceland_heightmap.png"} 
 {
+    glPolygonMode(GL_FRONT_AND_BACK, GL_LINE); //Wireframe mode
     //Move camera to a slightly better position
     m_camera.Reset(glm::vec3(67.0f, 27.5f, 169.9f),
         glm::vec3(0.0f, 1.0f, 0.0f),

@@ -211,7 +211,6 @@
     <ClInclude Include="renderer\shader.h" />
     <ClInclude Include="renderer\stb_image.h" />
     <ClInclude Include="renderer\texture.h" />
-    <ClInclude Include="renderer\vertex.h" />
     <ClInclude Include="renderer\vertex_array.h" />
     <ClInclude Include="Shapes\2Dquad.h" />
     <ClInclude Include="Shapes\terrain.h" />
