@@ -13,6 +13,18 @@ void main()
 	vec4 p2 = gl_in[2].gl_Position; //top right
 	vec4 p3 = gl_in[3].gl_Position; //top left
 
+	/*
+	Note that the vertices of the abstract patch are ordered as follows
+	p3---------------p2
+	|				 |
+	|                |               
+	|                |
+	|                |
+	p0---------------p1
+	*/
+
+
+	//Linearly interpolate
 	vec4 A = (1-u)*p0 + u*p1;
 	vec4 B = (1-u)*p3 + u*p2;
 

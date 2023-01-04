@@ -13,7 +13,6 @@ QuadTessellationScene::QuadTessellationScene(GLFWwindow* window)
 	m_gui{ window }
 
 {
-	m_camera.Reset(glm::vec3(0.f, 0.f, 1.f), glm::vec3(0.f, 0.f, -1.f), glm::vec3(0.f, 1.f, 0.f));
 	glPatchParameteri(GL_PATCH_VERTICES, 4); //number of vertices per patch
 	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE); //Wireframe mode
 
@@ -33,12 +32,23 @@ QuadTessellationScene::QuadTessellationScene(GLFWwindow* window)
 	0.5f,-0.5f
 	};
 
+	//Note the ordering of the vertices (see tess eval shader for diagram)
+	unsigned int indices[] = {
+		0,1,2,3,
+		4,5,6,7
+
+	};
+
 	glGenBuffers(1, &VBO);
 	glBindBuffer(GL_ARRAY_BUFFER, VBO);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 
 	glGenVertexArrays(1, &VAO);
 	glBindVertexArray(VAO);
+
+	glGenBuffers(1, &IBO);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, IBO);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
 
 	glEnableVertexAttribArray(0);
 	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), (void*)0);
@@ -48,13 +58,10 @@ QuadTessellationScene::QuadTessellationScene(GLFWwindow* window)
 
 void QuadTessellationScene::ProcessInput(float dt, float dx, float dy)
 {
-	m_camera.ProcessKeyboardInput(&m_window, dt);
-	m_camera.ProcessMouseInput(&m_window, dx, dy);
 }
 void QuadTessellationScene::Update(float dt)
 {
 	m_gui.CreateFrame();
-	m_camera.Update();
 }
 
 
@@ -66,13 +73,13 @@ void QuadTessellationScene::Render()
 
 
 	//Use ImGui to allow user to modify tessellation levels for each edge
-	static int outer_left{ 2 };
-	static int outer_bottom{ 2 };
-	static int outer_right{ 2 };
-	static int outer_top{ 2 };
+	static int outer_left{ 1 };
+	static int outer_bottom{ 1 };
+	static int outer_right{ 1 };
+	static int outer_top{ 1 };
 
-	static int inner_u{ 2 }; //horizontal ->
-	static int inner_v{ 2 }; //vertical ^
+	static int inner_u{ 1 }; //horizontal ->
+	static int inner_v{ 1 }; //vertical ^
 
 
 
@@ -106,7 +113,8 @@ void QuadTessellationScene::Render()
 
 	//Bind shader, pass uniforms
 	glBindVertexArray(VAO);
-	glDrawArrays(GL_PATCHES, 0, 8);
+	glDrawElements(GL_PATCHES, 8, GL_UNSIGNED_INT, 0); //8 indices (4 per patch)
+	//glDrawArrays(GL_PATCHES, 0, 8);
 
 	m_gui.Render();
 }

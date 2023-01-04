@@ -32,7 +32,7 @@ public:
 	GLShader m_shader;
 	QuadTessellationGIU m_gui;
 
-	unsigned int VAO, VBO;
+	unsigned int VAO, VBO, IBO;
 
 public:
 	QuadTessellationScene(GLFWwindow* window);

@@ -158,7 +158,7 @@
     <ClCompile Include="camera.cpp" />
     <ClCompile Include="application.cpp" />
     <ClCompile Include="examples\Instancing\instancing.cpp" />
-    <ClCompile Include="examples\PerlinNoise\perlin_noise.cpp" />
+    <ClCompile Include="examples\TerrainGeneration\terrain_generation.cpp" />
     <ClCompile Include="examples\postProcessing\post_processing_scene.cpp" />
     <ClCompile Include="examples\Tessellation\Quad\quad_tessellation.cpp" />
     <ClCompile Include="examples\Tessellation\Curve\curve_tessellation.cpp" />
@@ -188,9 +188,9 @@
     <ClInclude Include="examples\Tessellation\Curve\curve_tessellation.h" />
     <ClInclude Include="Shapes\cube.h" />
     <ClInclude Include="examples\Instancing\instancing.h" />
-    <ClInclude Include="examples\PerlinNoise\perlin_noise_gui.h" />
+    <ClInclude Include="examples\TerrainGeneration\terrain_generation_gui.h" />
     <ClInclude Include="light.h" />
-    <ClInclude Include="examples\PerlinNoise\perlin_noise.h" />
+    <ClInclude Include="examples\TerrainGeneration\terrain_generation.h" />
     <ClInclude Include="examples\postProcessing\post_processing_scene.h" />
     <ClInclude Include="examples\scene.h" />
     <ClInclude Include="gui.h" />
@@ -220,8 +220,8 @@
     <None Include="assets\models\backpack\backpack.mtl" />
     <None Include="examples\Instancing\2DQuadShader.fs" />
     <None Include="examples\Instancing\2DQuadShader.vs" />
-    <None Include="examples\PerlinNoise\HeightmapShader.fs" />
-    <None Include="examples\PerlinNoise\HeightmapShader.vs" />
+    <None Include="examples\TerrainGeneration\HeightmapShader.fs" />
+    <None Include="examples\TerrainGeneration\HeightmapShader.vs" />
     <None Include="examples\Tessellation\cubeShader.frag" />
     <None Include="examples\Tessellation\cubeShader.vert" />
     <None Include="examples\Tessellation\Curve\CurveShader.frag" />
@@ -240,8 +240,8 @@
     <None Include="shaders\LightSourceShader.vs" />
     <None Include="shaders\3DMaterialShader.fs" />
     <None Include="shaders\3DMaterialShader.vs" />
-    <None Include="examples\PerlinNoise\WaveShader.fs" />
-    <None Include="examples\PerlinNoise\WaveShader.vs" />
+    <None Include="examples\TerrainGeneration\WaveShader.fs" />
+    <None Include="examples\TerrainGeneration\WaveShader.vs" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="assets\models\backpack\ao.jpg" />

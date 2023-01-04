@@ -1,4 +1,4 @@
-#include "perlin_noise.h"
+#include "terrain_generation.h"
 
 inline const unsigned int SCREEN_WIDTH = 800;
 inline const unsigned int SCREEN_HEIGHT = 600;
@@ -6,17 +6,17 @@ inline const unsigned int SCREEN_HEIGHT = 600;
 constexpr int MESH_VERTICES_X{ 64 };
 constexpr int MESH_VERTICES_Z{ 64 };
 
-PerlinNoiseScene::PerlinNoiseScene(GLFWwindow* window)
+TerrainGenerationScene::TerrainGenerationScene(GLFWwindow* window)
     : 
     m_window{ *window },
     //Shaders
-    //m_shader{ GLShader("examples/PerlinNoise/WaveShader.vs", "examples/PerlinNoise/WaveShader.fs") },
-    m_shader{ GLShader("examples/PerlinNoise/HeightmapShader.vs", "examples/PerlinNoise/HeightmapShader.fs") },
+    //m_shader{ GLShader("examples/TerrainGeneration/WaveShader.vs", "examples/TerrainGeneration/WaveShader.fs") },
+    m_shader{ GLShader("examples/TerrainGeneration/HeightmapShader.vs", "examples/TerrainGeneration/HeightmapShader.fs") },
     //m_water_texture{ "assets/textures/water.jpg", false, "water" },
     m_gui{window},
 
     //Entities
-    m_terrain{ "examples/PerlinNoise/HeightMaps/iceland_heightmap.png"} 
+    m_terrain{ "examples/TerrainGeneration/HeightMaps/iceland_heightmap.png"} 
 {
     //Move camera to a slightly better position
     m_camera.Reset(glm::vec3(67.0f, 27.5f, 169.9f),
@@ -24,13 +24,13 @@ PerlinNoiseScene::PerlinNoiseScene(GLFWwindow* window)
         glm::vec3(0.0f, 1.0f, 0.0f));
 }
 
-void PerlinNoiseScene::ProcessInput(float dt, float dx, float dy)
+void TerrainGenerationScene::ProcessInput(float dt, float dx, float dy)
 {
     m_camera.ProcessKeyboardInput(&m_window, dt);
     m_camera.ProcessMouseInput(&m_window, dx, dy);
 }
 
-void PerlinNoiseScene::Update(float dt)
+void TerrainGenerationScene::Update(float dt)
 {
     m_gui.CreateFrame();
     m_camera.Update();
@@ -38,7 +38,7 @@ void PerlinNoiseScene::Update(float dt)
 }
 
 
-void PerlinNoiseScene::Render()
+void TerrainGenerationScene::Render()
 {
     //**WHAT IF WE WANT MULTIPLE IMGUI WINDOWS?**
 

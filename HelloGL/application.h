@@ -18,7 +18,7 @@
 
 #include "examples/scene.h"
 #include "examples/postProcessing/post_processing_scene.h"
-#include "examples/PerlinNoise/perlin_noise.h"
+#include "examples/TerrainGeneration/terrain_generation.h"
 #include "examples/Instancing/instancing.h"
 
 #include "examples/Tessellation/Curve/curve_tessellation.h"

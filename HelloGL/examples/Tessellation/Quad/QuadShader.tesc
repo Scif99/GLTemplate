@@ -10,6 +10,7 @@ void main()
 	//Pass vertex position unmodified
 	gl_out[gl_InvocationID].gl_Position = gl_in[gl_InvocationID].gl_Position; 
 
+	//Define tessellation levels 
 	 gl_TessLevelOuter[0] = float(Outer[0]);
 	 gl_TessLevelOuter[1] = float(Outer[1]);
 	 gl_TessLevelOuter[2] = float(Outer[2]);

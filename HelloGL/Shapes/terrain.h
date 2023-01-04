@@ -6,6 +6,7 @@
 
 #include "../renderer/renderer.h"
 
+
 /*
 - Note that a terrainMesh with 2 vertices in each dimension is equivalent to a quad.
 - Also note that the mesh is also normalised such that each to lie in [-1,1]
@@ -25,7 +26,6 @@ public:
 
     
     //construct with a specified number of vertices in each 
-    //By default the mesh lies in the x-z plane, with a normal in the +ve y-direction
     TerrainMesh(int xVert, int zVert)
     {
 
@@ -33,7 +33,7 @@ public:
         const float Zunit{ 2.f / (zVert - 1) };//distance between each vertex in z-direction
 
         std::vector<float> vertices;
-        vertices.reserve(xVert * zVert);
+        vertices.reserve(8* xVert * zVert);
         /* Order of vertices can be visualised like below (left->right, up->down)
         *(-1.f,-1.f,0.f)-->...-->(1.f,-1.f,0.f)
         * ...       ->                ...
@@ -66,7 +66,7 @@ public:
 
             }
         }
-
+        //Next generate vertices
         std::vector<unsigned int> indices;
         indices.reserve(xVert * zVert*3);
         for (int z = 0;z < zVert-1;++z)
