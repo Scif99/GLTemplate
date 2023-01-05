@@ -16,7 +16,7 @@ TerrainGenerationScene::TerrainGenerationScene(GLFWwindow* window)
     //Entities
     m_terrain{ m_heightmap} 
 {
-    //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE); //Wireframe mode
+    glPolygonMode(GL_FRONT_AND_BACK, GL_LINE); //Wireframe mode
     glPatchParameteri(GL_PATCH_VERTICES, 4);
 
     //Move camera to a slightly better position
@@ -61,6 +61,7 @@ void TerrainGenerationScene::Render()
     m_shader.SetMat4("projection", projection);
     m_shader.SetMat4("view", view);
     m_shader.SetMat4("model", model);
+    m_shader.SetMat4("MV", view * model);
 
     m_terrain.m_VAO->Bind();
     glDrawElements(GL_PATCHES, m_terrain.m_IBO->Count(), GL_UNSIGNED_INT, 0);
