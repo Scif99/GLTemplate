@@ -19,7 +19,9 @@ public:
 
     Quad()
     {
-
+        /*
+        Note that in 2D coordinates should be in [-1,1] 
+        */
         float vertices[] = {
             // positions   // texCoords
             -1.0f,  1.0f,  0.0f, 1.0f,

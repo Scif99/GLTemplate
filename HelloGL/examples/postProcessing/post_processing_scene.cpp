@@ -11,9 +11,9 @@ PostProcessingScene::PostProcessingScene(GLFWwindow* window)
     m_light_source_shader{ "shaders/LightSourceShader.vs", "shaders/LightSourceShader.fs" },
     m_frame_buffer_shader{ "shaders/FrameBufferShader.vs", "shaders/FrameBufferShader.fs" },
     //Textures
-    m_container_diffuse_map{ "assets/textures/container2.png", false, "diffuse" },
-    m_container_specular_map{ "assets/textures/container2_specular.png", false, "specular" },
-    m_tiles_texture{ "assets/textures/tiles.jpg", false, "floor" },
+    m_container_diffuse_map{ "assets/textures/container2.png", "diffuse" },
+    m_container_specular_map{ "assets/textures/container2_specular.png", "specular" },
+    m_tiles_texture{ "assets/textures/tiles.jpg", "floor" },
     //Framebuffer
     m_framebuffer{ SCREEN_WIDTH, SCREEN_HEIGHT },
     //Entities

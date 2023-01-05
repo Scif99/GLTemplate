@@ -27,7 +27,7 @@ public:
 	GLTexture& operator=(GLTexture&& other) = default;
 
 
-	GLTexture(const std::string& filePath, bool alpha, bool flip = true); //constructor for texture 
+	GLTexture(const std::string& filePath, bool flip = true); //constructor for texture 
 	GLTexture(int width, int height); //overload for framebuffers
 
 	//Bind to a specified texture unit

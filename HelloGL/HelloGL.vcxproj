@@ -219,8 +219,12 @@
     <None Include="assets\models\backpack\backpack.mtl" />
     <None Include="examples\Instancing\2DQuadShader.fs" />
     <None Include="examples\Instancing\2DQuadShader.vs" />
-    <None Include="examples\TerrainGeneration\HeightmapShader.fs" />
-    <None Include="examples\TerrainGeneration\HeightmapShader.vs" />
+    <None Include="examples\TerrainGeneration\HeightmapShader.frag" />
+    <None Include="examples\TerrainGeneration\HeightmapShader.vert" />
+    <None Include="examples\TerrainGeneration\TessHeightmapShader.frag" />
+    <None Include="examples\TerrainGeneration\TessHeightmapShader.tesc" />
+    <None Include="examples\TerrainGeneration\TessHeightMapShader.tese" />
+    <None Include="examples\TerrainGeneration\TessHeightmapShader.vert" />
     <None Include="examples\Tessellation\cubeShader.frag" />
     <None Include="examples\Tessellation\cubeShader.vert" />
     <None Include="examples\Tessellation\Curve\CurveShader.frag" />
@@ -239,8 +243,6 @@
     <None Include="shaders\LightSourceShader.vs" />
     <None Include="shaders\3DMaterialShader.fs" />
     <None Include="shaders\3DMaterialShader.vs" />
-    <None Include="examples\TerrainGeneration\WaveShader.fs" />
-    <None Include="examples\TerrainGeneration\WaveShader.vs" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="assets\models\backpack\ao.jpg" />
@@ -255,6 +257,7 @@
     <Image Include="assets\textures\container2_specular.png" />
     <Image Include="assets\textures\paddle.png" />
     <Image Include="assets\textures\Water.jpg" />
+    <Image Include="examples\TerrainGeneration\HeightMaps\iceland_heightmap.png" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="assets\models\backpack\source_attribution.txt" />

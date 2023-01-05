@@ -2,7 +2,7 @@
 
 /*
 This scene renders two quads, both of which are tessellated using tessellation shaders
-- 
+- Note that techincally the shared edge should really have the same tessellation level.
 
 */
 
@@ -19,23 +19,22 @@ QuadTessellationScene::QuadTessellationScene(GLFWwindow* window)
 
 	//1 quad = 1 patch
 	float vertices[] = {
-	//top left
-	-0.9f, 0.5f, 
+	//left column
+	- 0.5f, -0.5f,
 	-0.5f, 0.5f,
-	-0.5f, 0.9f, 
-	-0.9f, 0.9f,
-
-	//bottom right
-	0.5f, -0.9f,
-	0.9f,-0.9f,
-	0.9f,-0.5f,
-	0.5f,-0.5f
+	//mid column
+	0.f, -0.5f,
+	0.f, 0.5f,
+	//right column
+	0.5f, -0.5f,
+	0.5f, 0.5f
 	};
 
-	//Note the ordering of the vertices (see tess eval shader for diagram)
 	unsigned int indices[] = {
-		0,1,2,3,
-		4,5,6,7
+		//left quad
+		0,2,3,1,
+		//right quad
+		2,4,5,3
 
 	};
 

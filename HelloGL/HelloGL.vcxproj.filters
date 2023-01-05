@@ -199,12 +199,10 @@
     <None Include="shaders\LightSourceShader.fs" />
     <None Include="shaders\FrameBufferShader.vs" />
     <None Include="shaders\FrameBufferShader.fs" />
-    <None Include="examples\TerrainGeneration\WaveShader.vs" />
-    <None Include="examples\TerrainGeneration\WaveShader.fs" />
     <None Include="examples\Instancing\2DQuadShader.vs" />
     <None Include="examples\Instancing\2DQuadShader.fs" />
-    <None Include="examples\TerrainGeneration\HeightmapShader.vs" />
-    <None Include="examples\TerrainGeneration\HeightmapShader.fs" />
+    <None Include="examples\TerrainGeneration\HeightmapShader.vert" />
+    <None Include="examples\TerrainGeneration\HeightmapShader.frag" />
     <None Include="examples\Tessellation\Curve\CurveShader.vert" />
     <None Include="examples\Tessellation\Curve\CurveShader.frag" />
     <None Include="examples\Tessellation\Curve\CurveShader.tesc" />
@@ -215,6 +213,10 @@
     <None Include="examples\Tessellation\Quad\QuadShader.frag" />
     <None Include="examples\Tessellation\Quad\QuadShader.tesc" />
     <None Include="examples\Tessellation\Quad\QuadShader.tese" />
+    <None Include="examples\TerrainGeneration\TessHeightmapShader.vert" />
+    <None Include="examples\TerrainGeneration\TessHeightmapShader.tesc" />
+    <None Include="examples\TerrainGeneration\TessHeightMapShader.tese" />
+    <None Include="examples\TerrainGeneration\TessHeightmapShader.frag" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="assets\textures\container.jpg">
@@ -251,6 +253,9 @@
       <Filter>Resource Files</Filter>
     </Image>
     <Image Include="assets\textures\Water.jpg">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="examples\TerrainGeneration\HeightMaps\iceland_heightmap.png">
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>

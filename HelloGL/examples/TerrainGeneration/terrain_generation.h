@@ -16,12 +16,14 @@ class TerrainGenerationScene : public Scene
 {
 public:
 	GLFWwindow& m_window;
-
+	PerlinGui m_gui;
+	//Shaders
 	GLShader m_shader;
-	GLTexture m_water_texture;
+	//Textures
+	GLTexture m_heightmap;
+	//Entities
 	TerrainMesh m_terrain;
 	
-	PerlinGui m_gui;
 
 public:
 	~TerrainGenerationScene() { m_gui.Cleanup(); }

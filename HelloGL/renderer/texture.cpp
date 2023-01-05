@@ -1,6 +1,6 @@
 #include "texture.h"
 
-GLTexture::GLTexture(const std::string& filePath, bool alpha, bool flip /*= true*/)
+GLTexture::GLTexture(const std::string& filePath, bool flip /*= true*/)
 	:m_path{filePath}
 {
 	if (flip) { stbi_set_flip_vertically_on_load(1); }
@@ -30,10 +30,10 @@ GLTexture::GLTexture(const std::string& filePath, bool alpha, bool flip /*= true
 	glGenTextures(1, &m_renderer_ID);
 	glBindTexture(GL_TEXTURE_2D, m_renderer_ID.Value());
 
-	// set the texture wrapping/filtering options (on the currently bound texture object
+	// set the texture filtering parameters
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-
+	// set the texture wrapping parameters
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_BORDER);
 
@@ -45,6 +45,7 @@ GLTexture::GLTexture(const std::string& filePath, bool alpha, bool flip /*= true
 	glBindTexture(GL_TEXTURE_2D, 0);
 }
 
+//Overload for framebuffers
 GLTexture::GLTexture(int width, int height)
 	:m_width{width}, m_height{height}
 {
@@ -53,9 +54,10 @@ GLTexture::GLTexture(int width, int height)
 	glGenTextures(1, &m_renderer_ID);
 	glBindTexture(GL_TEXTURE_2D, m_renderer_ID.Value());
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, NULL); //note the texture has no data (it is added when we render to framebuffer!)
+	//Set texture filtering parameters
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-	//Clamp so we dont get any weird wrapping
+	//Set wrapping parameters
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 

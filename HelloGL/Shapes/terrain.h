@@ -32,8 +32,6 @@ public:
         const float Xunit{ 2.f/(xVert -1)}; //distance between each vertex in x-direction
         const float Zunit{ 2.f / (zVert - 1) };//distance between each vertex in z-direction
 
-        std::vector<float> vertices;
-        vertices.reserve(8* xVert * zVert);
         /* Order of vertices can be visualised like below (left->right, up->down)
         *(-1.f,-1.f,0.f)-->...-->(1.f,-1.f,0.f)
         * ...       ->                ...
@@ -41,6 +39,10 @@ public:
         * ...       ->                ...
         *(1.f,-1.f,0.f)-->...->(1.f,1.f,0.f)
         */
+
+        std::vector<float> vertices;
+        vertices.reserve(8* xVert * zVert);
+
         for (int z = 0; z < zVert;++z)
         {
             for (int x = 0; x < xVert;++x)
@@ -66,7 +68,7 @@ public:
 
             }
         }
-        //Next generate vertices
+        //Next generate indices 
         std::vector<unsigned int> indices;
         indices.reserve(xVert * zVert*3);
         for (int z = 0;z < zVert-1;++z)
@@ -101,78 +103,66 @@ public:
         m_VBO->Unbind();
     }
 
-    TerrainMesh(const std::string& heightmap_path)
+    TerrainMesh(const GLTexture& heightmap)
     {
-        // load height map texture
-        int width, height, nChannels;
-        unsigned char* data = stbi_load(heightmap_path.c_str(),
-            &width, &height, &nChannels, 0);
+        int width = heightmap.m_width;
+        int height = heightmap.m_height;
 
-        const float Xunit{ 2.f / (width - 1) }; //distance between each vertex in x-direction
-        const float Zunit{ 2.f / (height - 1) };//distance between each vertex in z-direction
+        unsigned int rez = 20;
+        const float xUnit = width / (float)rez;  //x-distance between vertices
+        const float zUnit = height / (float)rez; //z-distance between vertices
+
+        /*
+        Imagine looking down from the y-axis like below
+            
+            -z
+            ^
+            |
+            |
+            |
+            |____________> x
+
+            Then we fill the vertices in major order
+        */
 
         std::vector<float> vertices;
-        vertices.reserve(8*width * height); //3(position) + 3(normal) + 2(texture)
 
-        float yScale = 64.0f / 256.0f, yShift = 16.0f;  // apply a scale+shift to the height data
-        for (int z = 0; z < height;++z)
+        for (unsigned x = 0; x <= rez - 1; x++) //x-dim
         {
-            for (int x = 0; x < width;++x)
+            for (unsigned z = 0; z <= rez - 1; z++) //z-dim
             {
-                float x_coord{ -1.f + x * Xunit };
-                float z_coord{ -1.f + z * Zunit };
-                unsigned char* texel = data + (x + width * z) * nChannels;
-                float y_coord = (float)texel[0];
-
-                ////Position
-                //vertices.push_back(x_coord);
-                //vertices.push_back((int)y_coord * yScale - yShift);
-                //vertices.push_back(z_coord);
-
-                vertices.push_back(-height / 2.0f + z);        // v.x
-                vertices.push_back((int)y_coord * yScale - yShift); // v.y
-                vertices.push_back(-width / 2.0f + x);        // v.z
-
-                //Normal
-                vertices.push_back(0.f);
-                vertices.push_back(1.f);
-                vertices.push_back(0.f);
-
-                //Texture Coordinates
-                // (-1.f,-1.f,0.f) is top left -> (1.f,-1.f,-0.f) is top right
-                vertices.push_back(x * Xunit / 2.f);
-                vertices.push_back(1.f - (z * Zunit / 2.f));
-
+                vertices.push_back(-width / 2.0f + x*xUnit); // v.x
+                vertices.push_back(0.0f); // v.y
+                vertices.push_back(-height / 2.0f + z*zUnit); // v.z
+                vertices.push_back(x / (float)rez); // u
+                vertices.push_back(z / (float)rez); // v
             }
         }
-        stbi_image_free(data);
 
         std::vector<unsigned int> indices;
-        indices.reserve(width * height* 3);
-        for (int z = 0;z < height - 1;++z)
+        indices.reserve(rez * rez* 3);
+        for (int x = 0; x < rez - 1; ++x)
         {
-            for (int x = 1;x < height;++x)
+            for (int z = 0 ; z < rez - 1; ++z)
             {
-                //At each iteration we add a quad's (two triangles) worth of indices.
-                int curr = width * z + x;
-                indices.push_back(curr);
-                indices.push_back(curr - 1);
-                indices.push_back(curr + width - 1);
-
-                indices.push_back(curr);
-                indices.push_back(curr + width - 1);
-                indices.push_back(curr + width);
-
+                //At each iteration we add a patch worth of indices.
+                //Edges are described using the same visual as above
+                int top_left = rez * x + z;
+                indices.push_back(top_left);
+                indices.push_back(top_left + rez); //top right
+                indices.push_back(top_left +1); //bottom left
+                indices.push_back(top_left + rez + 1); //bottom right
             }
         }
 
+
         //specify the layout of the data
-        BufferLayout layout({ ShaderDataType::Float3, ShaderDataType::Float3, ShaderDataType::Float2 });
+        BufferLayout layout({ ShaderDataType::Float3, ShaderDataType::Float2 });
 
         //Generate VBO, attach layout
         m_VBO = std::make_shared<VertexBuffer>(vertices);
         m_VBO->SetLayout(layout);
-        m_IBO = std::make_shared<IndexBuffer>(indices);
+       m_IBO = std::make_shared<IndexBuffer>(indices);
         m_VAO = std::make_shared<VertexArray>();
 
         //Configure VAO
@@ -183,6 +173,7 @@ public:
         m_VBO->Unbind();
 
     }
+
     void Draw()
     {
         m_VAO->Bind();
