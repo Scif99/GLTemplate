@@ -16,6 +16,7 @@ class TerrainGenerationScene : public Scene
 {
 public:
 	GLFWwindow& m_window;
+
 	PerlinGui m_gui;
 	//Shaders
 	GLShader m_shader;

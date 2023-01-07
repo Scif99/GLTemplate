@@ -2,21 +2,11 @@
 
 #include <iostream>
 
-void VertexArray::Bind() const
-{
-	glBindVertexArray(m_renderer_ID.Value());
-}
-
-void VertexArray::Unbind() const
-{
-	glBindVertexArray(0);
-}
-
 void VertexArray::AddVertexBuffer(const std::shared_ptr<VertexBuffer>& vbo, int divisor /* = 0*/)
 {
     assert(vbo->GetLayout().m_elements.size() && "No Layout Has Been Set!");
 
-    glBindVertexArray(m_renderer_ID.Value());
+    glBindVertexArray(m_renderer_ID.m_ID);
     vbo->Bind();
 
     //Get 
@@ -42,7 +32,7 @@ void VertexArray::AddVertexBuffer(const std::shared_ptr<VertexBuffer>& vbo, int 
 
 void VertexArray::SetIndexBuffer(const std::shared_ptr<IndexBuffer>& ibo)
 {
-    glBindVertexArray(m_renderer_ID.Value());
+    glBindVertexArray(m_renderer_ID.m_ID);
     ibo->Bind();
     m_index_buffer = ibo;
 }

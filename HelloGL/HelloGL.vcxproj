@@ -186,6 +186,8 @@
     <ClInclude Include="3d_renderer.h" />
     <ClInclude Include="examples\Tessellation\Quad\quad_tessellation.h" />
     <ClInclude Include="examples\Tessellation\Curve\curve_tessellation.h" />
+    <ClInclude Include="renderer\perlin.h" />
+    <ClInclude Include="renderer\vertex.h" />
     <ClInclude Include="Shapes\cube.h" />
     <ClInclude Include="examples\Instancing\instancing.h" />
     <ClInclude Include="examples\TerrainGeneration\terrain_generation_gui.h" />
@@ -213,20 +215,19 @@
     <ClInclude Include="renderer\texture.h" />
     <ClInclude Include="renderer\vertex_array.h" />
     <ClInclude Include="Shapes\2Dquad.h" />
+    <ClInclude Include="Shapes\grid.h" />
     <ClInclude Include="Shapes\terrain.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="assets\models\backpack\backpack.mtl" />
-    <None Include="examples\Instancing\2DQuadShader.fs" />
-    <None Include="examples\Instancing\2DQuadShader.vs" />
-    <None Include="examples\TerrainGeneration\HeightmapShader.frag" />
-    <None Include="examples\TerrainGeneration\HeightmapShader.vert" />
+    <None Include="examples\Instancing\InstancedQuadShader.frag" />
+    <None Include="examples\Instancing\InstancedQuadShader.vert" />
     <None Include="examples\TerrainGeneration\TessHeightmapShader.frag" />
     <None Include="examples\TerrainGeneration\TessHeightmapShader.tesc" />
     <None Include="examples\TerrainGeneration\TessHeightMapShader.tese" />
     <None Include="examples\TerrainGeneration\TessHeightmapShader.vert" />
-    <None Include="examples\Tessellation\cubeShader.frag" />
-    <None Include="examples\Tessellation\cubeShader.vert" />
+    <None Include="shaders\3DDefaultShader.frag" />
+    <None Include="shaders\3DDefaultShader.vert" />
     <None Include="examples\Tessellation\Curve\CurveShader.frag" />
     <None Include="examples\Tessellation\Curve\CurveShader.tesc" />
     <None Include="examples\Tessellation\Curve\CurveShader.tese" />
@@ -235,14 +236,10 @@
     <None Include="examples\Tessellation\Quad\QuadShader.tesc" />
     <None Include="examples\Tessellation\Quad\QuadShader.tese" />
     <None Include="examples\Tessellation\Quad\QuadShader.vert" />
-    <None Include="shaders\2DSpriteShader.fs" />
-    <None Include="shaders\2DSpriteShader.vs" />
-    <None Include="shaders\FrameBufferShader.fs" />
-    <None Include="shaders\FrameBufferShader.vs" />
-    <None Include="shaders\LightSourceShader.fs" />
-    <None Include="shaders\LightSourceShader.vs" />
-    <None Include="shaders\3DMaterialShader.fs" />
-    <None Include="shaders\3DMaterialShader.vs" />
+    <None Include="examples\postProcessing\SharpenShader.frag" />
+    <None Include="examples\postProcessing\SharpenShader.vert" />
+    <None Include="shaders\3DMaterialShader.frag" />
+    <None Include="shaders\3DMaterialShader.vert" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="assets\models\backpack\ao.jpg" />

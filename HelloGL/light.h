@@ -25,6 +25,6 @@ public:
     LightCube(const glm::vec3& pos, const glm::vec3& ambient, const glm::vec3& diffuse, const glm::vec3& specular)
         : m_position{ pos }, m_ambient{ ambient }, m_diffuse{ diffuse }, m_specular{ specular }
     {
-        m_mesh = std::make_shared<CubeMesh>();
+        m_mesh = std::make_shared<CubeMesh>(1.f, 1.f);
     }
 };

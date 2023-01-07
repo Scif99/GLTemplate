@@ -188,27 +188,30 @@
     <ClInclude Include="examples\Tessellation\Quad\quad_tessellation.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="renderer\vertex.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="renderer\perlin.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Shapes\grid.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="assets\models\backpack\backpack.mtl" />
-    <None Include="shaders\2DSpriteShader.vs" />
-    <None Include="shaders\2DSpriteShader.fs" />
-    <None Include="shaders\3DMaterialShader.vs" />
-    <None Include="shaders\3DMaterialShader.fs" />
-    <None Include="shaders\LightSourceShader.vs" />
-    <None Include="shaders\LightSourceShader.fs" />
-    <None Include="shaders\FrameBufferShader.vs" />
-    <None Include="shaders\FrameBufferShader.fs" />
-    <None Include="examples\Instancing\2DQuadShader.vs" />
-    <None Include="examples\Instancing\2DQuadShader.fs" />
-    <None Include="examples\TerrainGeneration\HeightmapShader.vert" />
-    <None Include="examples\TerrainGeneration\HeightmapShader.frag" />
+    <None Include="shaders\3DMaterialShader.vert" />
+    <None Include="shaders\3DMaterialShader.frag" />
+    <None Include="examples\postProcessing\SharpenShader.vert" />
+    <None Include="examples\postProcessing\SharpenShader.frag" />
+    <None Include="examples\Instancing\InstancedQuadShader.vert" />
+    <None Include="examples\Instancing\InstancedQuadShader.frag" />
     <None Include="examples\Tessellation\Curve\CurveShader.vert" />
     <None Include="examples\Tessellation\Curve\CurveShader.frag" />
     <None Include="examples\Tessellation\Curve\CurveShader.tesc" />
     <None Include="examples\Tessellation\Curve\CurveShader.tese" />
-    <None Include="examples\Tessellation\cubeShader.vert" />
-    <None Include="examples\Tessellation\cubeShader.frag" />
+    <None Include="shaders\3DDefaultShader.vert" />
+    <None Include="shaders\3DDefaultShader.frag" />
     <None Include="examples\Tessellation\Quad\QuadShader.vert" />
     <None Include="examples\Tessellation\Quad\QuadShader.frag" />
     <None Include="examples\Tessellation\Quad\QuadShader.tesc" />

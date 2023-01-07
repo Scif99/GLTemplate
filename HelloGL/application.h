@@ -20,9 +20,9 @@
 #include "examples/postProcessing/post_processing_scene.h"
 #include "examples/TerrainGeneration/terrain_generation.h"
 #include "examples/Instancing/instancing.h"
-
 #include "examples/Tessellation/Curve/curve_tessellation.h"
 #include "examples/Tessellation/Quad/quad_tessellation.h"
+
 
 
 
@@ -62,6 +62,7 @@ public:
 
 	Application(unsigned int width, unsigned int height);
 	~Application() { glfwDestroyWindow(m_window); };
+	//Copy/Moves?
 
 	void init(GLFWwindow* window);
 	void ProcessInput(float dt, float dx, float dy);

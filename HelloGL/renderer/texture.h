@@ -19,7 +19,7 @@ public:
 	int m_height{ 0 };
 
 public:
-	~GLTexture() { glDeleteTextures(1, &m_renderer_ID); }
+	~GLTexture() { glDeleteTextures(1, &m_renderer_ID.m_ID); }
 	GLTexture() = default;
 	GLTexture(const GLTexture& other) = default;
 	GLTexture& operator=(const GLTexture& other) = default;

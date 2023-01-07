@@ -3,30 +3,21 @@
 Mesh::Mesh(const std::vector<Vertex>& vertices, const std::vector<unsigned int>& indices, const std::vector<ModelTexture>& textures)
 	: m_vertices{ vertices }, m_indices{ indices }, m_textures{ textures }
 {
-	glGenVertexArrays(1, &m_VAO);
-	glGenBuffers(1, &m_VBO);
-	glGenBuffers(1, &m_IBO);
 
-	glBindVertexArray(m_VAO);
-	glBindBuffer(GL_ARRAY_BUFFER, m_VBO);
+	//specify the layout of the data
+	BufferLayout layout{ {ShaderDataType::Float3, "Position"}, {ShaderDataType::Float3, "Normal"},{ ShaderDataType::Float2, "TexCoord"} };
+	//Generate VBO, attach layout
+	m_VBO = std::make_shared<VertexBuffer>(vertices);
+	m_VBO->SetLayout(layout);
+	m_IBO = std::make_unique<IndexBuffer>(indices);
+	m_VAO = std::make_unique<VertexArray>();
 
-	glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(Vertex), &vertices[0], GL_STATIC_DRAW);
-
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_IBO);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size() * sizeof(unsigned int),
-		&indices[0], GL_STATIC_DRAW);
-
-	// vertex positions
-	glEnableVertexAttribArray(0);
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)0);
-	// vertex normals
-	glEnableVertexAttribArray(1);
-	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, m_normal));
-	// vertex texture coords
-	glEnableVertexAttribArray(2);
-	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, m_tex_coords));
-
-	glBindVertexArray(0);
+	//Configure VAO
+	m_VAO->Bind();
+	m_VAO->AddVertexBuffer(m_VBO);
+	m_VAO->SetIndexBuffer(m_IBO);
+	m_VAO->Unbind();
+	m_VBO->Unbind();
 }
 
 
@@ -55,9 +46,9 @@ void Mesh::Draw(const GLShader& shader)
 		glBindTexture(GL_TEXTURE_2D, m_textures[i].id);
 
 	}
-	glBindVertexArray(m_VAO);
-	glDrawElements(GL_TRIANGLES, m_indices.size(), GL_UNSIGNED_INT, 0); //TODO what if we dont want GL_TRIANGLES?
-	glBindVertexArray(0);
+	m_VAO->Bind();
+	glDrawElements(GL_TRIANGLES, m_indices.size(), GL_UNSIGNED_INT, 0);
+	m_VAO->Unbind();
 
 	glActiveTexture(GL_TEXTURE0);
 }

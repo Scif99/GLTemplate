@@ -33,6 +33,7 @@ public:
 
 	CubeMesh m_cube;
 
+	//VAO/VBO for control points
 	unsigned int VAO;
 	unsigned int VBO;
 

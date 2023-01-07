@@ -52,20 +52,18 @@ void TerrainGenerationScene::Render()
     //Projection & view don't change per object
     glm::mat4 projection = glm::perspective(glm::radians(45.0f), 800.0f / 600.0f, 0.1f, 100000.0f);
     glm::mat4 view = m_camera.getView();
-    glm::mat4 model = glm::mat4(1.f);   
+    glm::mat4 model = glm::mat4(1.f); 
 
     //Bind shader, pass uniforms
     m_shader.Use();
-    m_heightmap.Bind();
-    m_shader.SetInt("heightMap", 0);
     m_shader.SetMat4("projection", projection);
     m_shader.SetMat4("view", view);
     m_shader.SetMat4("model", model);
     m_shader.SetMat4("MV", view * model);
 
-    m_terrain.m_VAO->Bind();
-    glDrawElements(GL_PATCHES, m_terrain.m_IBO->Count(), GL_UNSIGNED_INT, 0);
-    m_terrain.m_VAO->Unbind();
+    m_heightmap.Bind();
+    m_shader.SetInt("heightMap", 0);
+    m_terrain.Draw(GLPrimitive::PATCHES);
 
 
     m_gui.Render();

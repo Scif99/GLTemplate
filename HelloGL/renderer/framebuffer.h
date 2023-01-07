@@ -26,13 +26,13 @@ public:
 	GLID m_renderer_ID;
 	RenderbufferObject(unsigned int width, unsigned int height)
 	{
-		glGenRenderbuffers(1, &m_renderer_ID);
-		glBindRenderbuffer(GL_RENDERBUFFER, m_renderer_ID.Value());
+		glGenRenderbuffers(1, &m_renderer_ID.m_ID);
+		glBindRenderbuffer(GL_RENDERBUFFER, m_renderer_ID.m_ID);
 		glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, width, height);
 		glBindRenderbuffer(GL_RENDERBUFFER, 0); //unbind after allocating memory
 	}
 
-	~RenderbufferObject() { glDeleteRenderbuffers(1, &m_renderer_ID); }
+	~RenderbufferObject() { glDeleteRenderbuffers(1, &m_renderer_ID.m_ID); }
 };
 
 
@@ -51,7 +51,7 @@ public:
 	//Attach a renderbuffer object image as the stencil/depth attachments 
 	void AttachRenderbufferObject();
 
-	void Bind() { glBindFramebuffer(GL_FRAMEBUFFER, m_renderer_ID.Value()); }
+	void Bind() { glBindFramebuffer(GL_FRAMEBUFFER, m_renderer_ID.m_ID); }
 	void Unbind() { glBindFramebuffer(GL_FRAMEBUFFER, 0); }
 
 	~Framebuffer();

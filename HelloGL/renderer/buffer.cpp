@@ -5,34 +5,31 @@
 //--------------------------
 VertexBuffer::VertexBuffer(const float vertices[], unsigned int size)
 {
-	glGenBuffers(1, &m_renderer_ID);
-	glBindBuffer(GL_ARRAY_BUFFER, m_renderer_ID.Value()); //'How do we want to use this memory?'
+	glGenBuffers(1, &m_renderer_ID.m_ID);
+	glBindBuffer(GL_ARRAY_BUFFER, m_renderer_ID.m_ID); //'How do we want to use this memory?'
 	glBufferData(GL_ARRAY_BUFFER, size, vertices, GL_STATIC_DRAW); //copy data into our buffer
 }
 
 VertexBuffer::VertexBuffer(const glm::vec2 vertices[], unsigned int size)
 {
-	glGenBuffers(1, &m_renderer_ID);
-	glBindBuffer(GL_ARRAY_BUFFER, m_renderer_ID.Value()); //'How do we want to use this memory?'
+	glGenBuffers(1, &m_renderer_ID.m_ID);
+	glBindBuffer(GL_ARRAY_BUFFER, m_renderer_ID.m_ID); //'How do we want to use this memory?'
 	glBufferData(GL_ARRAY_BUFFER, size, vertices, GL_STATIC_DRAW); //copy data into our buffer
 }
 
 //overload for meshes
 VertexBuffer::VertexBuffer(const std::vector<float>& vertices)
 {
-	glGenBuffers(1, &m_renderer_ID);
-	glBindBuffer(GL_ARRAY_BUFFER, m_renderer_ID.Value()); //'How do we want to use this memory?'
+	glGenBuffers(1, &m_renderer_ID.m_ID);
+	glBindBuffer(GL_ARRAY_BUFFER, m_renderer_ID.m_ID); //'How do we want to use this memory?'
 	glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(float), &vertices[0], GL_STATIC_DRAW); //copy data into our buffer
 }
 
-void VertexBuffer::Bind() const
+VertexBuffer::VertexBuffer(const std::vector<Vertex>& vertices)
 {
-	glBindBuffer(GL_ARRAY_BUFFER, m_renderer_ID.Value());
-}
-
-void VertexBuffer::Unbind() const
-{
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	glGenBuffers(1, &m_renderer_ID.m_ID);
+	glBindBuffer(GL_ARRAY_BUFFER, m_renderer_ID.m_ID); //'How do we want to use this memory?'
+	glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(Vertex), &vertices[0], GL_STATIC_DRAW); //copy data into our buffer
 }
 
 
@@ -43,25 +40,15 @@ void VertexBuffer::Unbind() const
 IndexBuffer::IndexBuffer(const unsigned int indices[], unsigned int size)
 	:m_count{size/sizeof(unsigned int)}
 {
-	glGenBuffers(1, &m_renderer_ID);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_renderer_ID.Value()); //'How do we want to use this memory?'
+	glGenBuffers(1, &m_renderer_ID.m_ID);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_renderer_ID.m_ID); //'How do we want to use this memory?'
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, size, indices, GL_STATIC_DRAW); //copy data into our buffer
 }
 
 IndexBuffer::IndexBuffer(const std::vector<unsigned int>& indices)
 	:m_count{ (unsigned int)indices.size()}
 {
-	glGenBuffers(1, &m_renderer_ID);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_renderer_ID.Value()); //'How do we want to use this memory?'
+	glGenBuffers(1, &m_renderer_ID.m_ID);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_renderer_ID.m_ID); //'How do we want to use this memory?'
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size() * sizeof(unsigned int), &indices[0], GL_STATIC_DRAW); //copy data into our buffer
-}
-
-void IndexBuffer::Bind() const
-{
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_renderer_ID.Value());
-}
-
-void IndexBuffer::Unbind() const
-{
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 }

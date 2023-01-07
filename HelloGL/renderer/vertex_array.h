@@ -17,8 +17,8 @@ private:
 	int num_attributes{ 0 }; //The total number of vertex attributes over all the associated VBOs
 
 public:
-	VertexArray() { glGenVertexArrays(1, &m_renderer_ID); }
-	~VertexArray(){ glDeleteVertexArrays(1, &m_renderer_ID); }
+	VertexArray() { glGenVertexArrays(1, &m_renderer_ID.m_ID); Bind(); }
+	~VertexArray(){ glDeleteVertexArrays(1, &m_renderer_ID.m_ID); }
 	VertexArray(const VertexArray& other) = default;
 	VertexArray& operator=(const VertexArray& other) = default;
 	VertexArray(VertexArray&& other) = default;
@@ -30,8 +30,8 @@ public:
 	const std::vector<std::shared_ptr<VertexBuffer>>& GetVertexBuffers() const{ return m_vertex_buffers; }
 	const std::shared_ptr<IndexBuffer>& GetIndexBuffer() const{ return m_index_buffer; }
 
-	void Bind() const;
-	void Unbind() const;
+	void Bind() const { glBindVertexArray(m_renderer_ID.m_ID); }
+	void Unbind() const { glBindVertexArray(0); }
 };
 
 #endif // !VERTEX_ARRAY_H

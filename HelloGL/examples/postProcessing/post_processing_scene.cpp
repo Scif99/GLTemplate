@@ -1,4 +1,4 @@
-#include "post_processing_scene.h"
+    #include "post_processing_scene.h"
 
 inline const unsigned int SCREEN_WIDTH = 800;
 inline const unsigned int SCREEN_HEIGHT = 600;
@@ -7,9 +7,9 @@ PostProcessingScene::PostProcessingScene(GLFWwindow* window)
     :
     m_window{ *window },
     //Shaders
-    m_material_shader{ GLShader("shaders/3dMaterialShader.vs", "shaders/3dMaterialShader.fs") },
-    m_light_source_shader{ "shaders/LightSourceShader.vs", "shaders/LightSourceShader.fs" },
-    m_frame_buffer_shader{ "shaders/FrameBufferShader.vs", "shaders/FrameBufferShader.fs" },
+    m_material_shader{ GLShader("shaders/3DMaterialShader.vert", "shaders/3DMaterialShader.frag") },
+    m_light_source_shader{ "shaders/3DDefaultShader.vert", "shaders/3DDefaultShader.frag" },
+    m_frame_buffer_shader{ "examples/postProcessing/SharpenShader.vert", "examples/postProcessing/SharpenShader.frag" },
     //Textures
     m_container_diffuse_map{ "assets/textures/container2.png", "diffuse" },
     m_container_specular_map{ "assets/textures/container2_specular.png", "specular" },
@@ -18,9 +18,10 @@ PostProcessingScene::PostProcessingScene(GLFWwindow* window)
     m_framebuffer{ SCREEN_WIDTH, SCREEN_HEIGHT },
     //Entities
     m_light{ LightCube::s_default_pos, LightCube::s_default_ambient, LightCube::s_default_diffuse, LightCube::s_default_specular },
-    m_terrain{ 2,2 }
+    m_terrain{ 2.f,2.f, 2 },
+    m_frame_quad{1.f},
+    m_container{1.f, 1.f}
 {
-
 }
 
 void PostProcessingScene::ProcessInput(float dt, float dx, float dy)
@@ -73,7 +74,7 @@ void PostProcessingScene::Render()
     //draw
     m_container_diffuse_map.Bind(0);
     m_container_specular_map.Bind(1);
-    m_container.Draw();
+    m_container.Draw(GLPrimitive::TRIANGLE);
 
 
     //------------------------
@@ -89,7 +90,7 @@ void PostProcessingScene::Render()
     //Draw
     m_tiles_texture.Bind(0);
     m_tiles_texture.Bind(1);
-    m_terrain.Draw();
+    m_terrain.Draw(GLPrimitive::TRIANGLE);
 
 
     //-----------
@@ -108,7 +109,7 @@ void PostProcessingScene::Render()
     m_light_source_shader.SetMat4("model", Lightmodel);
 
     //Draw
-    m_container.Draw();
+    m_container.Draw(GLPrimitive::TRIANGLE);
 
     // SECOND PASS (Framebuffer)
     m_framebuffer.Unbind();
@@ -118,5 +119,5 @@ void PostProcessingScene::Render()
 
     m_frame_buffer_shader.Use();
     m_framebuffer.m_texture_object.Bind();
-    m_frame_quad.Draw();
+    m_frame_quad.Draw(GLPrimitive::TRIANGLE);
 }

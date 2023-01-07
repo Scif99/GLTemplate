@@ -3,6 +3,7 @@
 #include <memory>
 #include "../renderer/renderer.h"
 #include "../camera.h"
+#include "../renderer/gl_wrappers.h"
 
 class Scene
 {

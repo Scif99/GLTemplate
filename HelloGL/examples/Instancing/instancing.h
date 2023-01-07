@@ -1,6 +1,8 @@
 #pragma once
 
+#include <array>
 #include <memory>
+
 #include "../renderer/renderer.h"
 #include "../camera.h"
 #include "../scene.h"
@@ -15,17 +17,14 @@ class InstancingScene : public Scene
 {
 public:
 	GLFWwindow& m_window;
-	GLShader m_shader;
+	GLShader m_quad_shader;
+	GLTexture m_quad_texture;
 
-	std::shared_ptr<VertexArray> m_VAO;
-	std::shared_ptr<VertexBuffer> m_VBO;
+	Quad m_quad;
+
 	std::shared_ptr<VertexBuffer> m_InstanceVBO;
 
-	std::shared_ptr<IndexBuffer> m_IBO;
-
-	glm::vec2 m_translations[100];
-
-
+	std::array<glm::vec2,100> m_translations;
 
 public:
 	InstancingScene(GLFWwindow* window);

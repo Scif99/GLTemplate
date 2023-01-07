@@ -11,17 +11,24 @@
 #include "texture.h"
 #include "vertex_array.h"
 
-
+#include <concepts>
 #include <string>
 
-struct Vertex
+/*
+A VertexAttribute is something like a position, normal or texture coordinate 
+*/
+
+
+struct VertexAttribute
 {
-	glm::vec3 m_position;
-	glm::vec3 m_normal;
-	glm::vec2 m_tex_coords;
-	//tangents
-	//bitangents
+	ShaderDataType m_type;
 };
+
+struct GLVertex
+{
+	std::vector<VertexAttribute> m_attributes;
+};
+
 
 struct ModelTexture
 {
@@ -30,6 +37,8 @@ struct ModelTexture
 	std::string path;
 };
 
+
+
 class Mesh
 {
 private:
@@ -37,13 +46,12 @@ private:
 	std::vector<unsigned int> m_indices;
 	std::vector<ModelTexture> m_textures;
 
-	unsigned int m_VAO;
-	unsigned int m_VBO;
-	unsigned int m_IBO;
+	std::shared_ptr<VertexArray> m_VAO;
+	std::shared_ptr<VertexBuffer> m_VBO;
+	std::shared_ptr<IndexBuffer> m_IBO;
 
 
 public:
-	~Mesh() = default;
 	Mesh(const std::vector<Vertex>& vertices, const std::vector<unsigned int>& indices);
 	Mesh(const std::vector<Vertex>& vertices, const std::vector<unsigned int>& indices, const std::vector<ModelTexture>& textures);
 

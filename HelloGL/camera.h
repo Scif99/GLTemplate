@@ -52,7 +52,9 @@ public:
 
 	const glm::vec3& Position() const { return m_position; }
 	void setPosition(glm::vec3 v) { m_position = v; }; //sets absolute position
-	void move(glm::vec3 v) { m_position += v; }; //moves relative to current pos
+	void move(glm::vec3 v) { m_position += v; }; //move relative to current pos
+
+
 
 	glm::mat4 getView() const { return m_view; }
 

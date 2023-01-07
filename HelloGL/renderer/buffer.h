@@ -11,6 +11,7 @@
 #include <vector>
 #include <cassert>
 
+#include "vertex.h"
 #include "gl_wrappers.h"
 
 /*An API-agnostic data type for buffer elements*/
@@ -41,13 +42,13 @@ static unsigned int ShaderDataTypeSize(ShaderDataType type)
 */
 struct BufferElement
 {
-	//std::string m_name;
+	std::string m_name;
 	ShaderDataType m_type{ShaderDataType::None};
 	unsigned int m_size;
 	unsigned int m_offset;
 
-	BufferElement(ShaderDataType type)//, const std::string& name)
-		: /*m_name{name},*/ m_type{type}, m_size{ShaderDataTypeSize(type)}, m_offset{0}
+	BufferElement(ShaderDataType type, const std::string& name)
+		: m_name{name}, m_type{type}, m_size{ShaderDataTypeSize(type)}, m_offset{0}
 	{}
 
 	unsigned int GetcomponentCount() const
@@ -74,6 +75,12 @@ public:
 	unsigned int m_stride{ 0 };
 
 	BufferLayout() = default;
+
+	BufferLayout(const std::initializer_list<BufferElement>& elements)
+	:m_elements{ elements }
+	{
+		CalculateOffsetsAndStride();
+	}
 
 	BufferLayout(const std::vector<BufferElement>& elements)
 		:m_elements{ elements } 
@@ -108,8 +115,8 @@ private:
 	BufferLayout m_layout;
 public:
 	//default constructor for dynamic?
-	~VertexBuffer() { glDeleteBuffers(1, &m_renderer_ID); };
-	VertexBuffer() = default;
+	~VertexBuffer() { glDeleteBuffers(1, &m_renderer_ID.m_ID); };
+	VertexBuffer() { glGenBuffers(1, &m_renderer_ID.m_ID); }
 	VertexBuffer(const VertexBuffer& other) = default;
 	VertexBuffer& operator=(const VertexBuffer& other) = default;
 	VertexBuffer(VertexBuffer&& other) = default;
@@ -118,9 +125,11 @@ public:
 	VertexBuffer(const glm::vec2 vertices[], unsigned int size);
 	VertexBuffer(const float vertices[], unsigned int size);
 	VertexBuffer(const std::vector<float>& vertices); //overload for meshes
+	VertexBuffer(const std::vector<Vertex>& vertices); 
 
-	void Bind() const;
-	void Unbind() const;
+
+	void Bind() const { glBindBuffer(GL_ARRAY_BUFFER, m_renderer_ID.m_ID); }
+	void Unbind() const { glBindBuffer(GL_ARRAY_BUFFER, 0); }
 
 	const BufferLayout& GetLayout() const { return m_layout; }
 	void SetLayout(const BufferLayout& layout) { m_layout = layout; }
@@ -137,7 +146,7 @@ private:
 	GLID m_renderer_ID;
 	unsigned int m_count;
 public:
-	~IndexBuffer() { glDeleteBuffers(1, &m_renderer_ID); };
+	~IndexBuffer() { glDeleteBuffers(1, &m_renderer_ID.m_ID); };
 	IndexBuffer() = default;
 	IndexBuffer(const IndexBuffer& other) = default;
 	IndexBuffer& operator=(const IndexBuffer& other) = default;
@@ -148,8 +157,9 @@ public:
 	IndexBuffer(const std::vector<unsigned int>& indices); //size vs count...
 
 	const unsigned int Count() const { return m_count; }
-	void Bind() const;
-	void Unbind() const;
+
+	void Bind() const { glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_renderer_ID.m_ID); }
+	void Unbind() const { glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0); }
 
 };
 

@@ -27,8 +27,8 @@ GLTexture::GLTexture(const std::string& filePath, bool flip /*= true*/)
 	}
 
 	//gen/bind buffers
-	glGenTextures(1, &m_renderer_ID);
-	glBindTexture(GL_TEXTURE_2D, m_renderer_ID.Value());
+	glGenTextures(1, &m_renderer_ID.m_ID);
+	glBindTexture(GL_TEXTURE_2D, m_renderer_ID.m_ID);
 
 	// set the texture filtering parameters
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
@@ -51,8 +51,8 @@ GLTexture::GLTexture(int width, int height)
 {
 
 	// generate texture
-	glGenTextures(1, &m_renderer_ID);
-	glBindTexture(GL_TEXTURE_2D, m_renderer_ID.Value());
+	glGenTextures(1, &m_renderer_ID.m_ID);
+	glBindTexture(GL_TEXTURE_2D, m_renderer_ID.m_ID);
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, NULL); //note the texture has no data (it is added when we render to framebuffer!)
 	//Set texture filtering parameters
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
@@ -71,7 +71,7 @@ void GLTexture::Bind(unsigned int slot) const
 {
 	assert(slot >= 0);
 	glActiveTexture(GL_TEXTURE0 + slot);
-	glBindTexture(GL_TEXTURE_2D, m_renderer_ID.Value());
+	glBindTexture(GL_TEXTURE_2D, m_renderer_ID.m_ID);
 }
 
 

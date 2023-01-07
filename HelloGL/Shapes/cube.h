@@ -4,12 +4,16 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
+#include <cassert>
+#include <vector>
+
 #include "../renderer/renderer.h"
 
 /*
 All instances share a VBO, IBO
-	- Thus 
+	- This is why we use a shared_ptr
 */
+
 
 class CubeMesh
 {
@@ -19,74 +23,94 @@ public:
     std::shared_ptr<IndexBuffer> m_IBO;
 
 
-    CubeMesh()
+    CubeMesh(float xScale, float yScale, unsigned int instanceCount = 1)
     {
-        {
-            float vertices[] = {
-                //pos                   //normal             //tex
-                -0.5f, -0.5f, -0.5f,   0.0f,  0.0f, -1.0f,   0.0f, 0.0f,
-                 0.5f, -0.5f, -0.5f,   0.0f,  0.0f, -1.0f,   1.0f, 0.0f,
-                 0.5f,  0.5f, -0.5f,   0.0f,  0.0f, -1.0f,   1.0f, 1.0f,
-                -0.5f,  0.5f, -0.5f,   0.0f,  0.0f, -1.0f,   0.0f, 1.0f,
-                                     
-                -0.5f, -0.5f,  0.5f,   0.0f,  0.0f, 1.0f,    0.0f, 0.0f,
-                 0.5f, -0.5f,  0.5f,   0.0f,  0.0f, 1.0f,    1.0f, 0.0f,
-                 0.5f,  0.5f,  0.5f,   0.0f,  0.0f, 1.0f,    1.0f, 1.0f,
-                -0.5f,  0.5f,  0.5f,   0.0f,  0.0f, 1.0f,    0.0f, 1.0f,
-                                     
-                -0.5f,  0.5f,  0.5f,  -1.0f,  0.0f,  0.0f,   0.0f, 0.0f,
-                -0.5f,  0.5f, -0.5f,  -1.0f,  0.0f,  0.0f,   1.0f, 0.0f,
-                -0.5f, -0.5f, -0.5f,  -1.0f,  0.0f,  0.0f,   1.0f, 1.0f,
-                -0.5f, -0.5f,  0.5f,  -1.0f,  0.0f,  0.0f,   0.0f, 1.0f,
-                                     
-                 0.5f,  0.5f,  0.5f,   1.0f,  0.0f,  0.0f,   0.0f, 0.0f,
-                 0.5f,  0.5f, -0.5f,   1.0f,  0.0f,  0.0f,   1.0f, 0.0f,
-                 0.5f, -0.5f, -0.5f,   1.0f,  0.0f,  0.0f,   1.0f, 1.0f,
-                 0.5f, -0.5f,  0.5f,   1.0f,  0.0f,  0.0f,   0.0f, 1.0f,
-                                     
-                                     
-                -0.5f, -0.5f, -0.5f,   0.0f, -1.0f,  0.0f,   0.0f, 0.0f,
-                 0.5f, -0.5f, -0.5f,   0.0f, -1.0f,  0.0f,   1.0f, 0.0f,
-                 0.5f, -0.5f,  0.5f,   0.0f, -1.0f,  0.0f,   1.0f, 1.0f,
-                -0.5f, -0.5f,  0.5f,   0.0f, -1.0f,  0.0f,   0.0f, 1.0f,
-                                     
-                -0.5f,  0.5f, -0.5f,   0.0f,  1.0f,  0.0f,   0.0f, 0.0f,
-                 0.5f,  0.5f, -0.5f,   0.0f,  1.0f,  0.0f,   1.0f, 0.0f,
-                 0.5f,  0.5f,  0.5f,   0.0f,  1.0f,  0.0f,   1.0f, 1.0f,
-                -0.5f,  0.5f,  0.5f,   0.0f,  1.0f,  0.0f,   0.0f, 1.0f
+        m_vertices = CubeMesh::GenerateVertices(xScale, yScale);
+        m_indices = CubeMesh::GenerateIndices();
 
-            };
+        //specify the layout of the data
+        BufferLayout layout({ {ShaderDataType::Float3, "Position"}, { ShaderDataType::Float3, "Normal"}, {ShaderDataType::Float2, "TexCoord"}});
 
-            unsigned int indices[] = {
-               0,2,1, 0,3,2,
-               4,5,6, 4,6,7, 
-               8,10,11, 8,9, 10, 
-               12,15,14, 12,14, 13,
-               16,18,19, 16,17,18,
-               20,23,22, 20,22,21
-            };
+        //Generate VBO, attach layout
+        m_VBO = std::make_shared<VertexBuffer>(m_vertices);
+        m_VBO->SetLayout(layout);
+        m_IBO = std::make_shared<IndexBuffer>(m_indices);
+        m_VAO = std::make_shared<VertexArray>();
 
-            //specify the layout of the data
-            BufferLayout layout({ ShaderDataType::Float3, ShaderDataType::Float3, ShaderDataType::Float2 });
-
-            //Generate VBO, attach layout
-            m_VBO = std::make_shared<VertexBuffer>(vertices, sizeof(vertices));
-            m_VBO->SetLayout(layout);
-            m_IBO = std::make_shared<IndexBuffer>(indices, sizeof(indices));
-            m_VAO = std::make_shared<VertexArray>();
-
-            //Configure VAO
-            m_VAO->Bind();
-            m_VAO->AddVertexBuffer(m_VBO);
-            m_VAO->SetIndexBuffer(m_IBO);
-            m_VAO->Unbind();
-            m_VBO->Unbind();
-        }
+        //Configure VAO
+        m_VAO->Bind();
+        m_VAO->AddVertexBuffer(m_VBO);
+        m_VAO->SetIndexBuffer(m_IBO);
+        m_VAO->Unbind();
+        m_VBO->Unbind();
+        
     }
-    void Draw()
+    void Draw(GLPrimitive primitive)
     {
         m_VAO->Bind();
-        glDrawElements(GL_TRIANGLES, m_IBO->Count(), GL_UNSIGNED_INT, 0);
+        glDrawElements(static_cast<std::underlying_type<GLPrimitive>::type>(primitive), m_IBO->Count(), GL_UNSIGNED_INT, 0);
         m_VAO->Unbind();
     }
+
+private:
+    inline static std::vector<float> GenerateVertices(float xScale, float yScale);
+    inline static std::vector<unsigned int> GenerateIndices();
+
+    std::vector<float> m_vertices;
+    std::vector<unsigned int> m_indices;
+    unsigned int m_instance_count;
+
 };
+
+//Both functions should use NRVO to elide copies
+std::vector<float> CubeMesh::GenerateVertices(float xScale, float yScale)
+{
+    std::vector<float> vertices{
+        //pos                   //normal             //tex
+        -0.5f, -0.5f, -0.5f,   0.0f,  0.0f, -1.0f,   0.0f, 0.0f,
+         0.5f, -0.5f, -0.5f,   0.0f,  0.0f, -1.0f,   1.0f, 0.0f,
+         0.5f,  0.5f, -0.5f,   0.0f,  0.0f, -1.0f,   1.0f, 1.0f,
+        -0.5f,  0.5f, -0.5f,   0.0f,  0.0f, -1.0f,   0.0f, 1.0f,
+
+        -0.5f, -0.5f,  0.5f,   0.0f,  0.0f, 1.0f,    0.0f, 0.0f,
+         0.5f, -0.5f,  0.5f,   0.0f,  0.0f, 1.0f,    1.0f, 0.0f,
+         0.5f,  0.5f,  0.5f,   0.0f,  0.0f, 1.0f,    1.0f, 1.0f,
+        -0.5f,  0.5f,  0.5f,   0.0f,  0.0f, 1.0f,    0.0f, 1.0f,
+
+        -0.5f,  0.5f,  0.5f,  -1.0f,  0.0f,  0.0f,   0.0f, 0.0f,
+        -0.5f,  0.5f, -0.5f,  -1.0f,  0.0f,  0.0f,   1.0f, 0.0f,
+        -0.5f, -0.5f, -0.5f,  -1.0f,  0.0f,  0.0f,   1.0f, 1.0f,
+        -0.5f, -0.5f,  0.5f,  -1.0f,  0.0f,  0.0f,   0.0f, 1.0f,
+
+         0.5f,  0.5f,  0.5f,   1.0f,  0.0f,  0.0f,   0.0f, 0.0f,
+         0.5f,  0.5f, -0.5f,   1.0f,  0.0f,  0.0f,   1.0f, 0.0f,
+         0.5f, -0.5f, -0.5f,   1.0f,  0.0f,  0.0f,   1.0f, 1.0f,
+         0.5f, -0.5f,  0.5f,   1.0f,  0.0f,  0.0f,   0.0f, 1.0f,
+
+
+        -0.5f, -0.5f, -0.5f,   0.0f, -1.0f,  0.0f,   0.0f, 0.0f,
+         0.5f, -0.5f, -0.5f,   0.0f, -1.0f,  0.0f,   1.0f, 0.0f,
+         0.5f, -0.5f,  0.5f,   0.0f, -1.0f,  0.0f,   1.0f, 1.0f,
+        -0.5f, -0.5f,  0.5f,   0.0f, -1.0f,  0.0f,   0.0f, 1.0f,
+
+        -0.5f,  0.5f, -0.5f,   0.0f,  1.0f,  0.0f,   0.0f, 0.0f,
+         0.5f,  0.5f, -0.5f,   0.0f,  1.0f,  0.0f,   1.0f, 0.0f,
+         0.5f,  0.5f,  0.5f,   0.0f,  1.0f,  0.0f,   1.0f, 1.0f,
+        -0.5f,  0.5f,  0.5f,   0.0f,  1.0f,  0.0f,   0.0f, 1.0f
+
+    };
+    return vertices;
+}
+
+std::vector<unsigned int> CubeMesh::GenerateIndices()
+{
+    std::vector<unsigned int> indices{
+        0,2,1, 0,3,2,
+        4,5,6, 4,6,7,
+        8,10,11, 8,9, 10,
+        12,15,14, 12,14, 13,
+        16,18,19, 16,17,18,
+        20,23,22, 20,22,21
+    };
+    return indices;
+}

@@ -27,7 +27,7 @@ class Renderer
 	void Submit(const VertexArray& vao);
 	void EndScene();
 
-	void Draw(GLShader& shader, GLTexture& texture, const glm::mat4& model, const glm::mat4& view, const glm::mat4& projection,  const VertexArray& vao)
+	void Draw()
 	{
 		//Bind shader
 		//shader.Use();

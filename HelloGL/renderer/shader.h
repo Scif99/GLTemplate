@@ -30,7 +30,7 @@ public:
     GLID m_renderer_ID;
 public:
     GLShader() = default;
-    ~GLShader() { glDeleteProgram(m_renderer_ID.Value()); }
+    ~GLShader() { glDeleteProgram(m_renderer_ID.m_ID); }
     GLShader(const GLShader& other) = default;
     GLShader& operator=(const GLShader& other) = default;
     GLShader(GLShader&& other) = default;

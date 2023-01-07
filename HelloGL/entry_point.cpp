@@ -38,7 +38,7 @@ int main(int argc, char* argv[])
 {
     glfwInit();
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 0); //enforce minimum version of 4.0
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3); //enforce minimum version of 4.0
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
     GLFWwindow* window = glfwCreateWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "OpenGL Playground", nullptr, nullptr);
@@ -67,8 +67,8 @@ int main(int argc, char* argv[])
     glViewport(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-    glEnable(GL_DEPTH_TEST); //enable depth testing
-    //glEnable(GL_CULL_FACE); //face-culling
+    glEnable(GL_DEPTH_TEST);
+    //glEnable(GL_CULL_FACE); 
     //glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED); //hide & capture mouse
     //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE); //Wireframe mode
 
@@ -107,7 +107,6 @@ int main(int argc, char* argv[])
 
     // delete all resources as loaded using the resource manager
     // ---------------------------------------------------------
-
     App.Cleanup();
 
     glfwTerminate();

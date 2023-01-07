@@ -6,7 +6,7 @@
 #include "../light.h"
 
 #include "../Shapes/cube.h"
-#include "../Shapes/terrain.h"
+#include "../Shapes/grid.h"
 #include "../Shapes/2Dquad.h"
 
 class PostProcessingScene : public Scene
@@ -21,11 +21,10 @@ public:
 	GLTexture m_container_diffuse_map;
 	GLTexture m_container_specular_map;
 	GLTexture m_tiles_texture;
-	//Camera m_camera;
 
 	CubeMesh m_container;
 	LightCube m_light;
-	TerrainMesh m_terrain;
+	Grid m_terrain;
 
 	//Framebuffer stuff
 	Quad m_frame_quad;

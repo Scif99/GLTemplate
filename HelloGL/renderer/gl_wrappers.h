@@ -2,25 +2,53 @@
 #include <memory>
 
 /*
-
+* Wrappers for various OpenGL things
+*	- ID
+*	- Primitives
 */
 
 //GLID is a simple object that holds an opengl ID
 //It allows for move semantics of any objects that contain an opengl ID (buffer objects, textures etc...)
+
+/*
+
+OpenGL objects should be non-copyable, but moveable
+*/
+
 class GLID
 {
-private:
-	std::unique_ptr<unsigned int> ptr_ID;
 
 public:
-	GLID() : ptr_ID{ std::make_unique<unsigned int>(0) } {}
-	GLID(const GLID& other) = default;
-	GLID& operator=(const GLID& other) = default;
-	GLID(GLID&& other) = default;
-	GLID& operator=(GLID&& other) = default;
+	unsigned int m_ID{ 0 };
 
-	void Set(unsigned int i) { ptr_ID = std::make_unique<unsigned int>(i); }
+public:
+	GLID() {}
 
-	unsigned int* operator&() const noexcept { return ptr_ID.get(); }
-	unsigned int& Value() const noexcept { return *ptr_ID; }
+	GLID(const GLID& other) = delete;
+	GLID& operator=(const GLID& other) = delete;
+	
+	GLID(GLID&& other) noexcept
+		: m_ID{other.m_ID}
+	{
+		other.m_ID = 0;
+	}
+	GLID& operator=(GLID&& other) noexcept
+	{
+		if (this != &other)
+		{
+			m_ID = 0;
+
+			m_ID = other.m_ID;
+			other.m_ID = 0;
+		}
+		return *this;
+	}
+};
+
+
+
+enum class GLPrimitive
+{
+	TRIANGLE = GL_TRIANGLES,
+	PATCHES = GL_PATCHES
 };

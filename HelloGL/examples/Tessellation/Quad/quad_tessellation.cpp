@@ -19,15 +19,15 @@ QuadTessellationScene::QuadTessellationScene(GLFWwindow* window)
 
 	//1 quad = 1 patch
 	float vertices[] = {
-	//left column
-	- 0.5f, -0.5f,
-	-0.5f, 0.5f,
-	//mid column
-	0.f, -0.5f,
-	0.f, 0.5f,
-	//right column
-	0.5f, -0.5f,
-	0.5f, 0.5f
+		//left column
+		- 0.5f, -0.5f,
+		-0.5f, 0.5f,
+		//mid column
+		0.f, -0.5f,
+		0.f, 0.5f,
+		//right column
+		0.5f, -0.5f,
+		0.5f, 0.5f
 	};
 
 	unsigned int indices[] = {

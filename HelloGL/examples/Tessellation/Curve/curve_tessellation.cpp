@@ -1,5 +1,10 @@
 #include "curve_tessellation.h"
+#include <array>
+/*
+A scene that demonstrates tessellation of curves (Bezier)
+Also demonstrates the use of dynamic vertex buffers
 
+*/
 
 /*
 TODO: Refactor buffer classes to add support for dynamic buffers
@@ -10,13 +15,17 @@ CurveTessellationScene::CurveTessellationScene(GLFWwindow* window)
 	:   m_window{ *window }, 
 		m_shader{ "examples/Tessellation/Curve/CurveShader.vert", "examples/Tessellation/Curve/CurveShader.frag",
 				 "examples/Tessellation/Curve/CurveShader.tesc","examples/Tessellation/Curve/CurveShader.tese" },
-		m_cube_shader{"examples/Tessellation/cubeshader.vert", "examples/Tessellation/cubeShader.frag" },
-		m_gui{window}
+		m_cube_shader{"shaders/3DDefaultShader.vert", "shaders/3DDefaultShader.frag" },
+		m_gui{window},
+		
+		//Entities
+		m_cube{ 0.05f, 0.05f }
 
 {
 	m_camera.Reset(glm::vec3(0.f, 0.f, 1.f), glm::vec3(0.f, 0.f, -1.f), glm::vec3(0.f, 1.f, 0.f));
 	glPatchParameteri(GL_PATCH_VERTICES, 4); //number of vertices per patch
 
+	//Set up dynamic buffer objects for control points
 	glGenBuffers(1, &VBO);
 	glBindBuffer(GL_ARRAY_BUFFER, VBO);
 	glBufferData(GL_ARRAY_BUFFER, 12* sizeof(float), nullptr, GL_DYNAMIC_DRAW); //allocate enought space for 4 control points (12 floats)
@@ -48,19 +57,22 @@ void CurveTessellationScene::Render()
 	glEnable(GL_DEPTH_TEST);
 
 	//Use ImGui to allow user to move control points at runtime
-	static float a[3] = { -0.5f,-0.5f, 0.f };
-	static float b[3] = { -0.25f, 0.5f, 0.f };
-	static float c[3] = { 0.f, -0.5f, 0.f };
-	static float d[3] = { 0.25f, 0.5f, 0.f };
+	static std::vector<std::array<float,3>> control_points {
+		{ -0.5f,-0.5f, 0.f },
+		{ -0.25f, 0.5f, 0.f },
+		{ 0.f, -0.5f, 0.f },
+		{ 0.25f, 0.5f, 0.f }
+	};
+
 	static int segments{30};
 
 	//Configure GUI
 	ImGui::Begin("Control Points");
 
-	ImGui::SliderFloat3("a", a, -10.f, 10.f);
-	ImGui::SliderFloat3("b", b, -10.0f, 10.0f);
-	ImGui::SliderFloat3("c", c, -10.0f, 10.0f);
-	ImGui::SliderFloat3("d", d, -10.f, 10.f);
+	ImGui::SliderFloat3("a", control_points[0].data(), -10.f, 10.f);
+	ImGui::SliderFloat3("b", control_points[1].data(), -10.0f, 10.0f);
+	ImGui::SliderFloat3("c", control_points[2].data(), -10.0f, 10.0f);
+	ImGui::SliderFloat3("d", control_points[3].data(), -10.f, 10.f);
 	ImGui::SliderInt("Segments", &segments, 1, 30);
 
 	ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
@@ -68,10 +80,10 @@ void CurveTessellationScene::Render()
 
 	//Set buffer data
 	glBindBuffer(GL_ARRAY_BUFFER, VBO);
-	glBufferSubData(GL_ARRAY_BUFFER, 0,					3 * sizeof(float), a);
-	glBufferSubData(GL_ARRAY_BUFFER, 3 * sizeof(float), 3 * sizeof(float), b);
-	glBufferSubData(GL_ARRAY_BUFFER, 6 * sizeof(float), 3 * sizeof(float), c);
-	glBufferSubData(GL_ARRAY_BUFFER, 9 * sizeof(float), 3 * sizeof(float), d);
+	glBufferSubData(GL_ARRAY_BUFFER, 0,					3 * sizeof(float), control_points[0].data());
+	glBufferSubData(GL_ARRAY_BUFFER, 3 * sizeof(float), 3 * sizeof(float), control_points[1].data());
+	glBufferSubData(GL_ARRAY_BUFFER, 6 * sizeof(float), 3 * sizeof(float), control_points[2].data());
+	glBufferSubData(GL_ARRAY_BUFFER, 9 * sizeof(float), 3 * sizeof(float), control_points[3].data());
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 
 
@@ -100,10 +112,10 @@ void CurveTessellationScene::Render()
 	m_cube_shader.SetMat4("projection", projection);
 
 	std::vector<glm::vec3> translations{ 
-		glm::vec3(a[0],a[1],a[2]),
-		glm::vec3(b[0],b[1],b[2]),
-		glm::vec3(c[0],c[1],c[2]),
-		glm::vec3(d[0],d[1],d[2])
+		glm::vec3(control_points[0][0],control_points[0][1],control_points[0][2]),
+		glm::vec3(control_points[1][0],control_points[1][1],control_points[1][2]),
+		glm::vec3(control_points[2][0],control_points[2][1],control_points[2][2]),
+		glm::vec3(control_points[3][0],control_points[3][1],control_points[3][2])
 	};
 
 	//Move cubes to control points
@@ -114,8 +126,7 @@ void CurveTessellationScene::Render()
 		cube_model = glm::scale(cube_model, glm::vec3(0.05f, 0.05f, 0.05f));
 
 		m_cube_shader.SetMat4("model", cube_model);
-		m_cube.Draw();
-
+		m_cube.Draw(GLPrimitive::TRIANGLE);
 	}
 
 	//GUI
