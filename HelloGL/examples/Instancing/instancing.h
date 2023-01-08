@@ -1,5 +1,4 @@
 #pragma once
-
 #include <array>
 #include <memory>
 
@@ -24,7 +23,8 @@ public:
 
 	std::shared_ptr<VertexBuffer> m_InstanceVBO;
 
-	std::array<glm::vec2,100> m_translations;
+	std::array<float, 200> m_translations;
+
 
 public:
 	InstancingScene(GLFWwindow* window);

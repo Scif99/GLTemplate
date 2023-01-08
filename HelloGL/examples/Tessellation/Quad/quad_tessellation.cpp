@@ -113,7 +113,6 @@ void QuadTessellationScene::Render()
 	//Bind shader, pass uniforms
 	glBindVertexArray(VAO);
 	glDrawElements(GL_PATCHES, 8, GL_UNSIGNED_INT, 0); //8 indices (4 per patch)
-	//glDrawArrays(GL_PATCHES, 0, 8);
 
 	m_gui.Render();
 }

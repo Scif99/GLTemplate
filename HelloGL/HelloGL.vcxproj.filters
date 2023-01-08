@@ -173,9 +173,6 @@
     <ClInclude Include="light.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="examples\TerrainGeneration\terrain_generation_gui.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="examples\Instancing\instancing.h">
       <Filter>Header Files</Filter>
     </ClInclude>

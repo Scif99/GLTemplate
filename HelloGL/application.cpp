@@ -5,7 +5,7 @@
     
 
 Application::Application(unsigned int width, unsigned int height)
-	:m_keys(), m_width{ width }, m_height{ height }, m_state{Application::State::MENU}
+	:m_keys(), m_width{ width }, m_height{ height }
 {
 
 }
@@ -19,7 +19,8 @@ void Application::init(GLFWwindow* window)
     //m_scene = std::make_unique<TerrainGenerationScene>(window);
     //m_scene = std::make_unique<PostProcessingScene>(window);
     //m_scene = std::make_unique<CurveTessellationScene>(window);
-    m_scene = std::make_unique<QuadTessellationScene>(window);
+    //m_scene = std::make_unique<QuadTessellationScene>(window);
+    m_scene = std::make_unique<MenuScene>(window);
 
 }
 

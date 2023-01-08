@@ -10,10 +10,12 @@
 #include "../Shapes/2Dquad.h"
 #include "../gui.h"
 
-class QuadTessellationGIU : public GUI
+class QuadTessellationGUI : public GUI
 {
-	//**WHAT IF WE WANT MULTIPLE IMGUI WINDOWS?**
-	void CreateWindow()
+public:
+	QuadTessellationGUI(GLFWwindow* window) : GUI{ window } {}
+
+	void CreateWindow() override final
 	{
 
 		ImGui::Begin(" Quads");
@@ -30,7 +32,7 @@ public:
 	GLFWwindow& m_window;
 
 	GLShader m_shader;
-	QuadTessellationGIU m_gui;
+	QuadTessellationGUI m_gui;
 
 	unsigned int VAO, VBO, IBO;
 

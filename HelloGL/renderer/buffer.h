@@ -7,9 +7,10 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
-#include <string>
-#include <vector>
 #include <cassert>
+#include <string>
+#include <span>
+#include <vector>
 
 #include "vertex.h"
 #include "gl_wrappers.h"
@@ -122,8 +123,7 @@ public:
 	VertexBuffer(VertexBuffer&& other) = default;
 	VertexBuffer& operator=(VertexBuffer&& other) = default;
 
-	VertexBuffer(const glm::vec2 vertices[], unsigned int size);
-	VertexBuffer(const float vertices[], unsigned int size);
+	VertexBuffer(std::span<float> vertices);
 	VertexBuffer(const std::vector<float>& vertices); //overload for meshes
 	VertexBuffer(const std::vector<Vertex>& vertices); 
 
@@ -153,8 +153,8 @@ public:
 	IndexBuffer(IndexBuffer&& other) = default;
 	IndexBuffer& operator=(IndexBuffer&& other) = default;
 
-	IndexBuffer(const unsigned int indices[], unsigned int size); //size vs count...
-	IndexBuffer(const std::vector<unsigned int>& indices); //size vs count...
+	IndexBuffer(std::span<unsigned int> indices);
+	IndexBuffer(const std::vector<unsigned int>& indices);
 
 	const unsigned int Count() const { return m_count; }
 

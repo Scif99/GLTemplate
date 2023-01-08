@@ -38,6 +38,15 @@ struct ModelTexture
 };
 
 
+struct Material
+{
+	//std::vector<DiffuseTexture> m_diffuse_components;
+	//std::vector<SpecularTexture> m_specular_components;
+
+
+};
+
+
 
 class Mesh
 {

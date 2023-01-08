@@ -10,8 +10,11 @@
 
 class SplineGUI : public GUI
 {
-	//**WHAT IF WE WANT MULTIPLE IMGUI WINDOWS?**
-	void CreateWindow()
+public:
+
+	SplineGUI(GLFWwindow* window) : GUI{ window } {}
+
+	void CreateWindow() override final
 	{
 
 		ImGui::Begin(" Curves");

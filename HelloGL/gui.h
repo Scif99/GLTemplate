@@ -19,19 +19,7 @@ class GUI
 
 public:
 
-public:
-	GUI(GLFWwindow* window)
-	{
-		// Initialize ImGUI
-		IMGUI_CHECKVERSION();
-		ImGui::CreateContext();
-		ImGuiIO& io = ImGui::GetIO(); (void)io;
-		ImGui::StyleColorsDark();
-		ImGui_ImplGlfw_InitForOpenGL(window, true);
-		ImGui_ImplOpenGL3_Init("#version 330");
-	}
-	~GUI() {};
-
+	virtual ~GUI() {};
 
 	void CreateFrame()
 	{
@@ -43,14 +31,7 @@ public:
 
 
 	//**WHAT IF WE WANT MULTIPLE IMGUI WINDOWS?**
-	void CreateWindow()
-	{
-
-		ImGui::Begin("Scene Menu");
-
-		ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
-		ImGui::End();
-	}
+	virtual void CreateWindow() = 0;
 
 	void Render()
 	{
@@ -63,6 +44,18 @@ public:
 		ImGui_ImplOpenGL3_Shutdown();
 		ImGui_ImplGlfw_Shutdown();
 		ImGui::DestroyContext();
+	}
+
+protected:
+	GUI(GLFWwindow* window)
+	{
+		// Initialize ImGUI
+		IMGUI_CHECKVERSION();
+		ImGui::CreateContext();
+		ImGuiIO& io = ImGui::GetIO(); (void)io;
+		ImGui::StyleColorsDark();
+		ImGui_ImplGlfw_InitForOpenGL(window, true);
+		ImGui_ImplOpenGL3_Init("#version 430");
 	}
 };
 

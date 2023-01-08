@@ -14,15 +14,13 @@ InstancingScene::InstancingScene(GLFWwindow* window)
     {
         for (int x = -10; x < 10; x += 2)
         {
-            glm::vec2 translation;
-            translation.x = (float)x / 10.0f + offset;
-            translation.y = (float)y / 10.0f + offset;
-            m_translations[index++] = translation;
+            m_translations[index++] = (float)x / 10.0f + offset;
+            m_translations[index++] = (float)y / 10.0f + offset;
         }
     }
 
     BufferLayout instanced_layout{ { ShaderDataType::Float2, "Position" } };
-    m_InstanceVBO = std::make_shared<VertexBuffer>(m_translations.data(), sizeof(m_translations));
+    m_InstanceVBO = std::make_shared<VertexBuffer>(m_translations);
     m_InstanceVBO->SetLayout(instanced_layout);
 
     m_quad.m_VAO->Bind();

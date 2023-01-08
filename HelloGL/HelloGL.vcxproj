@@ -190,7 +190,6 @@
     <ClInclude Include="renderer\vertex.h" />
     <ClInclude Include="Shapes\cube.h" />
     <ClInclude Include="examples\Instancing\instancing.h" />
-    <ClInclude Include="examples\TerrainGeneration\terrain_generation_gui.h" />
     <ClInclude Include="light.h" />
     <ClInclude Include="examples\TerrainGeneration\terrain_generation.h" />
     <ClInclude Include="examples\postProcessing\post_processing_scene.h" />
