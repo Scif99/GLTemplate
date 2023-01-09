@@ -33,6 +33,7 @@ void main()
 
         //Scale to [0,1]
         //This value is used as the parameter in interpolation
+        //Note because we are in eye-space, the distance from camera to patch vertex is just eyeSpacePos.z
         float distance00 = clamp((abs(eyeSpacePos00.z)-MIN_DISTANCE) / (MAX_DISTANCE-MIN_DISTANCE), 0.0, 1.0);
         float distance01 = clamp((abs(eyeSpacePos01.z)-MIN_DISTANCE) / (MAX_DISTANCE-MIN_DISTANCE), 0.0, 1.0);
         float distance10 = clamp((abs(eyeSpacePos10.z)-MIN_DISTANCE) / (MAX_DISTANCE-MIN_DISTANCE), 0.0, 1.0);

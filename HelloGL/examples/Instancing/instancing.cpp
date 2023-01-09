@@ -19,7 +19,8 @@ InstancingScene::InstancingScene(GLFWwindow* window)
     m_quad_texture{"assets/textures/awesomeface.png", false}
     
 {
-    glPointSize(10.f);
+    m_camera.Reset(glm::vec3(0.f, 0.f, 1.f), glm::vec3(0.f, 0.f, -1.f), glm::vec3(0.f, 1.f, 0.f));
+    //glPointSize(10.f); //Point size is computed in shader as a function of distance from the camera!
     srand(static_cast <unsigned> (time(0)));
 
     //Fill buffer
@@ -102,7 +103,7 @@ void InstancingScene::Render()
     glDisable(GL_DEPTH_TEST);
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-
+    glEnable(GL_PROGRAM_POINT_SIZE);
 
 
     m_quad_shader.Use();
@@ -114,11 +115,15 @@ void InstancingScene::Render()
     glm::mat4 view = m_camera.getView();
     glm::mat4 model = glm::mat4(1.f);
 
-    m_quad_shader.SetMat4("MVP", projection * view * model);
+    m_quad_shader.SetMat4("u_Projection", projection);
+    m_quad_shader.SetMat4("u_View", view);
+    m_quad_shader.SetMat4("u_Model", model);
+
 
     float time = (float)glfwGetTime();
-    m_quad_shader.SetFloat("Time", time);
-    m_quad_shader.SetFloat("ParticleLifetime", 50.f);
+    m_quad_shader.SetFloat("u_Time", time);
+    m_quad_shader.SetFloat("u_ParticleLifetime", 15.f);
+
 
     glBindVertexArray(VAO);
     glDrawArrays(GL_POINTS, 0, NUM_PARTICLES);
