@@ -12,6 +12,8 @@
 #include "../Shapes/terrain.h"
 #include "../Shapes/2Dquad.h"
 
+constexpr int NUM_PARTICLES{ 100 };
+
 class InstancingScene : public Scene
 {
 public:
@@ -19,11 +21,10 @@ public:
 	GLShader m_quad_shader;
 	GLTexture m_quad_texture;
 
-	Quad m_quad;
+	std::array<float,4 * NUM_PARTICLES> m_data;
 
-	std::shared_ptr<VertexBuffer> m_InstanceVBO;
-
-	std::array<float, 200> m_translations;
+	unsigned int VBO;
+	unsigned int VAO;
 
 
 public:

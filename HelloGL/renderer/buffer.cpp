@@ -1,5 +1,5 @@
 #include "buffer.h"
-
+#include <iostream>
 //---------------------
 //Vertex Buffer
 //--------------------------
@@ -31,7 +31,7 @@ VertexBuffer::VertexBuffer(const std::vector<Vertex>& vertices)
 //-----------------------
 
 IndexBuffer::IndexBuffer(std::span<unsigned int> indices)
-	:m_count{indices.size()}
+	:m_count{(unsigned int)indices.size()}
 {
 	glGenBuffers(1, &m_renderer_ID.m_ID);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_renderer_ID.m_ID); //'How do we want to use this memory?'

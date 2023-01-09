@@ -7,10 +7,8 @@
 #include "../renderer/renderer.h"
 
 /*
-A 2D Quad
+A rectangular Quad
 */
-#include <optional>
-
 class Quad
 {
 public:
@@ -18,10 +16,12 @@ public:
     std::shared_ptr<VertexBuffer> m_VBO;
     std::shared_ptr<IndexBuffer> m_IBO;
 
-    Quad(float scale, unsigned int instanceCount = 1)
-        :m_instance_count{instanceCount}
+    
+    unsigned int m_instance_count{ 1 };
+
+    Quad(float width, float height)
     {
-        m_vertices = Quad::GenerateVertices(scale);
+        m_vertices = Quad::GenerateVertices(width, height);
         m_indices = Quad::GenerateIndices();
 
         //specify the layout of the data
@@ -45,37 +45,26 @@ public:
     {
 
         m_VAO->Bind();
-        if (m_instance_count > 1) 
-        { 
-            glDrawElementsInstanced(static_cast<std::underlying_type<GLPrimitive>::type>(primitive), m_IBO->Count(), GL_UNSIGNED_INT, 0, m_instance_count);
-        }
-        else
-        {     
-            glDrawElements(static_cast<std::underlying_type<GLPrimitive>::type>(primitive), m_IBO->Count(), GL_UNSIGNED_INT, 0); 
-        }
+        glDrawElements(static_cast<std::underlying_type<GLPrimitive>::type>(primitive), m_IBO->Count(), GL_UNSIGNED_INT, 0);
         m_VAO->Unbind();
     } 
 
-    void SetInstanceCount(unsigned int n) { m_instance_count = n; }
-
 private:
-
-    inline static std::vector<float> GenerateVertices(float scale);
+    inline static std::vector<float> GenerateVertices(float width, float height);
     inline static std::vector<unsigned int> GenerateIndices();
 
     std::vector<float> m_vertices;
     std::vector<unsigned int> m_indices;
-    unsigned int m_instance_count;
 };
 
-std::vector<float> Quad::GenerateVertices(float scale)
+std::vector<float> Quad::GenerateVertices(float width, float height)
 {
     std::vector<float> vertices{
-        // positions                    // texCoords
-        -1.0f * scale,  1.0f * scale, 0.f, 0.0f, 1.0f, //top left
-        -1.0f * scale, -1.0f * scale, 0.f, 0.0f, 0.0f, //bottom left
-         1.0f * scale, -1.0f * scale, 0.f, 1.0f, 0.0f, //bototm right
-         1.0f * scale,  1.0f * scale, 0.f, 1.0f, 1.0f  //top right
+                 // positions                    // texCoords
+        -1.0f * width,  1.0f * height, 0.f,     0.0f, 1.0f, //top left
+        -1.0f * width, -1.0f * height, 0.f,     0.0f, 0.0f, //bottom left
+         1.0f * width, -1.0f * height, 0.f,     1.0f, 0.0f, //bototm right
+         1.0f * width,  1.0f * height, 0.f,     1.0f, 1.0f  //top right
     };
     return vertices;
 }

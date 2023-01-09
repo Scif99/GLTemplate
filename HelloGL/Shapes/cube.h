@@ -23,7 +23,7 @@ public:
     std::shared_ptr<IndexBuffer> m_IBO;
 
 
-    CubeMesh(float xScale, float yScale, unsigned int instanceCount = 1)
+    CubeMesh(float xScale, float yScale)
     {
         m_vertices = CubeMesh::GenerateVertices(xScale, yScale);
         m_indices = CubeMesh::GenerateIndices();
@@ -58,7 +58,6 @@ private:
 
     std::vector<float> m_vertices;
     std::vector<unsigned int> m_indices;
-    unsigned int m_instance_count;
 
 };
 

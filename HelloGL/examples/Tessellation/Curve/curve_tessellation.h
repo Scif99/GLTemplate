@@ -42,10 +42,6 @@ public:
 
 	SplineGUI m_gui;
 
-	std::shared_ptr<VertexBuffer> m_VBO;
-	std::shared_ptr<VertexArray> m_VAO;
-	std::shared_ptr<IndexBuffer> m_IBO;
-
 public:
 	CurveTessellationScene(GLFWwindow* window);
 	void ProcessInput(float dt, float dx, float dy) override;

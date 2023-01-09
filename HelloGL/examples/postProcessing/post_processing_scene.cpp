@@ -19,7 +19,7 @@ PostProcessingScene::PostProcessingScene(GLFWwindow* window)
     //Entities
     m_light{ LightCube::s_default_pos, LightCube::s_default_ambient, LightCube::s_default_diffuse, LightCube::s_default_specular },
     m_terrain{ 2.f,2.f, 2 },
-    m_frame_quad{1.f},
+    m_frame_quad{1.f, 1.f},
     m_container{1.f, 1.f}
 {
 }

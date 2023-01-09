@@ -50,5 +50,6 @@ public:
 enum class GLPrimitive
 {
 	TRIANGLE = GL_TRIANGLES,
-	PATCHES = GL_PATCHES
+	PATCHES = GL_PATCHES,
+	POINTS = GL_POINTS
 };
