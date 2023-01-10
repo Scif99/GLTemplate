@@ -1,5 +1,4 @@
 #include <iostream>
-#include <filesystem>
 
 #include"imgui.h"
 #include"imgui_impl_glfw.h"
@@ -14,13 +13,7 @@
 
 #include "application.h"
 #include "camera.h"
-#include "gui.h"
 
-#include "renderer/model.h"
-#include "renderer/shader.h"
-#include "renderer/texture.h"
-#include "renderer/stb_image.h"
-#include "renderer/buffer.h"
 
 // GLFW function declarations
 //Callbacks are functions that are called when a certain condition is met (e.g. mouse movement, keyboard input)
@@ -34,7 +27,7 @@ inline const unsigned int SCREEN_HEIGHT = 600;
 
 Application App(SCREEN_WIDTH, SCREEN_HEIGHT);
 
-int main(int argc, char* argv[])
+int main()
 {
     glfwInit();
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);

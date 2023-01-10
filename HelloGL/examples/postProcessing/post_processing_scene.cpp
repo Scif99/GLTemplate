@@ -3,6 +3,7 @@
 inline const unsigned int SCREEN_WIDTH = 800;
 inline const unsigned int SCREEN_HEIGHT = 600;
 
+
 PostProcessingScene::PostProcessingScene(GLFWwindow* window)
     :
     m_window{ *window },
@@ -46,7 +47,7 @@ void PostProcessingScene::Render()
 
     //Projection & view don't change per object
     glm::mat4 projection = glm::perspective(glm::radians(45.0f), 800.0f / 600.0f, 0.1f, 100.0f);
-    glm::mat4 view = m_camera.getView();
+    glm::mat4 view = m_camera.GetView();
 
     //-------------------
     // WOODEN CONTAINER

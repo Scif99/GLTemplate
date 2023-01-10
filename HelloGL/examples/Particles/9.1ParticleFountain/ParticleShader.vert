@@ -40,6 +40,14 @@ void main()
 
 		//We also scale the size of the particle based off the distance from the camera
 		//Otherwise the particlers will be a fixed pixel size....
+
+
+		//We want the relationship between particle size and distance from camera to look like below
+	//(size)|
+	//		| ____
+	//		|     \
+	//		|      \___
+	//		|____________ (distance)
 		
 		//**TO_DO REWRITE WITHOUT ALL THE CONDITIONALS
 		vec3 origin = vec3(0.0); //Initial position of particle

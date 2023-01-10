@@ -5,8 +5,12 @@
 #include <glm/gtc/type_ptr.hpp>
 
 #include <memory>
+#include <vector>
 
-#include "../renderer/renderer.h"
+#include "renderer/buffer.h"
+#include "renderer/vertex_array.h"
+
+
 
 /*
 - Note that a terrainMesh with 2 vertices in each dimension is equivalent to a quad.

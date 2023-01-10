@@ -46,7 +46,7 @@ Mesh Model::processMesh(aiMesh* mesh, const aiScene* scene)
 	std::vector<ModelTexture> textures;
 
 	//process vertices
-	for (int i = 0; i < mesh->mNumVertices;++i)
+	for (unsigned int i = 0; i < mesh->mNumVertices;++i)
 	{
 		Vertex vertex;
 		//process positions

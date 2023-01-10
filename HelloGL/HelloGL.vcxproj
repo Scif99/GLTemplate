@@ -124,7 +124,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)dependencies/glfw/include;$(SolutionDir)dependencies/GLAD/include;$(SolutionDir)dependencies/glm;$(SolutionDir)dependencies/assimp/include;$(ProjectDir)imgui</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)dependencies/glfw/include;$(SolutionDir)dependencies/GLAD/include;$(SolutionDir)dependencies/glm;$(SolutionDir)dependencies/assimp/include;$(ProjectDir)imgui;$(ProjectDir)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
@@ -143,7 +143,7 @@
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>$(SolutionDir)dependencies/glfw/include;$(SolutionDir)dependencies/GLAD/include;$(SolutionDir)dependencies/glm;$(SolutionDir)dependencies/assimp/include;$(ProjectDir)imgui</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)dependencies/glfw/include;$(SolutionDir)dependencies/GLAD/include;$(SolutionDir)dependencies/glm;$(SolutionDir)dependencies/assimp/include;$(ProjectDir)imgui;$(ProjectDir)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -157,7 +157,7 @@
   <ItemGroup>
     <ClCompile Include="camera.cpp" />
     <ClCompile Include="application.cpp" />
-    <ClCompile Include="examples\Instancing\instancing.cpp" />
+    <ClCompile Include="examples\Particles\9.1ParticleFountain\fountain.cpp" />
     <ClCompile Include="examples\TerrainGeneration\terrain_generation.cpp" />
     <ClCompile Include="examples\postProcessing\post_processing_scene.cpp" />
     <ClCompile Include="examples\Tessellation\Quad\quad_tessellation.cpp" />
@@ -189,11 +189,11 @@
     <ClInclude Include="renderer\perlin.h" />
     <ClInclude Include="renderer\vertex.h" />
     <ClInclude Include="Shapes\cube.h" />
-    <ClInclude Include="examples\Instancing\instancing.h" />
+    <ClInclude Include="examples\Particles\9.1ParticleFountain\fountain.h" />
     <ClInclude Include="light.h" />
     <ClInclude Include="examples\TerrainGeneration\terrain_generation.h" />
     <ClInclude Include="examples\postProcessing\post_processing_scene.h" />
-    <ClInclude Include="examples\scene.h" />
+    <ClInclude Include="scene.h" />
     <ClInclude Include="gui.h" />
     <ClInclude Include="imgui\imconfig.h" />
     <ClInclude Include="imgui\imgui.h" />
@@ -208,7 +208,6 @@
     <ClInclude Include="renderer\gl_wrappers.h" />
     <ClInclude Include="renderer\mesh.h" />
     <ClInclude Include="renderer\model.h" />
-    <ClInclude Include="renderer\renderer.h" />
     <ClInclude Include="renderer\shader.h" />
     <ClInclude Include="renderer\stb_image.h" />
     <ClInclude Include="renderer\texture.h" />
@@ -219,8 +218,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="assets\models\backpack\backpack.mtl" />
-    <None Include="examples\Instancing\InstancedQuadShader.frag" />
-    <None Include="examples\Instancing\InstancedQuadShader.vert" />
+    <None Include="examples\Particles\9.1ParticleFountain\ParticleShader.frag" />
+    <None Include="examples\Particles\9.1ParticleFountain\ParticleShader.vert" />
     <None Include="examples\TerrainGeneration\TessHeightmapShader.frag" />
     <None Include="examples\TerrainGeneration\TessHeightmapShader.tesc" />
     <None Include="examples\TerrainGeneration\TessHeightMapShader.tese" />

@@ -1,5 +1,7 @@
 #include "curve_tessellation.h"
+
 #include <array>
+
 /*
 A scene that demonstrates tessellation of curves (Bezier)
 Also demonstrates the use of dynamic vertex buffers
@@ -89,7 +91,7 @@ void CurveTessellationScene::Render()
 
 	//Projection & view don't change per object
 	glm::mat4 projection = glm::perspective(glm::radians(45.0f), 800.0f / 600.0f, 0.1f, 100.0f);
-	glm::mat4 view = m_camera.getView();
+	glm::mat4 view = m_camera.GetView();
 	glm::mat4 model = glm::mat4(1.f);
 
 	m_shader.Use();

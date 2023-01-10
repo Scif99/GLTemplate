@@ -1,13 +1,18 @@
 #pragma once
 
-#include "../renderer/renderer.h"
-#include "../camera.h"
-#include "../scene.h"
-#include "../light.h"
+#include "camera.h"
+#include "scene.h"
+#include "light.h"
 
-#include "../Shapes/cube.h"
-#include "../Shapes/grid.h"
-#include "../Shapes/2Dquad.h"
+#include "renderer/framebuffer.h"
+#include "renderer/buffer.h"
+#include "renderer/shader.h"
+#include "renderer/texture.h"
+#include "renderer/vertex_array.h"
+
+#include "Shapes/cube.h"
+#include "Shapes/grid.h"
+#include "Shapes/2Dquad.h"
 
 class PostProcessingScene : public Scene
 {

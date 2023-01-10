@@ -1,12 +1,11 @@
 #pragma once
 
-#include "../renderer/renderer.h"
-#include "../camera.h"
-#include "../../scene.h"
-#include "../light.h"
+#include "camera.h"
+#include "gui.h"
+#include "scene.h"
 
-#include "../Shapes/cube.h"
-#include "../gui.h"
+#include "renderer/shader.h"
+#include "Shapes/cube.h"
 
 class SplineGUI : public GUI
 {
@@ -23,8 +22,6 @@ public:
 		ImGui::End();
 	}
 };
-
-
 
 class CurveTessellationScene : public Scene
 {
@@ -48,3 +45,7 @@ public:
 	void Update(float dt) override;
 	void Render() override;
 };
+
+
+
+

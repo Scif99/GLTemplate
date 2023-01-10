@@ -1,14 +1,14 @@
 #pragma once
 
-#include "../renderer/renderer.h"
-#include "../camera.h"
-#include "../../scene.h"
-#include "../light.h"
+#include "camera.h"
+#include "gui.h"
+#include "scene.h"
 
-#include "../Shapes/cube.h"
-#include "../Shapes/terrain.h"
-#include "../Shapes/2Dquad.h"
-#include "../gui.h"
+#include "renderer/buffer.h"
+#include "renderer/shader.h"
+#include "renderer/vertex_array.h"
+
+#include "Shapes/2Dquad.h"
 
 class QuadTessellationGUI : public GUI
 {
@@ -34,7 +34,9 @@ public:
 	GLShader m_shader;
 	QuadTessellationGUI m_gui;
 
-	unsigned int VAO, VBO, IBO;
+	std::shared_ptr<VertexBuffer> m_VBO;
+	std::shared_ptr<VertexArray> m_VAO;
+	std::shared_ptr<IndexBuffer> m_IBO;
 
 public:
 	QuadTessellationScene(GLFWwindow* window);

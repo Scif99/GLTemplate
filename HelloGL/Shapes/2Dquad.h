@@ -4,7 +4,11 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
-#include "../renderer/renderer.h"
+#include <memory>
+#include <vector>
+
+#include "renderer/buffer.h"
+#include "renderer/vertex_array.h"
 
 /*
 A rectangular Quad

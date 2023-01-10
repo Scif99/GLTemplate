@@ -1,12 +1,19 @@
 #pragma once
 
-#include "../renderer/renderer.h"
-#include "../camera.h"
-#include "../scene.h"
-#include "../gui.h"
-#include "../Shapes/cube.h"
-#include "../Shapes/terrain.h"
-#include "../Shapes/2Dquad.h"
+#include "camera.h"
+#include "gui.h"
+#include "scene.h"
+
+#include "renderer/buffer.h"
+#include "renderer/shader.h"
+#include "renderer/texture.h"
+#include "renderer/vertex_array.h"
+
+#include "Shapes/cube.h"
+#include "Shapes/terrain.h"
+#include "Shapes/2Dquad.h"
+
+
 
 
 class TerrainGUI : public GUI

@@ -1,9 +1,5 @@
 #include "terrain_generation.h"
 
-inline const unsigned int SCREEN_WIDTH = 800;
-inline const unsigned int SCREEN_HEIGHT = 600;
-
-
 TerrainGenerationScene::TerrainGenerationScene(GLFWwindow* window)
     :
     m_window{ *window },
@@ -51,7 +47,7 @@ void TerrainGenerationScene::Render()
 
     //Projection & view don't change per object
     glm::mat4 projection = glm::perspective(glm::radians(45.0f), 800.0f / 600.0f, 0.1f, 100000.0f);
-    glm::mat4 view = m_camera.getView();
+    glm::mat4 view = m_camera.GetView();
     glm::mat4 model = glm::mat4(1.f); 
 
     //Bind shader, pass uniforms

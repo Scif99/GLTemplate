@@ -4,10 +4,11 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
-#include <cassert>
+#include <memory>
 #include <vector>
 
-#include "../renderer/renderer.h"
+#include "renderer/buffer.h"
+#include "renderer/vertex_array.h"
 
 /*
 All instances share a VBO, IBO

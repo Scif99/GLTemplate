@@ -1,22 +1,18 @@
 #include "camera.h"
-
 #include <iostream>
-
-inline const unsigned int SCREEN_WIDTH = 800;
-inline const unsigned int SCREEN_HEIGHT = 600;
-
 //Note forward, up should be orthogonal
-Camera::Camera(glm::vec3 pos, glm::vec3 target, glm::vec3 up)
-    : m_position{ pos }, m_forward{ glm::normalize(target - m_position) }, m_up{ glm::normalize(up) }, m_right{ glm::normalize(glm::cross(m_forward, m_up)) },
-     lastX{SCREEN_WIDTH/2}, lastY{SCREEN_HEIGHT/2}, firstMouse{true}
-{
-    WORLD_UP = m_up;
-}
+Camera::Camera(const glm::vec3& pos, const glm::vec3& centre, const glm::vec3& up)
+    : m_position{ pos }, 
+      m_forward{ glm::normalize(centre - pos)}, 
+      WORLD_UP{ glm::normalize(up) },
+      m_right{ glm::normalize(glm::cross(m_forward, WORLD_UP)) }, 
+      m_up{ glm::normalize(glm::cross(m_right, m_forward)) }
+    {}
 
 
 void Camera::ProcessKeyboardInput(GLFWwindow* window, float dt)
 {
-    const float speed{ 3.f * dt };
+    const float speed{ m_speed * dt };
 
     if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
         m_position += speed * m_forward;
@@ -26,17 +22,18 @@ void Camera::ProcessKeyboardInput(GLFWwindow* window, float dt)
         m_position -= speed * m_right;
     if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
         m_position += speed * m_right;
-
     //m_position.y = 0.f;
 
 }
 
-void Camera::Reset(glm::vec3 pos, glm::vec3 target, glm::vec3 up)
+//Resets the camera basis
+void Camera::Reset(const glm::vec3& pos, const glm::vec3& centre, const glm::vec3& up)
 {
-    m_position =  pos ;
-    m_forward =  glm::normalize(target - m_position);
-    m_up = glm::normalize(up);
-    m_right = glm::normalize(glm::cross(m_forward, m_up));
+    m_position = pos;
+    m_forward = glm::normalize(centre - pos);
+    WORLD_UP = glm::normalize(m_up);
+    m_right = glm::normalize(glm::cross(m_forward, WORLD_UP));
+    m_up = glm::normalize(glm::cross(m_right, m_forward));
 }
 
 void Camera::ProcessMouseInput(GLFWwindow* window, float dx, float dy)
@@ -67,5 +64,4 @@ void Camera::Update()
     m_right = glm::normalize(glm::cross(m_forward, WORLD_UP));  // normalize the vectors, because their length gets closer to 0 the more you look up or down which results in slower movement.
     m_up = glm::normalize(glm::cross(m_right, m_forward));
 
-    m_view = glm::lookAt(m_position, m_position + m_forward, m_up);
 }

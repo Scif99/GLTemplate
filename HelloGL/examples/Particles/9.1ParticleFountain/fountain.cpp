@@ -1,21 +1,21 @@
-#include "instancing.h"
+#include "fountain.h"
 #include <algorithm>
 
 #include <ctime>
 #include <cstdlib>
 #include <cmath>
+#include <numeric>
 
 //Returns a random float in [low,high]
-float GenerateFloat(float low, float high)
+static float GenerateFloat(float low, float high)
 {
     assert(low <= high);
     return glm::mix(low, high, static_cast <float> (rand()) / static_cast <float> (RAND_MAX));
 }
 
-
-InstancingScene::InstancingScene(GLFWwindow* window)
+BasicFountainScene::BasicFountainScene(GLFWwindow* window)
 :   m_window{*window},
-    m_quad_shader{"examples/Instancing/InstancedQuadShader.vert", "examples/Instancing/InstancedQuadShader.frag" },
+    m_quad_shader{"examples/Particles/9.1ParticleFountain/ParticleShader.vert", "examples/Particles/9.1ParticleFountain/ParticleShader.frag" },
     m_quad_texture{"assets/textures/awesomeface.png", false}
     
 {
@@ -52,48 +52,36 @@ InstancingScene::InstancingScene(GLFWwindow* window)
         m_data[curr + 3] = i*rate;
     }
 
+    std::array<unsigned int, NUM_PARTICLES> indices;
+    std::iota(indices.begin(), indices.end(), 0);
 
 
+    BufferLayout layout{ {ShaderDataType::Float3, "InitialVelocity"}, {ShaderDataType::Float, "StartTime"} };
+    m_VBO = std::make_shared<VertexBuffer>(m_data);
+    m_VBO->Bind();
+    m_VBO->SetLayout(layout);
 
+    m_IBO = std::make_shared<IndexBuffer>(indices);
 
-    //Finally configure VAO
-    glGenVertexArrays(1, &VAO);
-    glGenBuffers(1, &VBO);
-
-
-    glBindVertexArray(VAO);
-
-    glBindBuffer(GL_ARRAY_BUFFER, VBO); 
-    glBufferData(GL_ARRAY_BUFFER, m_data.size() * sizeof(float), m_data.data(), GL_STATIC_DRAW);
-
-
-    //Configure Layout
-    glBindBuffer(GL_ARRAY_BUFFER, VBO);
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 4*sizeof(float), (void*)0);
-    glEnableVertexAttribArray(0);
-
-    glVertexAttribPointer(1, 1, GL_FLOAT, GL_FALSE, 4*sizeof(float), (void*)(3*sizeof(float)));
-    glEnableVertexAttribArray(1);
-
-    glBindBuffer(GL_VERTEX_ARRAY, 0);
-    glBindBuffer(GL_ARRAY_BUFFER, 0);
-
+    m_VAO = std::make_shared<VertexArray>();
+    m_VAO->AddVertexBuffer(m_VBO);
+    m_VAO->SetIndexBuffer(m_IBO);
 
 }
 
-void InstancingScene::ProcessInput(float dt, float dx, float dy)
+void BasicFountainScene::ProcessInput(float dt, float dx, float dy)
 {
     m_camera.ProcessKeyboardInput(&m_window, dt);
     m_camera.ProcessMouseInput(&m_window, dx, dy);
 
 }
 
-void InstancingScene::Update(float dt)
+void BasicFountainScene::Update(float dt)
 {
     m_camera.Update();
 }
 
-void InstancingScene::Render()
+void BasicFountainScene::Render()
 {
 
 
@@ -112,7 +100,7 @@ void InstancingScene::Render()
     //Set uniforms
     //Projection & view don't change per object
     glm::mat4 projection = glm::perspective(glm::radians(45.0f), 800.0f / 600.0f, 0.1f, 100.0f);
-    glm::mat4 view = m_camera.getView();
+    glm::mat4 view = m_camera.GetView();
     glm::mat4 model = glm::mat4(1.f);
 
     m_quad_shader.SetMat4("u_Projection", projection);
@@ -125,10 +113,7 @@ void InstancingScene::Render()
     m_quad_shader.SetFloat("u_ParticleLifetime", 15.f);
 
 
-    glBindVertexArray(VAO);
+    m_VAO->Bind();
     glDrawArrays(GL_POINTS, 0, NUM_PARTICLES);
-    glBindVertexArray(0);
-
-
-
+    m_VAO->Unbind();
 }

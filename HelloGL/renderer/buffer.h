@@ -18,7 +18,7 @@
 /*An API-agnostic data type for buffer elements*/
 static enum class ShaderDataType
 {
-	None = 0, Float, Float2, Float3, Float4
+	None, Float, Float2, Float3, Float4
 };
 
 static unsigned int ShaderDataTypeSize(ShaderDataType type)
@@ -45,8 +45,8 @@ struct BufferElement
 {
 	std::string m_name;
 	ShaderDataType m_type{ShaderDataType::None};
-	unsigned int m_size;
-	unsigned int m_offset;
+	unsigned int m_size{ 0 };
+	unsigned int m_offset{0};
 
 	BufferElement(ShaderDataType type, const std::string& name)
 		: m_name{name}, m_type{type}, m_size{ShaderDataTypeSize(type)}, m_offset{0}
@@ -61,6 +61,9 @@ struct BufferElement
 			case ShaderDataType::Float3:  return 3;
 			case ShaderDataType::Float4:  return 4;
 		}
+
+		assert(true && "Component is empty!");
+		return 0;
 	}
 };
 
@@ -89,12 +92,10 @@ public:
 		CalculateOffsetsAndStride();
 	}
 
-	auto begin() const { return m_elements.begin(); }
 	auto begin() { return m_elements.begin(); }
-
-	auto end() const { return m_elements.end(); }
 	auto end() { return m_elements.end(); }
-
+	auto begin() const { return m_elements.begin(); }
+	auto end() const { return m_elements.end(); }
 
 private:
 	void CalculateOffsetsAndStride()
@@ -114,18 +115,22 @@ class VertexBuffer
 private:
 	GLID m_renderer_ID;
 	BufferLayout m_layout;
+
 public:
 	//default constructor for dynamic?
 	~VertexBuffer() { glDeleteBuffers(1, &m_renderer_ID.m_ID); };
-	VertexBuffer() { glGenBuffers(1, &m_renderer_ID.m_ID); }
+	VertexBuffer() { glGenBuffers(1, &m_renderer_ID.m_ID); };
 	VertexBuffer(const VertexBuffer& other) = default;
 	VertexBuffer& operator=(const VertexBuffer& other) = default;
 	VertexBuffer(VertexBuffer&& other) = default;
 	VertexBuffer& operator=(VertexBuffer&& other) = default;
 
-	VertexBuffer(std::span<float> vertices);
-	VertexBuffer(const std::vector<float>& vertices); //overload for meshes
-	VertexBuffer(const std::vector<Vertex>& vertices); 
+	VertexBuffer(std::span<float> vertexAttributes);
+	VertexBuffer(const std::vector<float>& vertexAttributes); //overload for meshes
+	VertexBuffer(const std::vector<Vertex>& vertexAttributes);
+
+	void AddAttributes(std::span<float> vertexAttributes);
+	void AddAttributes(const std::vector<float>& vertexAttributes);
 
 
 	void Bind() const { glBindBuffer(GL_ARRAY_BUFFER, m_renderer_ID.m_ID); }

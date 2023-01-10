@@ -3,28 +3,44 @@
 //---------------------
 //Vertex Buffer
 //--------------------------
-VertexBuffer::VertexBuffer(std::span<float> vertices)
+VertexBuffer::VertexBuffer(std::span<float> vertexAttributes)
 {
 	glGenBuffers(1, &m_renderer_ID.m_ID);
-	glBindBuffer(GL_ARRAY_BUFFER, m_renderer_ID.m_ID); //'How do we want to use this memory?'
-	glBufferData(GL_ARRAY_BUFFER, vertices.size_bytes(), vertices.data(), GL_STATIC_DRAW); //copy data into our buffer
+	Bind();
+	glBufferData(GL_ARRAY_BUFFER, vertexAttributes.size_bytes(), vertexAttributes.data(), GL_STATIC_DRAW); //copy data into our buffer
+	Unbind();
 }
 
 //overload for meshes
-VertexBuffer::VertexBuffer(const std::vector<float>& vertices)
+VertexBuffer::VertexBuffer(const std::vector<float>& vertexAttributes)
 {
 	glGenBuffers(1, &m_renderer_ID.m_ID);
-	glBindBuffer(GL_ARRAY_BUFFER, m_renderer_ID.m_ID); //'How do we want to use this memory?'
-	glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(float), &vertices[0], GL_STATIC_DRAW); //copy data into our buffer
+	Bind();
+	glBufferData(GL_ARRAY_BUFFER, vertexAttributes.size() * sizeof(float), &vertexAttributes[0], GL_STATIC_DRAW); //copy data into our buffer
+	Unbind();
 }
 
-VertexBuffer::VertexBuffer(const std::vector<Vertex>& vertices)
+VertexBuffer::VertexBuffer(const std::vector<Vertex>& vertexAttributes)
 {
 	glGenBuffers(1, &m_renderer_ID.m_ID);
-	glBindBuffer(GL_ARRAY_BUFFER, m_renderer_ID.m_ID); //'How do we want to use this memory?'
-	glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(Vertex), &vertices[0], GL_STATIC_DRAW); //copy data into our buffer
+	Bind();
+	glBufferData(GL_ARRAY_BUFFER, vertexAttributes.size() * sizeof(Vertex), &vertexAttributes[0], GL_STATIC_DRAW); //copy data into our buffer
+	Unbind();
 }
 
+void VertexBuffer::AddAttributes(std::span<float> vertexAttributes)
+{
+	Bind();
+	glBufferData(GL_ARRAY_BUFFER, vertexAttributes.size_bytes(), vertexAttributes.data(), GL_STATIC_DRAW); //copy data into our buffer
+	Unbind();
+}
+
+void VertexBuffer::AddAttributes(const std::vector<float>& vertexAttributes)
+{
+	Bind();
+	glBufferData(GL_ARRAY_BUFFER, vertexAttributes.size() * sizeof(Vertex), &vertexAttributes[0], GL_STATIC_DRAW); //copy data into our buffer
+	Unbind();
+}
 
 //------------------------
 //INDEX BUFFER

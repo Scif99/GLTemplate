@@ -78,7 +78,7 @@
     <ClCompile Include="examples\TerrainGeneration\terrain_generation.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="examples\Instancing\instancing.cpp">
+    <ClCompile Include="examples\Particles\9.1ParticleFountain\fountain.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="examples\Tessellation\Curve\curve_tessellation.cpp">
@@ -114,9 +114,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="application.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="renderer\renderer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="3d_renderer.h">
@@ -161,7 +158,7 @@
     <ClInclude Include="renderer\framebuffer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="examples\scene.h">
+    <ClInclude Include="scene.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="examples\postProcessing\post_processing_scene.h">
@@ -173,7 +170,7 @@
     <ClInclude Include="light.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="examples\Instancing\instancing.h">
+    <ClInclude Include="examples\Particles\9.1ParticleFountain\fountain.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="renderer\gl_wrappers.h">
@@ -201,8 +198,8 @@
     <None Include="shaders\3DMaterialShader.frag" />
     <None Include="examples\postProcessing\SharpenShader.vert" />
     <None Include="examples\postProcessing\SharpenShader.frag" />
-    <None Include="examples\Instancing\InstancedQuadShader.vert" />
-    <None Include="examples\Instancing\InstancedQuadShader.frag" />
+    <None Include="examples\Particles\9.1ParticleFountain\ParticleShader.vert" />
+    <None Include="examples\Particles\9.1ParticleFountain\ParticleShader.frag" />
     <None Include="examples\Tessellation\Curve\CurveShader.vert" />
     <None Include="examples\Tessellation\Curve\CurveShader.frag" />
     <None Include="examples\Tessellation\Curve\CurveShader.tesc" />

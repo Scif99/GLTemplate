@@ -8,10 +8,6 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
-#include <memory>
-#include <string>
-#include <vector>
-
 
 //A class for a ImGui slider
 class GUI
@@ -20,6 +16,8 @@ class GUI
 public:
 
 	virtual ~GUI() {};
+
+	virtual void CreateWindow() = 0;
 
 	void CreateFrame()
 	{
@@ -30,8 +28,6 @@ public:
 	}
 
 
-	//**WHAT IF WE WANT MULTIPLE IMGUI WINDOWS?**
-	virtual void CreateWindow() = 0;
 
 	void Render()
 	{
@@ -46,6 +42,7 @@ public:
 		ImGui::DestroyContext();
 	}
 
+
 protected:
 	GUI(GLFWwindow* window)
 	{
@@ -58,10 +55,3 @@ protected:
 		ImGui_ImplOpenGL3_Init("#version 430");
 	}
 };
-
-
-
-
-
-//Event pattern?
-

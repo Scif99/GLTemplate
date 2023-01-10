@@ -1,6 +1,5 @@
 #include "application.h"
 
-#include <memory>
 
     
 
@@ -15,7 +14,7 @@ void Application::init(GLFWwindow* window)
     //Load scene
     //(scene can have stack-allocated members rather than pointers everywhere)
     m_window = window;
-    m_scene = std::make_unique<InstancingScene>(window);
+    m_scene = std::make_unique<BasicFountainScene>(window);
     //m_scene = std::make_unique<TerrainGenerationScene>(window);
     //m_scene = std::make_unique<PostProcessingScene>(window);
     //m_scene = std::make_unique<CurveTessellationScene>(window);

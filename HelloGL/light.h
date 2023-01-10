@@ -3,10 +3,9 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
-#include "renderer/renderer.h"
 
 //FIX
-#include "../Shapes/cube.h"
+#include "Shapes/cube.h"
 
 class LightCube
 {

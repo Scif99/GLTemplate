@@ -1,8 +1,5 @@
 #pragma once
 
-#include "camera.h"
-#include "renderer/renderer.h"
-
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
@@ -10,20 +7,47 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
+#include <memory>
+
+#include "camera.h"
 #include "gui.h"
 
-#include "../Shapes/cube.h"
-#include "../Shapes/terrain.h"
-#include "../Shapes/2Dquad.h"
-
-#include "examples/scene.h"
+#include "scene.h"
 #include "examples/postProcessing/post_processing_scene.h"
 #include "examples/TerrainGeneration/terrain_generation.h"
-#include "examples/Instancing/instancing.h"
 #include "examples/Tessellation/Curve/curve_tessellation.h"
 #include "examples/Tessellation/Quad/quad_tessellation.h"
 
+//Particle Scenes
+#include "examples/Particles/9.1ParticleFountain/fountain.h"
 
+
+class Application
+{
+
+public:
+	Application(unsigned int width, unsigned int height);
+	~Application() { glfwDestroyWindow(m_window); };
+	//Copy/Moves?
+
+	void init(GLFWwindow* window);
+	void ProcessInput(float dt, float dx, float dy);
+	void Update(float dt);
+	void Render();
+	 
+	//Ensure that we cleanup anything that relies on glfw before glfw itself gets cleaned up
+	void Cleanup();
+
+public:
+	bool m_keys[1024];
+	unsigned int m_width, m_height;
+	bool drag{ false }; //Used for mouse dragging...
+
+	std::unique_ptr<Scene> m_scene;
+
+	////Window/gui stuff
+	GLFWwindow* m_window{ nullptr }; //TODO figure out how to use smart pointers...
+};
 
 
 class MenuGUI : public GUI
@@ -78,32 +102,4 @@ public:
 
 		m_gui.Render();
 	}
-};
-
-
-class Application
-{
-
-public:
-	Application(unsigned int width, unsigned int height);
-	~Application() { glfwDestroyWindow(m_window); };
-	//Copy/Moves?
-
-	void init(GLFWwindow* window);
-	void ProcessInput(float dt, float dx, float dy);
-	void Update(float dt);
-	void Render();
-	 
-	//Ensure that we cleanup anything that relies on glfw before glfw itself gets cleaned up
-	void Cleanup();
-
-public:
-	bool m_keys[1024];
-	unsigned int m_width, m_height;
-	bool drag{ false }; //Used for mouse dragging...
-
-	std::unique_ptr<Scene> m_scene;
-
-	////Window/gui stuff
-	GLFWwindow* m_window{ nullptr }; //TODO figure out how to use smart pointers...
 };

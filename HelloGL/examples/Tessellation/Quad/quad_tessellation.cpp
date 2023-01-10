@@ -38,19 +38,31 @@ QuadTessellationScene::QuadTessellationScene(GLFWwindow* window)
 
 	};
 
-	glGenBuffers(1, &VBO);
-	glBindBuffer(GL_ARRAY_BUFFER, VBO);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+	BufferLayout layout{ {ShaderDataType::Float2, "Vertices"}, {ShaderDataType::Float, "Indices"} };
+	m_VBO = std::make_shared<VertexBuffer>(vertices);
+	m_VBO->SetLayout(layout);
 
-	glGenVertexArrays(1, &VAO);
-	glBindVertexArray(VAO);
+	m_IBO = std::make_shared<IndexBuffer>(indices);
 
-	glGenBuffers(1, &IBO);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, IBO);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
+	m_VAO = std::make_shared<VertexArray>();
+	m_VAO->AddVertexBuffer(m_VBO);
+	m_VAO->SetIndexBuffer(m_IBO);
 
-	glEnableVertexAttribArray(0);
-	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), (void*)0);
+
+
+	//glGenBuffers(1, &VBO);
+	//glBindBuffer(GL_ARRAY_BUFFER, VBO);
+	//glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+
+	//glGenVertexArrays(1, &VAO);
+	//glBindVertexArray(VAO);
+
+	//glGenBuffers(1, &IBO);
+	//glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, IBO);
+	//glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
+
+	//glEnableVertexAttribArray(0);
+	//glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 2 * sizeof(float), (void*)0);
 
 }
 
@@ -111,8 +123,10 @@ void QuadTessellationScene::Render()
 
 
 	//Bind shader, pass uniforms
-	glBindVertexArray(VAO);
-	glDrawElements(GL_PATCHES, 8, GL_UNSIGNED_INT, 0); //8 indices (4 per patch)
+	m_VAO->Bind();
+	//glBindVertexArray(VAO);
+	glDrawElements(GL_PATCHES, m_IBO->Count(), GL_UNSIGNED_INT, 0); //8 indices (4 per patch)
+	m_VAO->Unbind();
 
 	m_gui.Render();
 }

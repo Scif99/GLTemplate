@@ -4,11 +4,13 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
-#include <memory>
-
-#include "../renderer/renderer.h"
-
 #include <iostream>
+#include <memory>
+#include <vector>
+
+#include "renderer/buffer.h"
+#include "renderer/vertex_array.h"
+
 
 class Grid
 {
@@ -33,8 +35,8 @@ public:
         *(1.f,-1.f,0.f)-->...->(1.f,1.f,0.f)
         */
 
-        unsigned int xNumVertices = mPatches + 1;
-        unsigned int zNumVertices = mPatches + 1;
+        int xNumVertices = mPatches + 1;
+        int zNumVertices = mPatches + 1;
         m_vertices.reserve(8 * xNumVertices * zNumVertices);
 
         for (int z = 0; z < zNumVertices;++z)
